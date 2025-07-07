@@ -1,7 +1,5 @@
-class productManager { 
-    constructor() {
+class ProductManager {
+    constructor(path) {
         this.path = path
     }
-
-    
 }
