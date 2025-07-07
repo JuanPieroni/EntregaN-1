@@ -14,11 +14,10 @@ class ProductManager {
 
     addProduct(producto) {
         const productos = this.getProducts()
-        const nuevoId =
-            productos.length > 0 ? productos[productos.length - 1].id + 1 : 1
+        const nuevoId = productos.length > 0 ? productos[productos.length - 1].id + 1 : 1
         const nuevoProducto = { id: nuevoId, ...producto }
         productos.push(nuevoProducto)
-        fs.writeFileSync(this.path, JSON.stringify(productos, null, 2))
+        fs.writeFileSync(this.path, JSON.stringify(productos))
         return nuevoProducto
     }
 
@@ -27,6 +26,7 @@ class ProductManager {
         return productos.find((p) => p.id === parseInt(id)) || null
     }
 }
+// prueba
 // const producto1 = new ProductManager("productos.json")
 // producto1.addProduct({
 //     title: "Monitor",
@@ -35,4 +35,5 @@ class ProductManager {
 //     code: "ABC123",
 //     stock: 10,
 // })
+//se crea bien el productos.json
 export default ProductManager
