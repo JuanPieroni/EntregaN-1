@@ -23,7 +23,7 @@ class ProductManager {
 
     getProductById(id) {
         const productos = this.getProducts()
-        return productos.find((p) => p.id === parseInt(id)) || null
+        return productos.find((p) => p.id === parseInt(id))
     }
 }
 // prueba
