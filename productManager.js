@@ -1,6 +1,6 @@
-class productMAnager { 
+class productManager { 
     constructor() {
-        this.products = [];
+        this.path = path
     }
 
     

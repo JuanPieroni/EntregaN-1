@@ -1,0 +1,23 @@
+{
+  "name": "entrega_1",
+  "version": "1.0.0",
+  "description": "Entrega 1 Comision 74305",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JuanPieroni/EntregaN-1.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JuanPieroni/EntregaN-1/issues"
+  },
+  "homepage": "https://github.com/JuanPieroni/EntregaN-1#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
