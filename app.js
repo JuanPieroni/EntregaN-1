@@ -4,6 +4,7 @@ import ProductManager from "./managers/ProductManager.js"
 import CartManager from "./managers/CartManager.js"
 import productsRouter from "./routes/products.router.js"
 import cartRouter from "./routes/carts.router.js"
+import viewsRouter from "./routes/views.router.js"
 import { fileURLToPath } from "url"
 import path from "path"
 import { Server } from "socket.io"
@@ -42,6 +43,9 @@ app.use(express.urlencoded({ extended: true }))
  app.get("/", (req, res) => {
    res.render("home", { title: "Home", message: "Bienvenido a la página de inicio" })
 })
+ 
+
+app.use('/', viewsRouter);  
 
 //PRODUCTOS
 app.use("/api/products", productsRouter(manager))

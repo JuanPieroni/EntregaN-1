@@ -5,10 +5,8 @@ import path from "path"
 const productsRouter = (manager) => {
     const router = Router()
 
- router.get("/vista", (req, res) => {
-    const productos = manager.getProducts();
-    res.render("products", { productos });
-});
+ 
+
   
     router.get("/:pid", (req, res) => {
         const id = parseInt(req.params.pid)
