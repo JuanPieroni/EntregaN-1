@@ -1,17 +1,16 @@
 import { Router } from "express"
 import fs from "fs"
+import path from "path"
 
 const productsRouter = (manager) => {
     const router = Router()
-   
- 
 
- router.get("/", (req, res) => {
-        const productos = manager.getProducts()
-        res.status(200).json(productos)
-    })
-
- router.get("/:pid", (req, res) => {
+ router.get("/vista", (req, res) => {
+    const productos = manager.getProducts();
+    res.render("products", { productos });
+});
+  
+    router.get("/:pid", (req, res) => {
         const id = parseInt(req.params.pid)
         const producto = manager.getProductById(id)
         if (producto) {
@@ -21,13 +20,13 @@ const productsRouter = (manager) => {
         }
     })
 
- router.post("/", (req, res) => {
+    router.post("/", (req, res) => {
         const datos = req.body
         const nuevoProducto = manager.addProduct(datos)
         res.status(201).json(nuevoProducto)
     })
 
- router.put("/:pid", (req, res) => {
+    router.put("/:pid", (req, res) => {
         const id = parseInt(req.params.pid)
         const productos = manager.getProducts()
         const producto = productos.find((p) => p.id === id)
@@ -48,7 +47,7 @@ const productsRouter = (manager) => {
         })
     })
 
- router.delete("/:pid", (req, res) => {
+    router.delete("/:pid", (req, res) => {
         const id = parseInt(req.params.pid)
         let productos = manager.getProducts()
         const existe = productos.find((p) => p.id === id)
