@@ -25,8 +25,28 @@ class ProductManager {
         const productos = this.getProducts()
         return productos.find((p) => p.id === parseInt(id))
     }
+    restarStock(id) {
+        
+        
+        const productos = this.getProducts()
+        const producto = productos.find((p) => p.id === parseInt(id))
+        if(!producto || producto.stock <= 0 ) return null
+
+        producto.stock --
+        fs.writeFileSync(this.path, JSON.stringify(productos))
+        return producto
+        
+    }
+    
 }
-// prueba
+
+
+
+
+
+
+
+    // prueba
 // const producto1 = new ProductManager("productos.json")
 // producto1.addProduct({
 //     title: "Monitor",

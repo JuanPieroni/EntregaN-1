@@ -1,7 +1,9 @@
 import { Router } from "express"
 import fs from "fs"
+import { io } from "../app.js" 
 
-const cartRouter = (cartManager) => {
+
+const cartRouter = (cartManager, productManager) => {
     const router = Router()
 
     router.post("/", (req, res) => {
@@ -11,7 +13,8 @@ const cartRouter = (cartManager) => {
 
     router.get("/", (req, res) => {
         const carritos = cartManager.getCarts()
-        res.status(200).json({title: "Api carts", carritos}) // Si no hay carritos, devuelve []
+
+        res.status(200).json({ title: "Api carts", carritos }) // Si no hay carritos, devuelve []
     })
 
     router.get("/:cid", (req, res) => {
@@ -31,9 +34,16 @@ const cartRouter = (cartManager) => {
             return res.status(404).json({
                 mensaje: `Carrito con ID ${cid} no encontrado.`,
             })
+         
+        const productoActualizado = productManager.restarStock(pid)
+        if (productoActualizado) {
+            io.emit("stockUpdated", productoActualizado)
+        }
+
         res.status(200).json({
             mensaje: `Producto ID ${pid} agregado al carrito ID ${cid}.`,
             cart: carritoActualizado,
+            product: productoActualizado,
         })
     })
     return router

@@ -8,7 +8,9 @@
         <li data-id="{{this.id}}">{{this.title}}
             - ${{this.price}}
             - Stock:
-            {{this.stock}}</li>
+             <span id="stock-{{this.id}}">{{this.stock}}</span>
+            <button onclick="agregarAlCarrito({{this.id}})">Comprar</button>
+
     {{/each}}
 </ul>
 

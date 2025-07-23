@@ -54,7 +54,7 @@ app.use("/", viewsRouter)
  //PRODUCTOS EN JSON
 app.use("/api/products", productsRouter(manager))
 //CARRITOS EN JSON
-app.use("/api/carts", cartRouter(cartManager))
+app.use("/api/carts", cartRouter(cartManager, manager))
 
 //Crear websocket
 io.on("connection", (socket) => {
