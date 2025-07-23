@@ -1,7 +1,7 @@
 console.log("Script cargado")
 const socket = io()
 
-//  Escuchar el evento que envía la lista actualizada de productos
+//  escucha el evento que envía la litsa actualizada de productos
 socket.on("productosActualizados", (productos) => {
     console.log(`Lista actualizada recibida`, productos)
     const lista = document.getElementById("lista-productos")
@@ -10,7 +10,8 @@ socket.on("productosActualizados", (productos) => {
     productos.forEach((p) => {
         const li = document.createElement("li")
         li.setAttribute("data-id", p.id)
-        li.textContent = `${p.title} - ${p.price} - ${p.stock}`
+        li.textContent = `${p.title} - $${p.price} - Stock: ${p.stock}`;
+
         lista.appendChild(li)
     })
 })

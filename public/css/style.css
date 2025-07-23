@@ -125,6 +125,10 @@ button:hover {
     margin-bottom: 1rem;
     border-radius: .5rem;
 }
+li.fade-out {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
 
 #messages li{
     padding: 8px;
