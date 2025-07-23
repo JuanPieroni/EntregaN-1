@@ -1,15 +1,13 @@
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sitio en Mantenimiento</title>
-  </head>
-  <body>
-    <div>
-      <h1>Página HOME en Mantenimiento</h1>
-      <p>Estamos trabajando para mejorar tu experiencia. Volvé a visitarnos pronto.</p>
-      <p>Gracias por tu paciencia.</p>
-    </div>
-  </body>
-</html>
+{{!< main}}
+{{! extiende de main.hbs }}
+
+<nav>
+
+    <a href="/">Home</a>
+    <a href="/products">Productos</a>
+    <a href="/carts">Carritos</a>
+    <a href="/realtimeproducts">Real Time Products</a>
+    <a href="/api/products">Products JSON</a>
+    <a href="/api/carts">Carritos JSON</a>
+</nav>
+<h2>{{message}}</h2>

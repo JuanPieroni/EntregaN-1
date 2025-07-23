@@ -1,13 +1,15 @@
 import { Router } from "express"
 import fs from "fs"
-import path from "path"
+import { io } from "../app.js"
 
 const productsRouter = (manager) => {
     const router = Router()
 
- 
+    router.get("/", (req, res) => {
+        const productos = manager.getProducts()
+        res.status(200).json(productos)
+    })
 
-  
     router.get("/:pid", (req, res) => {
         const id = parseInt(req.params.pid)
         const producto = manager.getProductById(id)
@@ -21,6 +23,7 @@ const productsRouter = (manager) => {
     router.post("/", (req, res) => {
         const datos = req.body
         const nuevoProducto = manager.addProduct(datos)
+        
         res.status(201).json(nuevoProducto)
     })
 
@@ -57,6 +60,7 @@ const productsRouter = (manager) => {
         }
         productos = productos.filter((p) => p.id !== id)
         fs.writeFileSync(manager.path, JSON.stringify(productos))
+         io.emit("productosActualizados", productos)
         res.status(200).send(`Producto ${id}   eliminado`)
     })
 

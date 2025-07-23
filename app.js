@@ -9,14 +9,21 @@ import { fileURLToPath } from "url"
 import path from "path"
 import { Server } from "socket.io"
 import { engine } from "express-handlebars"
+import { createServer } from "http"
+
+
+export const manager = new ProductManager("./data/productos.json")
+const cartManager = new CartManager("./data/carrito.json")
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 const app = express()
-const PORT = 8080
-const manager = new ProductManager("./data/productos.json")
-const cartManager = new CartManager("./data/carrito.json")
+const httpServer = createServer(app)
+const io = new Server(httpServer)
+ 
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
 /** 1) Motor de Plantillas */
 app.engine("hbs", engine({ extname: ".hbs" }))
@@ -33,28 +40,38 @@ app.use(
     "/sweetalert2",
     express.static(path.join(__dirname, "node_modules/sweetalert2/dist"))
 )
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-
- 
-
 
 //LANDING
- app.get("/", (req, res) => {
-   res.render("home", { title: "Home", message: "Bienvenido a la página de inicio" })
+app.get("/", (req, res) => {
+    res.render("home", {
+        title: "Home",
+        message: "Bienvenido a la página de inicio",
+    })
 })
+
+app.use("/", viewsRouter)
  
 
-app.use('/', viewsRouter);  
-
-//PRODUCTOS
+//PRODUCTOS EN JSON
 app.use("/api/products", productsRouter(manager))
 
-//CARRITOS
+//CARRITOS EN JSON
 app.use("/api/carts", cartRouter(cartManager))
 
-app.listen(PORT, () => {
-    console.log(`Servidor corriendo en http://localhost:${PORT}`)
+//Crear websocket
+io.on("connection", (socket) => {
+    console.log("🟢 Nuevo cliente conectado por WebSocket")
+
+     
+
+    socket.on("disconnect", () => {
+        console.log("🔴 Cliente desconectado")
+    })
 })
 
-//Crear websocket
+export { io }
+
+const PORT = 8080
+httpServer.listen(PORT, () => {
+    console.log(`Servidor corriendo en http://localhost:${PORT}`)
+})

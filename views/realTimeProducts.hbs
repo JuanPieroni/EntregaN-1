@@ -1,0 +1,17 @@
+{{!< main}}
+{{! extiende de main.hbs }}
+
+<h2>RealTimeProducts</h2>
+
+<ul id="lista-productos">
+    {{#each productos}}
+        <li data-id="{{this.id}}">{{this.title}}
+            - ${{this.price}}
+            - Stocks:
+            {{this.stock}}</li>
+    {{/each}}
+</ul>
+
+<a href="/" class="btn-volver">Volver a Inicio</a>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/static/js/RealTimeProducts.js"></script>
