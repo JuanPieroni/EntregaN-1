@@ -23,7 +23,8 @@ const productsRouter = (manager) => {
     router.post("/", (req, res) => {
         const datos = req.body
         const nuevoProducto = manager.addProduct(datos)
-        
+        const productosActualizados = manager.getProducts()
+        io.emit("productosActualizados", productosActualizados)
         res.status(201).json(nuevoProducto)
     })
 
@@ -47,7 +48,7 @@ const productsRouter = (manager) => {
             producto,
         })
     })
-
+    
     router.delete("/:pid", (req, res) => {
         const id = parseInt(req.params.pid)
         let productos = manager.getProducts()

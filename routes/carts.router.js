@@ -11,7 +11,7 @@ const cartRouter = (cartManager) => {
 
     router.get("/", (req, res) => {
         const carritos = cartManager.getCarts()
-        res.status(200).json(carritos) // Si no hay carritos, devuelve []
+        res.status(200).json({title: "Api carts", carritos}) // Si no hay carritos, devuelve []
     })
 
     router.get("/:cid", (req, res) => {

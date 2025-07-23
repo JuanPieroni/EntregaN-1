@@ -2,6 +2,7 @@ import { Router } from "express"
 import { manager } from "../app.js"
 import path from "path"
 import { fileURLToPath } from "url"
+import { title } from "process"
 
 const router = Router()
 const __filename = fileURLToPath(import.meta.url)
@@ -11,7 +12,7 @@ router.get("/products", async (req, res) => {
     try {
         const products = await manager.getProducts()
         res.render("products", {
-            
+            title: "Lista de Productos",
             message: "Lista de Productos",
             products,
         })
@@ -23,7 +24,7 @@ router.get("/products", async (req, res) => {
 router.get("/realtimeproducts", async (req, res) => {
     try {
         const productos = await manager.getProducts()
-        res.render("realTimeProducts", { productos })
+        res.render("realTimeProducts", {title: "Real Time Products", productos })
     } catch (err) {
         res.status(500).send("Error al obtener productos en tiempo real")
     }
