@@ -30,7 +30,7 @@ app.engine("hbs", engine({ extname: ".hbs" }))
 app.set("view engine", "hbs")
 app.set("views", path.join(__dirname, "views"))
 
-/** 2) Carpeta de archivos static y llamados a bootstrap y sweetalert*/
+ 
 app.use("/static", express.static(path.join(__dirname, "public")))
 app.use(
     "/bootstrap",
@@ -49,12 +49,10 @@ app.get("/", (req, res) => {
     })
 })
 
+
 app.use("/", viewsRouter)
- 
-
-//PRODUCTOS EN JSON
+ //PRODUCTOS EN JSON
 app.use("/api/products", productsRouter(manager))
-
 //CARRITOS EN JSON
 app.use("/api/carts", cartRouter(cartManager))
 

@@ -1,8 +1,11 @@
 console.log("Script cargado")
 const socket = io()
+    
+ 
 
 //  escucha el evento que envía la litsa actualizada de productos
 socket.on("productosActualizados", (productos) => {
+    console.log(productos);
     console.log(`Lista actualizada recibida`, productos)
     const lista = document.getElementById("lista-productos")
     lista.innerHTML = ""
