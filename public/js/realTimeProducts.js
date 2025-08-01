@@ -33,6 +33,8 @@ socket.on("stockUpdated", (producto) => {
 
 const agregarAlCarrito = (pid) => {
   
+  
+  // agrego solo al carrito 2 por ahora.
   const cid = 2  
 
   fetch(`/api/carts/${cid}/product/${pid}`, {

@@ -6,6 +6,7 @@ body {
 }
 
 /* Sticky footer layout */
+
 html,
 body {
     height: 100%;
@@ -21,7 +22,7 @@ header {
 }
 
 nav a {
-    color: #ffd500;
+    color: #176529;
     margin: 0 0.5rem;
     text-decoration: none;
 }
@@ -53,7 +54,6 @@ footer {
     font-size: 0.9rem;
     border-top: 2px solid #222;
 }
-
 
 h2 {
     text-align: center;
@@ -123,19 +123,19 @@ button:hover {
     overflow-y: auto;
     border: 1px solid #ddd;
     margin-bottom: 1rem;
-    border-radius: .5rem;
+    border-radius: 0.5rem;
 }
 li.fade-out {
-  opacity: 0;
-  transition: opacity 0.5s ease;
+    opacity: 0;
+    transition: opacity 0.5s ease;
 }
 
-#messages li{
+#messages li {
     padding: 8px;
     border-bottom: 1px solid #ccc;
 }
 
-input[type="text"]{
+input[type="text"] {
     flex: 1;
     padding: 10px;
     border-radius: 5px;
