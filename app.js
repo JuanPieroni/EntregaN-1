@@ -5,13 +5,17 @@ import CartManager from "./managers/CartManager.js"
 import productsRouter from "./routes/products.router.js"
 import cartRouter from "./routes/carts.router.js"
 import viewsRouter from "./routes/views.router.js"
-import clientsRouter from "./routes/clients.router.js"
+import studentsRouter from "./routes/students.router.js"
+import coursesRouter from "./routes/coursers.router.js"
 import { fileURLToPath } from "url"
 import path from "path"
 import { Server } from "socket.io"
 import { engine } from "express-handlebars"
 import { createServer } from "http"
-import { connectToMongoDB } from "./config/db/connect.config.js"
+import {
+    connectToMongoDB,
+    connectToMongoDBAtlas,
+} from "./config/db/connect.config.js"
 
 export const manager = new ProductManager("./data/productos.json")
 const cartManager = new CartManager("./data/carrito.json")
@@ -41,10 +45,6 @@ app.use(
     express.static(path.join(__dirname, "node_modules/sweetalert2/dist"))
 )
 
-//rutas api
-app.use("/api/users", clientsRouter)
-
-
 //LANDING
 app.get("/", (req, res) => {
     res.render("home", {
@@ -52,6 +52,10 @@ app.get("/", (req, res) => {
         message: "Bienvenido a la página de inicio",
     })
 })
+
+//rutas api
+app.use("/api/students", studentsRouter)
+app.use("/api/courses", coursesRouter)
 
 app.use("/", viewsRouter)
 //PRODUCTOS EN JSON
@@ -71,14 +75,27 @@ export { io }
 
 const PORT = 8080
 
+const atlas = true
+
 const startServer = async () => {
-    try {
-        await connectToMongoDB()
-        httpServer.listen(PORT, () => {
-            console.log(`Servidor corriendo en http://localhost:${PORT}`)
-        })
-    } catch (error) {
-        console.error("Error al iniciar el servidor:", error)
+    if (!atlas) {
+        try {
+            await connectToMongoDB()
+            httpServer.listen(PORT, () => {
+                console.log(`Servidor corriendo en http://localhost:${PORT}`)
+            })
+        } catch (error) {
+            console.error("Error al iniciar el servidor:", error)
+        }
+    } else {
+        try {
+            await connectToMongoDBAtlas()
+            httpServer.listen(PORT, () => {
+                console.log(`Servidor corriendo en http://localhost:${PORT}`)
+            })
+        } catch (error) {
+            console.error("Error al iniciar el servidor:", error)
+        }
     }
 }
 
