@@ -1,52 +1,58 @@
-import fs from "fs"
- 
+import { promises as fs } from "fs"
+
 class ProductManager {
     constructor(path) {
         this.path = path
     }
-    getProducts() {
-        if (!fs.existsSync(this.path)) {
+    async getProducts() {
+        try {
+            await fs.access(this.path)
+            const contenido = await fs.readFile(this.path, "utf-8")
+            return JSON.parse(contenido)
+        } catch (error) {
             return []
         }
-        const contenido = fs.readFileSync(this.path, "utf-8")
-        return JSON.parse(contenido)
     }
 
-    addProduct(producto) {
-        const productos = this.getProducts()
-        const nuevoId = productos.length > 0 ? productos[productos.length - 1].id + 1 : 1
+    async addProduct(producto) {
+        const { title, description, code, price, stock } = producto
+        if (!title || !description || !code || !price || !stock) {
+            throw new Error("Todos los campos son obligatorios")
+        }
+
+        const productos = await this.getProducts()
+        const codigorepetido = productos.some((p) => p.code === code)
+        if (codigorepetido) {
+            throw new Error("El código del producto ya existe")
+        }
+        const nuevoId =
+            productos.length > 0 ? productos[productos.length - 1].id + 1 : 1
         const nuevoProducto = { id: nuevoId, ...producto }
         productos.push(nuevoProducto)
-        fs.writeFileSync(this.path, JSON.stringify(productos))
+        await fs.writeFile(this.path, JSON.stringify(productos))
         return nuevoProducto
     }
 
-    getProductById(id) {
-        const productos = this.getProducts()
+
+
+    async getProductById(id) {
+        const productos = await this.getProducts()
         return productos.find((p) => p.id === parseInt(id))
     }
-    restarStock(id) {
-        
-        
-        const productos = this.getProducts()
-        const producto = productos.find((p) => p.id === parseInt(id))
-        if(!producto || producto.stock <= 0 ) return null
-
-        producto.stock --
-        fs.writeFileSync(this.path, JSON.stringify(productos))
-        return producto
-        
-    }
     
+    
+    async restarStock(id) {
+        const productos = await this.getProducts()
+        const producto = productos.find((p) => p.id === parseInt(id))
+        if (!producto || producto.stock <= 0) return null
+
+        producto.stock--
+       await fs.writeFile(this.path, JSON.stringify(productos))
+        return producto
+    }
 }
 
-
-
-
-
-
-
-    // prueba
+// prueba
 // const producto1 = new ProductManager("productos.json")
 // producto1.addProduct({
 //     title: "Monitor",
