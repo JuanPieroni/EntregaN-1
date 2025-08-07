@@ -13,8 +13,6 @@ class CartManager {
         } catch (error) {
             return []
         }
-
-      
     }
     async saveCarts(carts) {
         await fs.writeFile(this.path, JSON.stringify(carts))
@@ -28,13 +26,12 @@ class CartManager {
         await this.saveCarts(carts)
         return newCart
     }
-    
+
     async getCartById(id) {
         const carts = await this.getCarts()
         return carts.find((c) => c.id === parseInt(id))
     }
-    
-    
+
     async addProductToCart(cid, pid) {
         const carts = await this.getCarts()
         const cart = carts.find((c) => c.id === parseInt(cid))
@@ -52,6 +49,9 @@ class CartManager {
         await this.saveCarts(carts)
         return cart
     }
-}
 
+    async saveCarts(carts) {
+        await fs.writeFile(this.path, JSON.stringify(carts))
+    }
+}
 export default CartManager

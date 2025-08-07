@@ -17,13 +17,13 @@ class ProductManager {
     async addProduct(producto) {
         const { title, description, code, price, stock } = producto
         if (!title || !description || !code || !price || !stock) {
-            throw new Error("Todos los campos son obligatorios")
+            throw new Error("Los siguientes campos son obligatorios: title, description, code, price, stock")
         }
 
         const productos = await this.getProducts()
         const codigorepetido = productos.some((p) => p.code === code)
         if (codigorepetido) {
-            throw new Error("El código del producto ya existe")
+            throw new Error("El códe del producto ya existe")
         }
         const nuevoId =
             productos.length > 0 ? productos[productos.length - 1].id + 1 : 1
@@ -33,22 +33,22 @@ class ProductManager {
         return nuevoProducto
     }
 
-
-
     async getProductById(id) {
         const productos = await this.getProducts()
         return productos.find((p) => p.id === parseInt(id))
     }
-    
-    
+
     async restarStock(id) {
         const productos = await this.getProducts()
         const producto = productos.find((p) => p.id === parseInt(id))
         if (!producto || producto.stock <= 0) return null
 
         producto.stock--
-       await fs.writeFile(this.path, JSON.stringify(productos))
+        await fs.writeFile(this.path, JSON.stringify(productos))
         return producto
+    }
+    async saveProducts(productos) {
+        await fs.writeFile(this.path, JSON.stringify(productos, null, 2))
     }
 }
 

@@ -5,14 +5,14 @@ import { io } from "../app.js"
 const productsRouter = (manager) => {
     const router = Router()
 
-    router.get("/", (req, res) => {
-        const productos = manager.getProducts()
+    router.get("/", async (req, res) => {
+        const productos = await manager.getProducts()
         res.status(200).json(productos)
     })
 
-    router.get("/:pid", (req, res) => {
+    router.get("/:pid", async (req, res) => {
         const id = parseInt(req.params.pid)
-        const producto = manager.getProductById(id)
+        const producto = await manager.getProductById(id)
         if (producto) {
             res.status(200).json(producto)
         } else {
@@ -20,17 +20,21 @@ const productsRouter = (manager) => {
         }
     })
 
-    router.post("/", (req, res) => {
-        const datos = req.body
-        const nuevoProducto = manager.addProduct(datos)
-        const productosActualizados = manager.getProducts()
-        io.emit("productosActualizados", productosActualizados)
-        res.status(201).json(nuevoProducto)
+    router.post("/", async (req, res) => {
+        try {
+            const datos = req.body
+            const nuevoProducto = await manager.addProduct(datos)
+            const productosActualizados = await manager.getProducts()
+            io.emit("productosActualizados", productosActualizados)
+            res.status(201).json(nuevoProducto)
+        } catch (error) {
+            res.status(400).json({ error: error.message })
+        }
     })
 
-    router.put("/:pid", (req, res) => {
+    router.put("/:pid", async (req, res) => {
         const id = parseInt(req.params.pid)
-        const productos = manager.getProducts()
+        const productos = await manager.getProducts()
         const producto = productos.find((p) => p.id === id)
         if (!producto) {
             return res.status(404).json({ mensaje: "Producto no encontrado" })
@@ -42,16 +46,17 @@ const productsRouter = (manager) => {
         if (code) producto.code = code
         if (stock) producto.stock = stock
 
-        fs.writeFileSync(manager.path, JSON.stringify(productos))
+        /*  fs.writeFileSync(manager.path, JSON.stringify(productos)) */
+        await manager.saveProducts(productos)
         res.status(200).json({
             message: `Producto ${producto.id} actualizado`,
             producto,
         })
     })
-    
-    router.delete("/:pid", (req, res) => {
+
+    router.delete("/:pid", async (req, res) => {
         const id = parseInt(req.params.pid)
-        let productos = manager.getProducts()
+        let productos = await manager.getProducts()
         const existe = productos.find((p) => p.id === id)
 
         if (!existe) {
@@ -60,9 +65,13 @@ const productsRouter = (manager) => {
                 .json({ mensaje: "No se pudo eliminar. Productto inexistente" })
         }
         productos = productos.filter((p) => p.id !== id)
-        fs.writeFileSync(manager.path, JSON.stringify(productos))
-         io.emit("productosActualizados", productos)
-        res.status(200).send(`Producto ${id}   eliminado`)
+
+        /* fs.writeFileSync(manager.path, JSON.stringify(productos)) */
+        await manager.saveProducts(productos)
+        io.emit("productosActualizados", productos)
+        res.status(200).send(
+            `El producto con id ${id} ${existe.title} fue eliminado. `
+        )
     })
 
     return router
