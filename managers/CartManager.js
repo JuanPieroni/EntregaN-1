@@ -50,8 +50,19 @@ class CartManager {
         return cart
     }
 
-    async saveCarts(carts) {
-        await fs.writeFile(this.path, JSON.stringify(carts))
+ 
+async deleteCart(cid) {
+    const carts = await this.getCarts()
+    const index = carts.findIndex((c) => c.id === parseInt(cid))
+
+    if (index === -1) {
+        return null  
     }
+
+    const [deletedCart] = carts.splice(index, 1)  
+    await this.saveCarts(carts) 
+    return deletedCart  
+}
+
 }
 export default CartManager

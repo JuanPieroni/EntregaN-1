@@ -1,15 +1,7 @@
 [
   {
-    "id": 6,
-    "title": "Vodka Premium",
-    "description": "Suave y puro",
-    "code": "alc003",
-    "price": 11000,
-    "stock": 2
-  },
-  {
     "id": 7,
-    "title": "Ron Añejo",
+    "title": "Ron VERGA",
     "description": "Sabor intenso",
     "code": "alc004",
     "price": 13500,
@@ -26,5 +18,13 @@
     "title": "Malibu",
     "price": "50",
     "stock": 95
+  },
+  {
+    "id": 10,
+    "title": "Ron VERGaaaaaaaaaaaaaaaa",
+    "description": "sdfs",
+    "code": "2342",
+    "price": 123,
+    "stock": 2
   }
 ]
