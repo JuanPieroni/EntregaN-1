@@ -1,33 +1,42 @@
-import fs from "fs"
+import { promises as fs } from "fs"
 
 class CartManager {
     constructor(path) {
         this.path = path
     }
 
-    getCarts() {
-        if (!fs.existsSync(this.path)) return []
-        const contenido = fs.readFileSync(this.path, "utf-8")
-        if (!contenido) return []
-        return JSON.parse(contenido)
+    async getCarts() {
+        try {
+            await fs.access(this.path)
+            const contenido = await fs.readFile(this.path, "utf-8")
+            return contenido ? JSON.parse(contenido) : []
+        } catch (error) {
+            return []
+        }
+
+      
     }
-    saveCarts(carts) {
-        fs.writeFileSync(this.path, JSON.stringify(carts))
+    async saveCarts(carts) {
+        await fs.writeFile(this.path, JSON.stringify(carts))
     }
-    createCart() {
-        const carts = this.getCarts()
+
+    async createCart() {
+        const carts = await this.getCarts()
         const newId = carts.length > 0 ? carts[carts.length - 1].id + 1 : 1
         const newCart = { id: newId, productos: [] }
         carts.push(newCart)
-        this.saveCarts(carts)
+        await this.saveCarts(carts)
         return newCart
     }
-    getCartById(id) {
-        const carts = this.getCarts()
+    
+    async getCartById(id) {
+        const carts = await this.getCarts()
         return carts.find((c) => c.id === parseInt(id))
     }
-    addProductToCart(cid, pid) {
-        const carts = this.getCarts()
+    
+    
+    async addProductToCart(cid, pid) {
+        const carts = await this.getCarts()
         const cart = carts.find((c) => c.id === parseInt(cid))
         if (!cart) return null
 
@@ -40,7 +49,7 @@ class CartManager {
             cart.productos.push({ producto: parseInt(pid), cantidad: 1 })
         }
 
-        this.saveCarts(carts)
+        await this.saveCarts(carts)
         return cart
     }
 }
