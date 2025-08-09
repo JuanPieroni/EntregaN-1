@@ -16,7 +16,7 @@ export const connectToMongoDB = async () => {
 export const connectToMongoDBAtlas = async () => {
     try {
         await mongoose.connect(
-            "mongodb+srv://SeisDuro:Atlgla36%2A@cluster0.bvo0gcz.mongodb.net/coderhouse?retryWrites=true&w=majority",
+            "mongodb+srv://SeisDuro:Mongla36%2A@cluster0.bvo0gcz.mongodb.net/coderhouse?retryWrites=true&w=majority",
             console.log("MongoDB conectado a Atlas")
         )
     } catch (error) {

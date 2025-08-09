@@ -26,8 +26,6 @@ class ProductManager {
         return productos.find((p) => p.id === parseInt(id))
     }
     restarStock(id) {
-        
-        
         const productos = this.getProducts()
         const producto = productos.find((p) => p.id === parseInt(id))
         if(!producto || producto.stock <= 0 ) return null
@@ -35,10 +33,12 @@ class ProductManager {
         producto.stock --
         fs.writeFileSync(this.path, JSON.stringify(productos))
         return producto
-        
-    }
+           }
     
 }
+        
+        
+ 
 
 
 

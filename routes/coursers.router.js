@@ -66,7 +66,6 @@ router.delete("/:courserId/inscription/:studentId", async (req, res) => {
     }
 })
 
-
 router.delete("/:courserId", async (req, res) => {
     try {
         const course = await Curso.findByIdAndDelete(req.params.courserId)
@@ -79,7 +78,7 @@ router.delete("/:courserId", async (req, res) => {
         })
     } catch (error) {
         //error generico 500
-        
+
         res.status(500).json({ error: error.message })
     }
 })
