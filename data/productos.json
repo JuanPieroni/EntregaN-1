@@ -1,23 +1,15 @@
 [
   {
-    "id": 7,
-    "title": "Ron VERGA",
-    "description": "Sabor intenso",
-    "code": "alc004",
-    "price": 13500,
-    "stock": 0
-  },
-  {
     "id": 8,
     "title": "VINO",
     "price": "50",
-    "stock": 8990
+    "stock": 8983
   },
   {
     "id": 9,
     "title": "Malibu",
     "price": "50",
-    "stock": 95
+    "stock": 93
   },
   {
     "id": 10,
@@ -25,6 +17,6 @@
     "description": "sdfs",
     "code": "2342",
     "price": 123,
-    "stock": 2
+    "stock": 1
   }
 ]
