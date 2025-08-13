@@ -6,15 +6,18 @@ class ProductManager extends BaseManager {
         super(productsModel)
     }
 
-    async findAllProducts(obj) {
-        console.log(obj)
-        const { limit, page, sort, ...restoQueryFilter } = obj
-        console.log("restoQueryFilter", restoQueryFilter)
-        const response = await productsModel.paginate(restoQueryFilter, {
+    async findAllProducts(params) {
+        console.log(params)
+        const { limit, page, sort, ...restoQueryFilters } = params
+
+        console.log("restoQueryFilters", restoQueryFilters)
+// metersoryt aca
+        const response = await productsModel.paginate(restoQueryFilters, {
             limit,
             page,
-           
         })
+
+        return response
     }
 }
 

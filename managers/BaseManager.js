@@ -1,34 +1,31 @@
-
-
 export default class BaseManager {
     constructor(model) {
         this.model = model
     }
 
     async findAll() {
-        return this.model.find().lean()
+        const findAll = await this.model.find().lean()
+        return findAll
     }
 
     async findById(id) {
-        return this.model.findById(id)
+        const idFound = await this.model.findById(id)
+        return idFound
     }
 
     async createOne(obj) {
-        console.log("obj", obj);
-        return this.model.create(obj)
+        console.log("obj", obj)
+        const created = await this.model.create(obj)
+        return created
     }
 
     async updateOne(id, obj) {
-        return this.model.updateOne({ _id: id }, obj)
+        const updated = await this.model.updateOne({ _id: id }, obj)
+        return updated
     }
 
     async deleteOne(id) {
-        
-        return this.model.deleteOne({ _id: id })
+        const deleted = await this.model.findByIdAndDelete(id)
+        return deleted
     }
 }
-
-
-
-
-
