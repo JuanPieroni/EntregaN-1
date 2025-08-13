@@ -8,7 +8,7 @@ class ProductsManager extends BaseManager {
     }
 
     async findAllProducts(obj) {
-        const { limit, page, sort, ...resolvePtr } = obj
+        const { limit, page, sort, ...restoQueryFilter } = obj
     }
 }
 
