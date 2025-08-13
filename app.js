@@ -1,7 +1,5 @@
 import express from "express"
 
-import ProductManager from "./managers/ProductManager.js"
-import CartManager from "./managers/CartManager.js"
 import productsRouter from "./routes/products.router.js"
 import cartRouter from "./routes/carts.router.js"
 import viewsRouter from "./routes/views.router.js"
@@ -15,9 +13,6 @@ import {
     connectToMongoDB,
     connectToMongoDBAtlas,
 } from "./config/db/connect.config.js"
-
-export const manager = new ProductManager("./data/productos.json")
-const cartManager = new CartManager("./data/carrito.json")
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -39,8 +34,7 @@ app.use("/static", express.static(path.join(__dirname, "public")))
 
 app.get("/", (req, res) => {
     res.render("home", {
-        title: "Entrega Final Backend I" 
-       
+        title: "Entrega Final Backend I",
     })
 })
 
