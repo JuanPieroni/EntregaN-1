@@ -5,11 +5,10 @@ import CartManager from "./managers/CartManager.js"
 import productsRouter from "./routes/products.router.js"
 import cartRouter from "./routes/carts.router.js"
 import viewsRouter from "./routes/views.router.js"
-import studentsRouter from "./routes/students.router.js"
-import coursesRouter from "./routes/coursers.router.js"
+
 import { fileURLToPath } from "url"
 import path from "path"
-import { Server } from "socket.io"
+
 import { engine } from "express-handlebars"
 import { createServer } from "http"
 import {
@@ -25,7 +24,7 @@ const __dirname = path.dirname(__filename)
 
 const app = express()
 const httpServer = createServer(app)
-const io = new Server(httpServer)
+
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -36,14 +35,7 @@ app.set("view engine", "hbs")
 app.set("views", path.join(__dirname, "views"))
 
 app.use("/static", express.static(path.join(__dirname, "public")))
-app.use(
-    "/bootstrap",
-    express.static(path.join(__dirname, "node_modules/bootstrap/dist"))
-)
-app.use(
-    "/sweetalert2",
-    express.static(path.join(__dirname, "node_modules/sweetalert2/dist"))
-)
+
 
 //LANDING
 app.get("/", (req, res) => {
@@ -54,8 +46,7 @@ app.get("/", (req, res) => {
 })
 
 //rutas api
-app.use("/api/students", studentsRouter)
-app.use("/api/courses", coursesRouter)
+
 
 app.use("/", viewsRouter)
 //PRODUCTOS EN JSON
@@ -63,15 +54,7 @@ app.use("/api/products", productsRouter(manager))
 //CARRITOS EN JSON
 app.use("/api/carts", cartRouter(cartManager, manager))
 
-//Crear websocket
-io.on("connection", (socket) => {
-    console.log("🟢 Nuevo cliente conectado por WebSocket")
 
-    socket.on("disconnect", () => {
-        console.log("🔴 Cliente desconectado")
-    })
-})
-export { io }
 
 const PORT = 8080
 

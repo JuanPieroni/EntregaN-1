@@ -21,17 +21,7 @@ router.get("/products", async (req, res) => {
     }
 })      
 
-router.get("/realtimeproducts", async (req, res) => {
-    try {
-        const productos = await manager.getProducts()
-        res.render("realTimeProducts", {
-            title: "Real Time Products",
-            productos,
-        })
-    } catch (err) {
-        res.status(500).send("Error al obtener productos en tiempo real")
-    }
-})
+
 
 router.get("/carts", (req, res) => {
     res.render("carts")

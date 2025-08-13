@@ -19,12 +19,10 @@
   },
   "homepage": "https://github.com/JuanPieroni/EntregaN-1#readme",
   "dependencies": {
-    "bootstrap": "^5.3.7",
     "express": "^5.1.0",
     "express-handlebars": "^8.0.3",
     "mongoose": "^8.17.0",
-    "nodemon": "^3.1.10",
-    "socket.io": "^4.8.1",
-    "sweetalert2": "^11.22.2"
+    "mongoose-paginate-v2": "^1.9.1",
+    "nodemon": "^3.1.10"
   }
 }

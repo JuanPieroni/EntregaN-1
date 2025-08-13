@@ -1,6 +1,6 @@
 import { Router } from "express"
 import fs from "fs"
-import { io } from "../app.js"
+
 
 const productsRouter = (manager) => {
     const router = Router()
