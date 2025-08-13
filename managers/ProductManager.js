@@ -1,59 +1,36 @@
-import fs from "fs"
- 
+
+
 class ProductManager {
     constructor(path) {
         this.path = path
     }
-    getProducts() {
-        if (!fs.existsSync(this.path)) {
-            return []
-        }
-        const contenido = fs.readFileSync(this.path, "utf-8")
-        return JSON.parse(contenido)
+    async findAll ( ) {
+        const result = await productsModel.paginate({},{})
+    }
+    async getProducts() {
+        const response = await productsModel.find().lean()
+        return response
     }
 
-    addProduct(producto) {
-        const productos = this.getProducts()
-        const nuevoId = productos.length > 0 ? productos[productos.length - 1].id + 1 : 1
-        const nuevoProducto = { id: nuevoId, ...producto }
-        productos.push(nuevoProducto)
-        fs.writeFileSync(this.path, JSON.stringify(productos))
-        return nuevoProducto
+    async addProduct(producto) {
+        const response = await productsModel.create(producto)
+        return response
     }
 
-    getProductById(id) {
-        const productos = this.getProducts()
-        return productos.find((p) => p.id === parseInt(id))
+    async getProductById(id) {
+        const response = await productsModel.findById(id)
+        return response
     }
-    restarStock(id) {
-        const productos = this.getProducts()
-        const producto = productos.find((p) => p.id === parseInt(id))
-        if(!producto || producto.stock <= 0 ) return null
 
-        producto.stock --
-        fs.writeFileSync(this.path, JSON.stringify(productos))
-        return producto
-           }
-    
+    async deleteProduct(id) {
+        const response = await productsModel.deleteOne({_id: id})
+        return response
+    }
+
+    async updateProduct(id, data) {
+        const response = await productsModel.updateOne({_id: id}, data)
+        return response
+    }
 }
-        
-        
- 
 
-
-
-
-
-
-
-    // prueba
-// const producto1 = new ProductManager("productos.json")
-// producto1.addProduct({
-//     title: "Monitor",
-//     description: "ASUS 27",
-//     price: 100,
-//     code: "ABC123",
-//     stock: 10,
-// })
-//se crea bien el productos.json
 export default ProductManager

@@ -1,5 +1,5 @@
 import express from "express"
-import fs from "fs"
+
 import ProductManager from "./managers/ProductManager.js"
 import CartManager from "./managers/CartManager.js"
 import productsRouter from "./routes/products.router.js"
@@ -25,7 +25,6 @@ const __dirname = path.dirname(__filename)
 const app = express()
 const httpServer = createServer(app)
 
-
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
@@ -36,25 +35,22 @@ app.set("views", path.join(__dirname, "views"))
 
 app.use("/static", express.static(path.join(__dirname, "public")))
 
-
 //LANDING
+
 app.get("/", (req, res) => {
     res.render("home", {
-        title: "Home",
-        message: "Bienvenido a la página de inicio",
+        title: "Entrega Final Backend I" 
+       
     })
 })
 
 //rutas api
-
 
 app.use("/", viewsRouter)
 //PRODUCTOS EN JSON
 app.use("/api/products", productsRouter(manager))
 //CARRITOS EN JSON
 app.use("/api/carts", cartRouter(cartManager, manager))
-
-
 
 const PORT = 8080
 

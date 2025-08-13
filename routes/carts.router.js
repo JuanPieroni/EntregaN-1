@@ -1,7 +1,5 @@
 import { Router } from "express"
 import fs from "fs"
-import { io } from "../app.js" 
-
 
 const cartRouter = (cartManager, productManager) => {
     const router = Router()
@@ -34,7 +32,7 @@ const cartRouter = (cartManager, productManager) => {
             return res.status(404).json({
                 mensaje: `Carrito con ID ${cid} no encontrado.`,
             })
-         
+
         const productoActualizado = productManager.restarStock(pid)
         if (productoActualizado) {
             io.emit("stockUpdated", productoActualizado)

@@ -1,7 +1,6 @@
 import { Router } from "express"
 import fs from "fs"
 
-
 const productsRouter = (manager) => {
     const router = Router()
 
@@ -48,7 +47,7 @@ const productsRouter = (manager) => {
             producto,
         })
     })
-    
+
     router.delete("/:pid", (req, res) => {
         const id = parseInt(req.params.pid)
         let productos = manager.getProducts()
@@ -61,7 +60,7 @@ const productsRouter = (manager) => {
         }
         productos = productos.filter((p) => p.id !== id)
         fs.writeFileSync(manager.path, JSON.stringify(productos))
-         io.emit("productosActualizados", productos)
+        io.emit("productosActualizados", productos)
         res.status(200).send(`Producto ${id}   eliminado`)
     })
 

@@ -2,7 +2,6 @@ import { Router } from "express"
 import { manager } from "../app.js"
 import path from "path"
 import { fileURLToPath } from "url"
- 
 
 const router = Router()
 const __filename = fileURLToPath(import.meta.url)
@@ -19,9 +18,7 @@ router.get("/products", async (req, res) => {
     } catch (err) {
         res.status(500).send("Error al obtener los productos")
     }
-})      
-
-
+})
 
 router.get("/carts", (req, res) => {
     res.render("carts")
