@@ -23,6 +23,7 @@ export default class BaseManager {
     }
 
     async deleteOne(id) {
+        
         return this.model.deleteOne({ _id: id })
     }
 }

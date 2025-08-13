@@ -1,14 +1,13 @@
 import express from "express"
-
-import productsRouter from "./routes/products.router.js"
-import cartRouter from "./routes/carts.router.js"
-import viewsRouter from "./routes/views.router.js"
-
 import { fileURLToPath } from "url"
 import path from "path"
-
 import { engine } from "express-handlebars"
 import { createServer } from "http"
+
+import productsRouter from "./routes/products.router.js"
+import cartsRouter from "./routes/carts.router.js"
+import viewsRouter from "./routes/views.router.js"
+
 import {
     connectToMongoDB,
     connectToMongoDBAtlas,
@@ -19,16 +18,17 @@ const __dirname = path.dirname(__filename)
 
 const app = express()
 const httpServer = createServer(app)
+const PORT = 8080
+const atlas = true
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use("/static", express.static(path.join(__dirname, "public")))
 
 /** 1) Motor de Plantillas */
 app.engine("hbs", engine({ extname: ".hbs" }))
 app.set("view engine", "hbs")
 app.set("views", path.join(__dirname, "views"))
-
-app.use("/static", express.static(path.join(__dirname, "public")))
 
 //LANDING
 
@@ -38,17 +38,11 @@ app.get("/", (req, res) => {
     })
 })
 
-//rutas api
+//ROUTES
 
 app.use("/", viewsRouter)
-//PRODUCTOS EN JSON
-app.use("/api/products", productsRouter(manager))
-//CARRITOS EN JSON
-app.use("/api/carts", cartRouter(cartManager, manager))
-
-const PORT = 8080
-
-const atlas = true
+app.use("/api/products", productsRouter)
+app.use("/api/carts", cartsRouter)
 
 const startServer = async () => {
     if (!atlas) {

@@ -1,4 +1,4 @@
-// Schema for shopping cart
+
 import mongoose from "mongoose"
 
 const cartsSchema = new mongoose.Schema({
@@ -6,15 +6,18 @@ const cartsSchema = new mongoose.Schema({
         {
             product: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "Products",
+                ref: "Product",
+                required: true
             },
 
             quantity: {
                 type: Number,
+                required: true,
+                default: 1
               
             },
         },
     ],
 })
 
-export const cartsModel = mongoose.model("Carts", cartsSchema)
+export const cartModel = mongoose.model("Cart", cartsSchema)

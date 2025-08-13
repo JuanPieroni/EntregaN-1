@@ -16,4 +16,5 @@ router.get("/:cid", (req, res) => {
 })
 
 router.post("/:cid/product/:pid", (req, res) => {})
-return router
+ 
+export default router

@@ -5,6 +5,7 @@ const router = Router()
 
 router.get("/", async (req, res) => {
     const productos = await productsManager.findAllProducts(req.query)
+    res.json({ productos })
 })
 
 router.get("/:pid", (req, res) => {})
