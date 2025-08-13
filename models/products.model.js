@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
 
-const producstSchema = new mongoose.Schema({
+const productsSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true,
@@ -29,6 +29,7 @@ const producstSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    
 })
 
 export const productsModel = mongoose.model("Product", productsSchema)
