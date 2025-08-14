@@ -20,8 +20,11 @@ export default class BaseManager {
     }
 
     async updateOne(id, obj) {
-        const updated = await this.model.updateOne({ _id: id }, obj)
-        return updated
+        const updated = await this.model.updateOne(id, obj, { new: true })
+        if (!updated) {
+            return { success: false, message: "Articulo no encontrado" }
+        }
+        return { success: true, data: updated }
     }
 
     async deleteOne(id) {

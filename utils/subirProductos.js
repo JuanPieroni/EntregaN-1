@@ -15,4 +15,4 @@ console.log("Productos insertados en MongoDB");
 
  
 await mongoose.connection.close();
-console.log("Conexión cerrada");
+console.log("Conexión cerrada"); 
