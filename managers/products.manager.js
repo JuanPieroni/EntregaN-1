@@ -1,4 +1,4 @@
-import BaseManager from "./BaseManager.js"
+import BaseManager from "./base.manager.js"
 import { productsModel } from "../models/product.model.js"
 
 class ProductManager extends BaseManager {
@@ -11,7 +11,7 @@ class ProductManager extends BaseManager {
         const { limit = 10, page = 1, sort, ...restoQueryFilters } = params
 
         console.log("restoQueryFilters", restoQueryFilters)
-        
+
         const sortFilter = sort ? { price: sort === "asc" ? 1 : -1 } : {}
         const response = await productsModel.paginate(restoQueryFilters, {
             limit,

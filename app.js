@@ -5,7 +5,7 @@ import { engine } from "express-handlebars"
 import { createServer } from "http"
 
 import productsRouter from "./routes/products.router.js"
-import cartsRouter from "./routes/carts.router.js"
+import cartRouter from "./routes/carts.router.js"
 import viewsRouter from "./routes/views.router.js"
 
 import {
@@ -30,7 +30,7 @@ app.engine("hbs", engine({ extname: ".hbs" }))
 app.set("view engine", "hbs")
 app.set("views", path.join(__dirname, "views"))
 
-//LANDING
+
 
 app.get("/", (req, res) => {
     res.render("home", {
@@ -42,7 +42,7 @@ app.get("/", (req, res) => {
 
 app.use("/", viewsRouter)
 app.use("/api/products", productsRouter)
-app.use("/api/carts", cartsRouter)
+app.use("/api/carts", cartRouter)
 
 const startServer = async () => {
     if (!atlas) {

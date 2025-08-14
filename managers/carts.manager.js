@@ -1,7 +1,7 @@
-import BaseManager from "./BaseManager.js"
-import { cartsModel } from "../models/carts.model.js"
+import BaseManager from "./base.manager.js"
+import { cartsModel } from "../models/cart.model.js"
 
-class CartsManager extends BaseManager {
+class CartManager extends BaseManager {
     constructor() {
         super(cartsModel)
     }
@@ -19,7 +19,7 @@ class CartsManager extends BaseManager {
         const cart = await this.model.findById(cid)
         if (!cart) return "Carrito no encontrado"
 
-        const existe = cart.products.find((p) => p.product.toString() === pid)
+        const existe = cart.products.find((p) => p.product.toString() === pid.toString())
 
         if (existe) {
             existe.cantidad += cantidad
@@ -47,6 +47,7 @@ class CartsManager extends BaseManager {
         return carritoActualizado
     }
 
+
     async updateCartProducts(cid, productosActualizados) {
         const cart = await this.model.findById(cid)
         if (!cart) return "Carrito no encontrado"
@@ -54,6 +55,8 @@ class CartsManager extends BaseManager {
         const carritoActualizado = await cart.save()
         return carritoActualizado
     }
+
+    
 
     async deleteProductoCarrito(cid, pid) {
         const cart = await this.model.findById(cid)
@@ -77,4 +80,4 @@ class CartsManager extends BaseManager {
     }
 }
 
-export const cartsManager = new CartsManager()
+export const cartsManager = new CartManager()

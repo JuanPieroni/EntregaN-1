@@ -1,13 +1,12 @@
 import { Router } from "express"
-import { productsManager } from "../managers/ProductsManager"
+import { productsManager } from "../managers/products.manager.js"
 
 const router = Router()
 
 router.get("/", async (req, res) => {
     try {
         const productos = await productsManager.findAllProducts(req.query)
-      res.status(200).json({ status: "success", payload: productos })
-
+        res.status(200).json({ status: "success", payload: productos })
     } catch (error) {
         res.status(500).json({ error: error.message })
     }
@@ -21,7 +20,7 @@ router.get("/:pid", async (req, res) => {
         if (!producto) {
             return res.status(404).json({ error: "Producto no encontrado" })
         }
-        res.status(200).json({ producto })
+        res.status(200).json({ status: "success", payload: producto })
     } catch (error) {
         res.status(500).json({ error: error.message })
     }
