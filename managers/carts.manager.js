@@ -1,5 +1,6 @@
 import BaseManager from "./base.manager.js"
 import { cartsModel } from "../models/cart.model.js"
+ import mongoose from "mongoose"
 
 class CartManager extends BaseManager {
     constructor() {
@@ -11,26 +12,11 @@ class CartManager extends BaseManager {
             products: [],
         }
 
-        const createdCart = await this.model.create(newCart)
+        const createdCart = await this.createOne(newCart)
         return createdCart
     }
 
-    async addProductToCart(cid, pid, cantidad = 1) {
-        const cart = await this.model.findById(cid)
-        if (!cart) return "Carrito no encontrado"
-
-        const existe = cart.products.find((p) => p.product.toString() === pid.toString())
-
-        if (existe) {
-            existe.cantidad += cantidad
-        } else {
-            cart.products.push({ product: pid, cantidad })
-        }
-
-        const updatedCart = await cart.save()
-        return updatedCart
-    }
-    // PUT api/carts/:cid/products/:pid
+ 
 
     async updateCantidadProducto(cid, pid, cantidad) {
         const cart = await this.model.findById(cid)

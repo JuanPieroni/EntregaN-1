@@ -1,3 +1,5 @@
+
+
 export default class BaseManager {
     constructor(model) {
         this.model = model
@@ -10,7 +12,11 @@ export default class BaseManager {
 
     async findById(id) {
         const idFound = await this.model.findById(id)
-        return idFound
+
+        if (!idFound) {
+            return { success: false, message: "Articulo no encontrado" }
+        }
+        return { success: true, data: idFound }
     }
 
     async createOne(obj) {
@@ -20,7 +26,9 @@ export default class BaseManager {
     }
 
     async updateOne(id, obj) {
-        const updated = await this.model.updateOne(id, obj, { new: true })
+        const updated = await this.model.findByIdAndUpdate(id, obj, {
+            new: true,
+        })
         if (!updated) {
             return { success: false, message: "Articulo no encontrado" }
         }

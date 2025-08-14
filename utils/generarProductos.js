@@ -1,4 +1,4 @@
- import fs from "fs";
+/*  import fs from "fs";
 
 function generarCodigoSimple() {
     const letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -66,3 +66,4 @@ function generarProductos(cantidad = 2500) {
 }
 
 generarProductos();
+ */

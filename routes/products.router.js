@@ -17,10 +17,10 @@ router.get("/:pid", async (req, res) => {
         const { pid } = req.params
         const producto = await productsManager.findById(pid)
 
-        if (!producto) {
+        if (!producto.success) {
             return res.status(404).json({ error: "Producto no encontrado" })
         }
-        res.status(200).json({ status: "success", payload: producto })
+        res.status(200).json({ status: "success", payload: producto.data })
     } catch (error) {
         res.status(500).json({ error: error.message })
     }
@@ -43,19 +43,20 @@ router.put("/:pid", async (req, res) => {
             pid,
             req.body
         )
-        if (!productoActualizado) {
-            return res.status(404).json({ error: "Producto no encontrado" })
+        if (!productoActualizado.success) {
+            return res
+                .status(404)
+                .json({ status: "error", message: productoActualizado.message })
         }
         res.status(200).json({
             status: "success",
-            payload: productoActualizado,
+            payload: productoActualizado.data,
         })
     } catch (error) {
         res.status(500).json({ error: error.message })
     }
 })
 
- 
 router.delete("/:pid", async (req, res) => {
     try {
         const { pid } = req.params

@@ -1,11 +1,14 @@
 import { Router } from "express"
 import { cartsManager } from "../managers/carts.manager.js"
 import { aggregateCarrito } from "../controllers/aggregation.controller.js"
+import mongoose from "mongoose"
+import { cartsModel } from "../models/cart.model.js"
+import { productsModel } from "../models/product.model.js"
 
 const router = Router()
 
 router.post("/", async (req, res) => {
-    const cart = await cartsManager.create()
+    const cart = await cartsManager.createCart()
     res.status(201).json({
         mensaje: `El carrito fue creado con exito`,
         status: "success",
@@ -86,25 +89,31 @@ router.get("/:cid", async (req, res) => {
 })
 
 router.post("/:cid/product/:pid", async (req, res) => {
-    const { cid, pid } = req.params
-    const { cantidad = 1 } = req.body
-
     try {
-        const carritoActualizado = await cartsManager.addProductToCart(
-            cid,
-            pid,
-            cantidad
-        )
 
-        if (typeof carritoActualizado === "string") {
+        
+        const cart = await cartsModel.findById(req.params.cid)
+        const product = await productsModel.findById(req.params.pid)
+        console.log("cart ", cart)
+        console.log("product", product)
+
+        if (!cart || !product) {
             return res
                 .status(404)
-                .json({ status: "error", message: carritoActualizado })
+                .json({ error: "carrito o producto no encontrado" })
         }
+7
+        if (cart.products.includes(product._id)) {
+            return res
+                .status(400)
+                .json({ error: `Producto ingresado al carrito ` })
+        }
+        cart.products.push({ product: product._id })
+        await cart.save()
 
-        res.status(200).json({ status: "success", payload: carritoActualizado })
+        res.status(202).json({ message: `El producto fue agregado al carrito` })
     } catch (error) {
-        res.status(500).json({ status: "error", message: error.message })
+        res.status(500).json({ error: error.message })
     }
 })
 

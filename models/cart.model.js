@@ -1,3 +1,4 @@
+import { create } from "express-handlebars"
 import mongoose from "mongoose"
 
 const cartSchema = new mongoose.Schema({
@@ -16,6 +17,10 @@ const cartSchema = new mongoose.Schema({
             },
         },
     ],
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
 })
 
 export const cartsModel = mongoose.model("Cart", cartSchema)
