@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
 router.get("/:pid", async (req, res) => {
     try {
         const { pid } = req.params
-        const producto = await productsManager.findProductById(pid)
+        const producto = await productsManager.findById(pid)
 
         if (!producto) {
             return res.status(404).json({ error: "Producto no encontrado" })
@@ -55,14 +55,20 @@ router.put("/:pid", async (req, res) => {
     }
 })
 
+
+// deletedProduct.name me sale undefiened, . la funcion va, pero no kme lee la variable. res olver
 router.delete("/:pid", async (req, res) => {
-    const { pid } = req.params
     try {
-        await productsManager.deleteOne(pid)
-        res.status(200).json({
-            status: "success",
-            message: "Producto eliminado",
-        })
+        const { pid } = req.params
+        const deletedProduct = await productsManager.deleteOne(pid)
+        if (deletedProduct) {
+            res.status(200).json({
+                status: "success",
+                message: `Producto ${deletedProduct.name} eliminado`,
+            })
+        } else {
+            return res.status(404).json({ error: "Producto no encontrado" })
+        }
     } catch (error) {
         res.status(500).json({ status: "error", message: error.message })
     }

@@ -1,5 +1,6 @@
 import { Router } from "express"
 import { cartsManager } from "../managers/carts.manager.js"
+import { aggregateCarrito } from "../controllers/aggregation.controller.js"
 
 const router = Router()
 

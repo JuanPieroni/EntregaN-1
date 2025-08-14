@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
-import { cartsModel } from "../models/carts.model.js"
+import { cartsModel } from "../models/cart.model.js"
 
-export const getDetalleCarrito = async (req, res) => {
+export const aggregateCarrito = async (req, res) => {
     try {
         const { cid } = req.params
         const carritoId = new mongoose.Types.ObjectId(cid)
@@ -14,10 +14,25 @@ export const getDetalleCarrito = async (req, res) => {
                     from: "products",
                     localField: "products.product",
                     foreignField: "_id",
-                    as: "productoDetalle"
-                }
+                    as: "productoDetalle",
+                },
             },
-         
+
+            { $unwind: "$productoDetalle" },
+            {
+                $project: {
+                    _id: 0,
+                    producto: "$productoDetalle.title",
+                    cantidad: "$products.cantidad",
+                    precioUnitario: "$productoDetalle.price",
+                    precioTotal: {
+                        $multiply: [
+                            "$products.cantidad",
+                            "$productoDetalle.price",
+                        ],
+                    },
+                },
+            },
         ])
 
         res.status(200).json({ status: "success", payload: detalle })
