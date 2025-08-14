@@ -11,7 +11,7 @@ class ProductManager extends BaseManager {
         const { limit = 10, page = 1, sort, ...restoQueryFilters } = params
 
         console.log("restoQueryFilters", restoQueryFilters)
-        // metersoryt aca
+        
         const sortFilter = sort ? { price: sort === "asc" ? 1 : -1 } : {}
         const response = await productsModel.paginate(restoQueryFilters, {
             limit,

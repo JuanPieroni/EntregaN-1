@@ -4,16 +4,69 @@ import { productsManager } from "../managers/ProductsManager"
 const router = Router()
 
 router.get("/", async (req, res) => {
-    const productos = await productsManager.findAllProducts(req.query)
-    res.json({ productos })
+    try {
+        const productos = await productsManager.findAllProducts(req.query)
+      res.status(200).json({ status: "success", payload: productos })
+
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
 })
 
-router.get("/:pid", (req, res) => {})
+router.get("/:pid", async (req, res) => {
+    try {
+        const { pid } = req.params
+        const producto = await productsManager.findProductById(pid)
 
-router.post("/", (req, res) => {})
+        if (!producto) {
+            return res.status(404).json({ error: "Producto no encontrado" })
+        }
+        res.status(200).json({ producto })
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+})
 
-router.put("/:pid", (req, res) => {})
+router.post("/", async (req, res) => {
+    try {
+        const producto = req.body
+        const nuevoProducto = await productsManager.createOne(producto)
+        res.status(201).json({ status: "succes", payload: nuevoProducto })
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+})
 
-router.delete("/:pid", (req, res) => {})
+router.put("/:pid", async (req, res) => {
+    try {
+        const { pid } = req.params
+        const productoActualizado = await productsManager.updateOne(
+            pid,
+            req.body
+        )
+        if (!productoActualizado) {
+            return res.status(404).json({ error: "Producto no encontrado" })
+        }
+        res.status(200).json({
+            status: "success",
+            payload: productoActualizado,
+        })
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+})
+
+router.delete("/:pid", async (req, res) => {
+    const { pid } = req.params
+    try {
+        await productsManager.deleteOne(pid)
+        res.status(200).json({
+            status: "success",
+            message: "Producto eliminado",
+        })
+    } catch (error) {
+        res.status(500).json({ status: "error", message: error.message })
+    }
+})
 
 export default router
