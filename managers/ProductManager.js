@@ -8,16 +8,28 @@ class ProductManager extends BaseManager {
 
     async findAllProducts(params) {
         console.log(params)
-        const { limit, page, sort, ...restoQueryFilters } = params
+        const { limit = 10, page = 1, sort, ...restoQueryFilters } = params
 
         console.log("restoQueryFilters", restoQueryFilters)
-// metersoryt aca
+        // metersoryt aca
+        const sortFilter = sort ? { price: sort === "asc" ? 1 : -1 } : {}
         const response = await productsModel.paginate(restoQueryFilters, {
             limit,
             page,
+            sort: sortFilter,
+            lean: true,
         })
 
-        return response
+        return {
+            status: "success",
+            payload: response.docs,
+            totalPages: response.totalPages,
+            prevPage: response.prevPage,
+            nextPage: response.nextPage,
+            page: response.page,
+            hasPrevPage: response.hasPrevPage,
+            hasNextPage: response.hasNextPage,
+        }
     }
 }
 

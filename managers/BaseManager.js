@@ -26,6 +26,9 @@ export default class BaseManager {
 
     async deleteOne(id) {
         const deleted = await this.model.findByIdAndDelete(id)
-        return deleted
+        if (!deleted) {
+            return { success: false, message: "Articulo no encontrado" }
+        }
+        return { success: true, data: deleted }
     }
 }
