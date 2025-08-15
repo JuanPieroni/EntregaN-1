@@ -29,6 +29,7 @@ class ProductManager extends BaseManager {
             nextPage: response.nextPage,
             page: response.page,
             sort : sortFilter,
+            totalDocs: response.totalDocs,
             hasPrevPage: response.hasPrevPage,
             hasNextPage: response.hasNextPage,
             prevPage: response.prevPage,
