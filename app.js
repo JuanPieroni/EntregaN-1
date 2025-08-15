@@ -7,6 +7,7 @@ import { createServer } from "http"
 import productsRouter from "./routes/products.router.js"
 import cartRouter from "./routes/carts.router.js"
 import viewsRouter from "./routes/views.router.js"
+import aggregateRouter from "./routes/aggregations.router.js"
 
 import {
     connectToMongoDB,
@@ -30,8 +31,6 @@ app.engine("hbs", engine({ extname: ".hbs" }))
 app.set("view engine", "hbs")
 app.set("views", path.join(__dirname, "views"))
 
-
-
 app.get("/", (req, res) => {
     res.render("home", {
         title: "Entrega Final Backend I",
@@ -43,6 +42,7 @@ app.get("/", (req, res) => {
 app.use("/", viewsRouter)
 app.use("/api/products", productsRouter)
 app.use("/api/carts", cartRouter)
+ app.use("/api/aggregations", aggregateRouter) 
 
 const startServer = async () => {
     if (!atlas) {

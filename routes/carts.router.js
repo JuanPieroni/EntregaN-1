@@ -16,7 +16,7 @@ router.post("/", async (req, res) => {
     })
 })
 
-router.put("/:cid/products/:pid", async (req, res) => {
+router.put("/:cid/product/:pid", async (req, res) => {
     try {
         const { cid, pid } = req.params
         const { cantidad } = req.body
@@ -42,7 +42,7 @@ router.put("/:cid", async (req, res) => {
     }
 })
 
-router.delete("/:cid/products/:pid", async (req, res) => {
+router.delete("/:cid/product/:pid", async (req, res) => {
     const { cid, pid } = req.params
     try {
         const cart = await cartsManager.deleteProductoCarrito(cid, pid)
@@ -51,6 +51,21 @@ router.delete("/:cid/products/:pid", async (req, res) => {
         res.status(404).json({ status: "error", message: error.message })
     }
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 router.delete("/:cid", async (req, res) => {
     try {
@@ -61,6 +76,25 @@ router.delete("/:cid", async (req, res) => {
         res.status(404).json({ status: "error", message: error.message })
     }
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 router.get("/", async (req, res) => {
     try {
@@ -90,10 +124,12 @@ router.get("/:cid", async (req, res) => {
 
 router.post("/:cid/product/:pid", async (req, res) => {
     try {
+        const { cid, pid } = req.params
+        let { cantidad = 1 } = req.body || {}
+        cantidad = Number(cantidad)
 
-        
-        const cart = await cartsModel.findById(req.params.cid)
-        const product = await productsModel.findById(req.params.pid)
+        const cart = await cartsModel.findById(cid)
+        const product = await productsModel.findById(pid)
         console.log("cart ", cart)
         console.log("product", product)
 
@@ -102,16 +138,19 @@ router.post("/:cid/product/:pid", async (req, res) => {
                 .status(404)
                 .json({ error: "carrito o producto no encontrado" })
         }
-7
-        if (cart.products.includes(product._id)) {
-            return res
-                .status(400)
-                .json({ error: `Producto ingresado al carrito ` })
+
+        const existe = cart.products.find((p) => p.product.toString() === pid)
+
+        if (existe) {
+            existe.cantidad += cantidad
+        } else {
+            cart.products.push({ product: product._id, cantidad })
         }
-        cart.products.push({ product: product._id })
         await cart.save()
 
-        res.status(202).json({ message: `El producto fue agregado al carrito` })
+        res.status(202).json({
+            message: `El Producto ${product.title} fue agregado al carrito`,
+        })
     } catch (error) {
         res.status(500).json({ error: error.message })
     }

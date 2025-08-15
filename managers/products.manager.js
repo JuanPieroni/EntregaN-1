@@ -22,13 +22,24 @@ class ProductManager extends BaseManager {
 
         return {
             status: "success",
+            limit: response.limit,
             payload: response.docs,
             totalPages: response.totalPages,
             prevPage: response.prevPage,
             nextPage: response.nextPage,
             page: response.page,
+            sort : sortFilter,
             hasPrevPage: response.hasPrevPage,
             hasNextPage: response.hasNextPage,
+            prevPage: response.prevPage,
+            nextPage: response.nextPage,
+            prevLink: response.hasPrevPage
+                ? `/api/products?page=${response.prevPage}`
+                : null,
+            nextLink: response.hasNextPage
+                ? `/api/products?page=${response.nextPage}`
+                : null,
+            
         }
     }
 }
