@@ -37,6 +37,7 @@ router.get("/cart/:cid", async (req, res) => {
 router.get("/carts", async (req, res) => {
     try {
         const carts = await cartsManager.findAllCarts()
+         
         res.render("carts", { carts })
     } catch (error) {
         console.log(error)

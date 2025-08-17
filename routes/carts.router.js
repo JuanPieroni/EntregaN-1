@@ -52,21 +52,6 @@ router.delete("/:cid/product/:pid", async (req, res) => {
     }
 })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 router.delete("/:cid", async (req, res) => {
     try {
         const { cid } = req.params
@@ -76,25 +61,6 @@ router.delete("/:cid", async (req, res) => {
         res.status(404).json({ status: "error", message: error.message })
     }
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 router.get("/", async (req, res) => {
     try {
