@@ -6,9 +6,21 @@
         <li>
             <h3>{{this.title}}</h3>
             <p>Precio: ${{this.price}}</p>
+            <p>Descripcion: {{this.description}}</p>
+
+            <p>Categoria : {{this.category}}</p>
+            <p>
+                {{#if this.disponible}}
+                    En stock
+                {{else}}
+                    No hay stock
+                {{/if}}
+            </p>
+
             <form
-                action="/api/carts/ID_DEL_CARRITO/product/{{this._id}}"
+                action="/api/carts/689e59631d0abc79418bdf86/product/{{this._id}}"
                 method="POST"
+                onsubmit="alertAgregarProducto('{{this.title}}')">
             >
                 <button type="submit">Agregar al carrito</button>
             </form>
@@ -27,3 +39,7 @@
         <a href="/products?page={{products.nextPage}}">Siguiente</a>
     {{/if}}
 </div>
+<script>
+    function alertAgregarProducto(nombreProducto) { alert('Producto "' +
+    nombreProducto + '" agregado al carrito ✅'); }
+</script>

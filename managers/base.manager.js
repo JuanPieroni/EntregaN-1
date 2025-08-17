@@ -12,7 +12,6 @@ export default class BaseManager {
 
     async findById(id) {
         const idFound = await this.model.findById(id)
-
         if (!idFound) {
             return { success: false, message: "Articulo no encontrado" }
         }

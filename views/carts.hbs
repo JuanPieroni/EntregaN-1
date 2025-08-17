@@ -1,0 +1,19 @@
+<h1>Todos los Carritos</h1>
+
+{{#each carts}}
+    <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 20px;">
+        <h2>Carrito ID: {{this._id}}</h2>
+        <p>Creado: {{this.createdAt}}</p>
+
+        <ul>
+            {{#each this.products}}
+                <li>
+                    <strong>{{this.product.title}}</strong>
+                    - Precio: ${{this.product.price}}
+                    - Cantidad:
+                    {{this.cantidad}}
+                </li>
+            {{/each}}
+        </ul>
+    </div>
+{{/each}}

@@ -6,6 +6,17 @@ class CartManager extends BaseManager {
     constructor() {
         super(cartsModel)
     }
+    async findAllCarts() {
+        return this.model.find().populate("products.product").lean()
+    }
+
+    async getCartById(cid) {
+        const cart = await this.model
+            .findById(cid)
+            .populate("products.product")
+            .lean()
+        return cart
+    }
 
     async createCart() {
         const newCart = {
@@ -58,17 +69,6 @@ class CartManager extends BaseManager {
         return carritoActualizado
     }
 
-
-
-
-
-
-
-
-
-
-
-
     async vaciarCarrito(cid) {
         const cart = await this.model.findById(cid)
         if (!cart) return "carrito no encontraso"
@@ -79,27 +79,5 @@ class CartManager extends BaseManager {
         return carritoVacio
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 export const cartsManager = new CartManager()
