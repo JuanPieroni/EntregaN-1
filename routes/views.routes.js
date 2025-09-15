@@ -1,15 +1,15 @@
 import { Router } from "express"
 import path from "path"
 import { fileURLToPath } from "url"
-
 import { productsManager } from "../managers/products.manager.js"
 import { cartsManager } from "../managers/carts.manager.js"
 
-const router = Router()
+
+const viewsRouter = Router()
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-router.get("/products", async (req, res) => {
+viewsRouter.get("/products", async (req, res) => {
     try {
         const products = await productsManager.findAllProducts(req.query)
 
@@ -20,7 +20,7 @@ router.get("/products", async (req, res) => {
     }
 })
 
-router.get("/cart/:cid", async (req, res) => {
+viewsRouter.get("/cart/:cid", async (req, res) => {
     try {
         const { cid } = req.params
         const cart = await cartsManager.getCartById(cid)
@@ -34,7 +34,7 @@ router.get("/cart/:cid", async (req, res) => {
     }
 })
 
-router.get("/carts", async (req, res) => {
+viewsRouter.get("/carts", async (req, res) => {
     try {
         const carts = await cartsManager.findAllCarts()
          
@@ -45,4 +45,18 @@ router.get("/carts", async (req, res) => {
     }
 })
 
-export default router
+viewsRouter.get("/login", (req, res) => {
+    res.render("login")
+})
+
+viewsRouter.get("/register", (req, res) => {
+    res.render("register")
+})
+
+viewsRouter.get("/profile", (req, res) => {
+    // TODO: Obtener usuario de la sesión/JWT
+    const user = req.user || null
+    res.render("profile", { user })
+})
+
+export default viewsRouter

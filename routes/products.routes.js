@@ -1,9 +1,9 @@
 import { Router } from "express"
 import { productsManager } from "../managers/products.manager.js"
 
-const router = Router()
+const productsRouter = Router()
 
-router.get("/", async (req, res) => {
+productsRouter.get("/", async (req, res) => {
     try {
         const productos = await productsManager.findAllProducts(req.query)
         res.status(200).json({ status: "success", payload: productos })
@@ -12,7 +12,7 @@ router.get("/", async (req, res) => {
     }
 })
 
-router.get("/:pid", async (req, res) => {
+productsRouter.get("/:pid", async (req, res) => {
     try {
         const { pid } = req.params
         const producto = await productsManager.findById(pid)
@@ -26,7 +26,7 @@ router.get("/:pid", async (req, res) => {
     }
 })
 
-router.post("/", async (req, res) => {
+productsRouter.post("/", async (req, res) => {
     try {
         const producto = req.body
         const nuevoProducto = await productsManager.createOne(producto)
@@ -36,7 +36,7 @@ router.post("/", async (req, res) => {
     }
 })
 
-router.put("/:pid", async (req, res) => {
+productsRouter.put("/:pid", async (req, res) => {
     try {
         const { pid } = req.params
         const productoActualizado = await productsManager.updateOne(
@@ -57,7 +57,7 @@ router.put("/:pid", async (req, res) => {
     }
 })
 
-router.delete("/:pid", async (req, res) => {
+productsRouter.delete("/:pid", async (req, res) => {
     try {
         const { pid } = req.params
         const deletedProduct = await productsManager.deleteOne(pid)
@@ -75,4 +75,4 @@ router.delete("/:pid", async (req, res) => {
     }
 })
 
-export default router
+export default productsRouter

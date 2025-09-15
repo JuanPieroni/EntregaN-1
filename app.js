@@ -4,10 +4,10 @@ import path from "path"
 import { engine } from "express-handlebars"
 import { createServer } from "http"
 
-import productsRouter from "./routes/products.router.js"
-import cartRouter from "./routes/carts.router.js"
-import viewsRouter from "./routes/views.router.js"
-import aggregateRouter from "./routes/aggregations.router.js"
+import productsRouter from "./routes/products.routes.js"
+import cartRouter from "./routes/carts.routes.js"
+import viewsRouter from "./routes/views.routes.js"
+import aggregateRouter from "./routes/aggregations.routes.js"
 
 import {
     connectToMongoDB,
@@ -42,7 +42,7 @@ app.get("/", (req, res) => {
 app.use("/", viewsRouter)
 app.use("/api/products", productsRouter)
 app.use("/api/carts", cartRouter)
- app.use("/api/aggregations", aggregateRouter) 
+app.use("/api/aggregations", aggregateRouter) 
 
 const startServer = async () => {
     if (!atlas) {

@@ -1,0 +1,22 @@
+<h1>Perfil de Usuario</h1>
+
+{{#if user}}
+    <div>
+        <h2>Información Personal</h2>
+        <p><strong>Nombre:</strong> {{user.first_name}} {{user.last_name}}</p>
+        <p><strong>Email:</strong> {{user.email}}</p>
+        <p><strong>Edad:</strong> {{user.age}}</p>
+        <p><strong>Rol:</strong> {{user.role}}</p>
+        {{#if user.cart}}
+            <p><strong>Carrito ID:</strong> {{user.cart}}</p>
+        {{/if}}
+    </div>
+    
+    <div>
+        <a href="/products">Ver Productos</a>
+        <a href="/api/sessions/logout">Cerrar Sesión</a>
+    </div>
+{{else}}
+    <p>No hay usuario logueado</p>
+    <a href="/login">Iniciar Sesión</a>
+{{/if}}

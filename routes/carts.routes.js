@@ -5,9 +5,9 @@ import mongoose from "mongoose"
 import { cartsModel } from "../models/cart.model.js"
 import { productsModel } from "../models/product.model.js"
 
-const router = Router()
+const cartsRouter = Router()
 
-router.post("/", async (req, res) => {
+cartsRouter.post("/", async (req, res) => {
     const cart = await cartsManager.createCart()
     res.status(201).json({
         mensaje: `El carrito fue creado con exito`,
@@ -16,7 +16,7 @@ router.post("/", async (req, res) => {
     })
 })
 
-router.put("/:cid/product/:pid", async (req, res) => {
+cartsRouter.put("/:cid/product/:pid", async (req, res) => {
     try {
         const { cid, pid } = req.params
         const { cantidad } = req.body
@@ -31,7 +31,7 @@ router.put("/:cid/product/:pid", async (req, res) => {
     }
 })
 
-router.put("/:cid", async (req, res) => {
+cartsRouter.put("/:cid", async (req, res) => {
     try {
         const { cid } = req.params
         const nuevoProducto = req.body.products
@@ -42,7 +42,7 @@ router.put("/:cid", async (req, res) => {
     }
 })
 
-router.delete("/:cid/product/:pid", async (req, res) => {
+cartsRouter.delete("/:cid/product/:pid", async (req, res) => {
     const { cid, pid } = req.params
     try {
         const cart = await cartsManager.deleteProductoCarrito(cid, pid)
@@ -52,7 +52,7 @@ router.delete("/:cid/product/:pid", async (req, res) => {
     }
 })
 
-router.delete("/:cid", async (req, res) => {
+cartsRouter.delete("/:cid", async (req, res) => {
     try {
         const { cid } = req.params
         const carritoVacio = await cartsManager.vaciarCarrito(cid)
@@ -62,7 +62,7 @@ router.delete("/:cid", async (req, res) => {
     }
 })
 
-router.get("/", async (req, res) => {
+cartsRouter.get("/", async (req, res) => {
     try {
         const cart = await cartsManager.findAll()
         res.status(200).json({ title: "Api carts", cart })
@@ -71,7 +71,7 @@ router.get("/", async (req, res) => {
     }
 })
 
-router.get("/:cid", async (req, res) => {
+cartsRouter.get("/:cid", async (req, res) => {
     const { cid } = req.params
     try {
         const cart = await cartsManager.model
@@ -88,7 +88,7 @@ router.get("/:cid", async (req, res) => {
     }
 })
 
-router.post("/:cid/product/:pid", async (req, res) => {
+cartsRouter.post("/:cid/product/:pid", async (req, res) => {
     try {
         const { cid, pid } = req.params
         let { cantidad = 1 } = req.body || {}
@@ -122,4 +122,4 @@ router.post("/:cid/product/:pid", async (req, res) => {
     }
 })
 
-export default router
+export default cartsRouter
