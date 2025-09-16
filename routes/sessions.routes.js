@@ -1,7 +1,9 @@
 import { Router } from "express"
 import { passport, JWT_SECRET } from "../config/passport.config.js"
 import { usersManager } from "../managers/users.manager.js"
+import { cartsManager } from "../managers/carts.manager.js"
 import { hashPassword } from "../utils/auth.utils.js"
+import { authenticateJWT } from "../middlewares/auth.middleware.js"
 import jwt from "jsonwebtoken"
 
 const sessionsRouter = Router()
@@ -14,38 +16,40 @@ sessionsRouter.post("/register", async (req, res) => {
         // Verificar si el usuario ya existe
         const existingUser = await usersManager.findByEmail(email)
         if (existingUser.success) {
-            return res.status(400).json({
-                status: "error",
-                message: "El usuario ya existe",
-            })
+            return res.render("register", { error: true })
         }
 
-        // Crear nuevo usuario
+        // Crear carrito para el usuario
+        const newCart = await cartsManager.createCart()
+        
+        // Crear nuevo usuario con carrito asignado
         const hashedPassword = hashPassword(password)
-        const newUser = await usersManager.create({
+        const newUser = await usersManager.createOne({
             first_name,
             last_name,
             email,
             age,
             password: hashedPassword,
+            cart: newCart._id,
             role: "user",
         })
 
-        res.status(201).json({
-            status: "success",
-            message: "Usuario registrado exitosamente",
-            payload: {
-                id: newUser._id,
-                email: newUser.email,
-                first_name: newUser.first_name,
-                last_name: newUser.last_name,
-            },
+        // Login automático tras registro
+        const token = jwt.sign(
+            { id: newUser._id, email: newUser.email, role: newUser.role },
+            JWT_SECRET,
+            { expiresIn: "24h" }
+        )
+
+        res.cookie("token", token, {
+            httpOnly: true,
+            maxAge: 24 * 60 * 60 * 1000, // 24 horas
         })
+
+        // Redirigir directamente a productos
+        res.redirect("/products")
     } catch (error) {
-        res.status(500).json({
-            status: "error",
-            message: error.message,
-        })
+        res.render("register", { error: true })
     }
 })
 
@@ -53,70 +57,48 @@ sessionsRouter.post("/register", async (req, res) => {
 sessionsRouter.post("/login", (req, res, next) => {
     passport.authenticate("login", (err, user, info) => {
         if (err) {
-            return res.status(500).json({
-                status: "error",
-                message: err.message,
-            })
+            return res.render("login", { error: true })
         }
         if (!user) {
-            return res.status(401).json({
-                status: "error",
-                message: info.message,
-            })
+            return res.render("login", { error: true })
         }
 
-        // Genero JWT token
+        //. JWT token
         const token = jwt.sign(
             { id: user._id, email: user.email, role: user.role },
             JWT_SECRET,
             { expiresIn: "24h" }
         )
 
-        // Establecer cookie
+        // Estab. cookie
         res.cookie("token", token, {
             httpOnly: true,
-            maxAge: 24 * 60 * 60 * 1000, // 24 horas
+            maxAge: 15 * 60 * 1000,  
         })
 
-        res.json({
-            status: "success",
-            message: "Login exitoso",
-            payload: {
-                id: user._id,
-                email: user.email,
-                first_name: user.first_name,
-                last_name: user.last_name,
-                role: user.role,
-            },
-        })
+        // Redirigir a profile
+        res.redirect("/profile")
     })(req, res, next)
 })
 
 // POST /api/sessions/logout
 sessionsRouter.post("/logout", (req, res) => {
     res.clearCookie("token")
-    res.json({
-        status: "success",
-        message: "Logout exitoso",
-    })
+    res.redirect("/login")
 })
 
 // GET /api/sessions/current
-sessionsRouter.get(
-    "/current",
-    passport.authenticate("jwt", { session: false }),
-    (req, res) => {
-        res.json({
-            status: "success",
-            payload: {
-                id: req.user._id,
-                email: req.user.email,
-                first_name: req.user.first_name,
-                last_name: req.user.last_name,
-                role: req.user.role,
-            },
-        })
-    }
-)
+sessionsRouter.get("/current", authenticateJWT, (req, res) => {
+    res.json({
+        status: "success",
+        payload: {
+            id: req.user._id,
+            email: req.user.email,
+            first_name: req.user.first_name,
+            last_name: req.user.last_name,
+            role: req.user.role,
+        },
+    })
+})
 
 export default sessionsRouter

@@ -1,5 +1,20 @@
 {{! index.handlebars }}
-<h1>Listado de productos</h1>
+<div
+    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;"
+>
+    <h1>Listado de productos</h1>
+    <div>
+        <a href="/carts" style="margin-right: 10px;">carts todos</a>
+        <a href="/cart/{{userCartId}}" style="margin-right: 10px;">Vercarrito</a>
+        <form
+            method="POST"
+            action="/api/sessions/logout"
+            style="display: inline;"
+        >
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+</div>
 
 <ul>
     {{#each products.payload}}
@@ -18,10 +33,11 @@
             </p>
 
             <form
-                action="/api/carts/689e59651d0abc79418bdf88/product/{{this._id}}"
+                action="/api/carts/{{../userCartId}}/product/{{this._id}}"
                 method="POST"
-                onsubmit="alertAgregarProducto('{{this.title}}')">
-          
+                onsubmit="alertAgregarProducto('{{this.title}}')"
+            >
+
                 <button type="submit">Agregar al carrito</button>
             </form>
         </li>

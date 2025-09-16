@@ -40,7 +40,9 @@ passport.use("jwt", new JWTStrategy({
         if (!result.success) {
             return done(null, false)
         }
-        return done(null, result.data)
+        // Convertir a objeto plano para hbss
+        const user = result.data.toObject ? result.data.toObject() : result.data
+        return done(null, user)
     } catch (error) {
         return done(error)
     }

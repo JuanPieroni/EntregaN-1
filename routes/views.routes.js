@@ -3,17 +3,22 @@ import path from "path"
 import { fileURLToPath } from "url"
 import { productsManager } from "../managers/products.manager.js"
 import { cartsManager } from "../managers/carts.manager.js"
+import { authenticateJWT } from "../middlewares/auth.middleware.js"
 
 
 const viewsRouter = Router()
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-viewsRouter.get("/products", async (req, res) => {
+viewsRouter.get("/products", authenticateJWT, async (req, res) => {
     try {
         const products = await productsManager.findAllProducts(req.query)
-
-        res.render("index", { products })
+        
+        // Pasar carrito del usuario autenticado
+        res.render("index", { 
+            products, 
+            userCartId: req.user.cart 
+        })
     } catch (error) {
         console.log(error)
         res.status(500).send("Error al obtener productos")
@@ -53,10 +58,9 @@ viewsRouter.get("/register", (req, res) => {
     res.render("register")
 })
 
-viewsRouter.get("/profile", (req, res) => {
-    // TODO: Obtener usuario de la sesión/JWT
-    const user = req.user || null
-    res.render("profile", { user })
+viewsRouter.get("/profile", authenticateJWT, (req, res) => {
+    console.log("req.user en /profile:", req.user)
+    res.render("profile", { user: req.user })
 })
 
 export default viewsRouter
