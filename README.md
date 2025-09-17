@@ -67,7 +67,7 @@
 - `POST` `/api/sessions/register` → Registro API  
 - `POST` `/api/sessions/login` → Login API  
 - `POST` `/api/sessions/logout` → Logout API  
-- `GET` `/api/sessions/current` → Usuario actual (**OBLIGATORIO**)  
+- `GET` `/api/sessions/current` → Usuario actual  
 
 ---
 
