@@ -26,7 +26,7 @@ class CartManager extends BaseManager {
         const createdCart = await this.createOne(newCart)
         return createdCart
     }
-
+        
     async updateCantidadProducto(cid, pid, cantidad) {
         const cart = await this.model.findById(cid)
         if (!cart) return "Carrito no encontrado"

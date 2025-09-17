@@ -1,7 +1,6 @@
 import { Router } from "express"
 import { cartsManager } from "../managers/carts.manager.js"
 import { aggregateCarrito } from "../controllers/aggregation.controller.js"
-import mongoose from "mongoose"
 import { cartsModel } from "../models/cart.model.js"
 import { productsModel } from "../models/product.model.js"
 
@@ -64,8 +63,15 @@ cartsRouter.delete("/:cid", async (req, res) => {
 
 cartsRouter.get("/", async (req, res) => {
     try {
-        const cart = await cartsManager.findAll()
-        res.status(200).json({ title: "Api carts", cart })
+        const carts = await cartsManager.model
+            .find()
+            .populate("products.product")
+            .lean()
+
+        res.status(200).json({
+            status: "success",
+            payload: carts,
+        })
     } catch (error) {
         res.status(500).json({ status: "error", message: error.message })
     }
@@ -104,7 +110,10 @@ cartsRouter.post("/:cid/product/:pid", async (req, res) => {
                 .status(404)
                 .json({ error: "carrito o producto no encontrado" })
         }
-
+        // Verificar stock disponible
+        if (product.stock < cantidad) {
+            return res.status(400).json({ error: "Stock insuficiente" })
+        }
         const existe = cart.products.find((p) => p.product.toString() === pid)
 
         if (existe) {
@@ -113,6 +122,11 @@ cartsRouter.post("/:cid/product/:pid", async (req, res) => {
             cart.products.push({ product: product._id, cantidad })
         }
         await cart.save()
+        // Restar stock del producto
+        product.stock -= cantidad
+        // Guardar ambos
+        await cart.save()
+        await product.save()
 
         res.status(202).json({
             message: `El Producto ${product.title} fue agregado al carrito`,
@@ -122,7 +136,6 @@ cartsRouter.post("/:cid/product/:pid", async (req, res) => {
     }
 })
 
- 
 cartsRouter.get("/:cid/detalle", aggregateCarrito)
 
 export default cartsRouter

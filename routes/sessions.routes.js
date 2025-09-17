@@ -38,7 +38,7 @@ sessionsRouter.post("/register", async (req, res) => {
         const token = jwt.sign(
             { id: newUser._id, email: newUser.email, role: newUser.role },
             JWT_SECRET,
-            { expiresIn: "24h" }
+            { expiresIn: "15m" }
         )
 
         res.cookie("token", token, {
@@ -46,8 +46,8 @@ sessionsRouter.post("/register", async (req, res) => {
             maxAge: 24 * 60 * 60 * 1000, // 24 horas
         })
 
-        // Redirigir directamente a productos
-        res.redirect("/products")
+        
+        res.redirect("/login")
     } catch (error) {
         res.render("register", { error: true })
     }
@@ -67,7 +67,7 @@ sessionsRouter.post("/login", (req, res, next) => {
         const token = jwt.sign(
             { id: user._id, email: user.email, role: user.role },
             JWT_SECRET,
-            { expiresIn: "24h" }
+            { expiresIn: "15m" }
         )
 
         // Estab. cookie

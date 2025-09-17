@@ -3,13 +3,17 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{{title}}</title>
-         
 
-       
     </head>
     <body>
-        <h1>Entrega 1 BackEnd II</h1>
+        <h1> BackEnd II - Entrega 1</h1>
         {{{body}}}
 
+        {{#if buttons}}
+            <div>
+                <a href="/register"><button>Registrarse</button></a>
+                <a href="/login"><button>Login</button></a>
+            </div>
+        {{/if}}
     </body>
 </html>
