@@ -17,7 +17,9 @@ viewsRouter.get("/products", authenticateJWT, async (req, res) => {
         // Pasar carrito del usuario autenticado
         res.render("index", { 
             products, 
-            userCartId: req.user.cart 
+            userCartId: req.user.cart,
+            user: req.user
+
         })
     } catch (error) {
         console.log(error)
