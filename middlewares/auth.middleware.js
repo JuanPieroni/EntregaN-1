@@ -20,7 +20,7 @@ export const authenticateJWT = (req, res, next) => {
     })(req, res, next)
 }
 
-// Middleware para verificar roles
+/* // Middleware para verificar roles
 export const authorizeRole = (roles) => {
     return (req, res, next) => {
         if (!req.user) {
@@ -37,4 +37,4 @@ export const authorizeRole = (roles) => {
         }
         next()
     }
-}
+} */
