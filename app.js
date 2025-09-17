@@ -9,7 +9,6 @@ import { passport } from "./config/passport.config.js"
 import productsRouter from "./routes/products.routes.js"
 import cartRouter from "./routes/carts.routes.js"
 import viewsRouter from "./routes/views.routes.js"
-import aggregateRouter from "./routes/aggregations.routes.js"
 import sessionsRouter from "./routes/sessions.routes.js"
 
 import {
@@ -47,7 +46,6 @@ app.get("/", (req, res) => {
 app.use("/", viewsRouter)
 app.use("/api/products", productsRouter)
 app.use("/api/carts", cartRouter)
-app.use("/api/aggregations", aggregateRouter)
 app.use("/api/sessions", sessionsRouter) 
 
 const startServer = async () => {

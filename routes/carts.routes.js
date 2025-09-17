@@ -122,4 +122,7 @@ cartsRouter.post("/:cid/product/:pid", async (req, res) => {
     }
 })
 
+ 
+cartsRouter.get("/:cid/detalle", aggregateCarrito)
+
 export default cartsRouter
