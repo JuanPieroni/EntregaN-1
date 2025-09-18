@@ -3,6 +3,7 @@
 {{#each carts}}
     <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 20px;">
         <h2>Carrito ID: {{this._id}}</h2>
+        <p><strong>Propietario:</strong> {{this.user.first_name}} {{this.user.last_name}}</p>
         <p>Creado: {{this.createdAt}}</p>
 
         <ul>

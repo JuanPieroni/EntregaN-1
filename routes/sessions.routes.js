@@ -21,7 +21,7 @@ sessionsRouter.post("/register", async (req, res) => {
 
         // Crear carrito para el usuario
         const newCart = await cartsManager.createCart()
-        
+
         // Crear nuevo usuario con carrito asignado
         const hashedPassword = hashPassword(password)
         const newUser = await usersManager.createOne({
@@ -34,7 +34,7 @@ sessionsRouter.post("/register", async (req, res) => {
             role: "user",
         })
 
-        // Login automático tras registro
+        /*      // Login automático tras registro
         const token = jwt.sign(
             { id: newUser._id, email: newUser.email, role: newUser.role },
             JWT_SECRET,
@@ -44,9 +44,8 @@ sessionsRouter.post("/register", async (req, res) => {
         res.cookie("token", token, {
             httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000, // 24 horas
-        })
+        }) */
 
-        
         res.redirect("/login")
     } catch (error) {
         res.render("register", { error: true })
@@ -73,7 +72,7 @@ sessionsRouter.post("/login", (req, res, next) => {
         // Estab. cookie
         res.cookie("token", token, {
             httpOnly: true,
-            maxAge: 15 * 60 * 1000,  
+            maxAge: 15 * 60 * 1000,
         })
 
         // Redirigir a profile

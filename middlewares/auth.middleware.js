@@ -4,15 +4,15 @@ import { passport } from "../config/passport.config.js"
 export const authenticateJWT = (req, res, next) => {
     passport.authenticate("jwt", { session: false }, (err, user) => {
         if (err) {
-            return res.status(500).json({ 
-                status: "error", 
-                message: "Error de autenticación" 
+            return res.status(500).json({
+                status: "error",
+                message: "Error de autenticación",
             })
         }
         if (!user) {
-            return res.status(401).json({ 
-                status: "error", 
-                message: "Token inválido o expirado" 
+            return res.status(401).json({
+                status: "error",
+                message: "Token inválido o expirado",
             })
         }
         req.user = user
