@@ -37,4 +37,22 @@ export const authorizeRole = (roles) => {
         }
         next()
     }
-} */
+} 
+
+otra forma de hacerlo: 
+ export const authorizeRole = (role) => {
+    return (req, res, next) => {
+        if (req.user.role !== role) {
+            return res.status(403).json({
+                status: "error",
+                message: "No autorizado",
+            })
+        }   
+ next()
+    }
+}
+
+-- diferencia entre 401 y 403:
+401 Unauthorized: El usuario no está autenticado. Necesita iniciar sesión.
+403 Forbidden: El usuario está autenticado pero no tiene permisos para acceder al recurso.
+*/

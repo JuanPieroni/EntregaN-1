@@ -21,7 +21,7 @@ sessionsRouter.post("/register", async (req, res) => {
 
         // Crear carrito para el usuario
         const newCart = await cartsManager.createCart()
-        
+
         // Crear nuevo usuario con carrito asignado
         const hashedPassword = hashPassword(password)
         const newUser = await usersManager.createOne({
@@ -34,7 +34,7 @@ sessionsRouter.post("/register", async (req, res) => {
             role: "user",
         })
 
-   /*      // Login automático tras registro
+        /*      // Login automático tras registro
         const token = jwt.sign(
             { id: newUser._id, email: newUser.email, role: newUser.role },
             JWT_SECRET,
@@ -46,7 +46,6 @@ sessionsRouter.post("/register", async (req, res) => {
             maxAge: 24 * 60 * 60 * 1000, // 24 horas
         }) */
 
-        
         res.redirect("/login")
     } catch (error) {
         res.render("register", { error: true })
@@ -73,7 +72,7 @@ sessionsRouter.post("/login", (req, res, next) => {
         // Estab. cookie
         res.cookie("token", token, {
             httpOnly: true,
-            maxAge: 15 * 60 * 1000,  
+            maxAge: 15 * 60 * 1000,
         })
 
         // Redirigir a profile
@@ -88,6 +87,7 @@ sessionsRouter.post("/logout", (req, res) => {
 })
 
 // GET /api/sessions/current
+//ToDo agregar middleware distintos roles
 sessionsRouter.get("/current", authenticateJWT, (req, res) => {
     res.json({
         status: "success",
@@ -102,44 +102,41 @@ sessionsRouter.get("/current", authenticateJWT, (req, res) => {
 })
 
 // GitHub OAuth routes
-sessionsRouter.get("/github", passport.authenticate("github", { scope: ["user:email"] }))
-
 sessionsRouter.get(
-    "/github/callback",
-    (req, res, next) => {
-        passport.authenticate("github", { session: false }, (err, user) => {
-            if (err) {
-                console.error("GitHub auth error:", err)
-                return res.redirect("/login?error=github_error")
-            }
-            if (!user) {
-                return res.redirect("/login?error=github_failed")
-            }
-
-            try {
-                console.log("GitHub callback user:", user)
-                
-                const token = jwt.sign(
-                    { id: user._id, email: user.email, role: user.role },
-                    JWT_SECRET,
-                    { expiresIn: "15m" }
-                )
-                
-                res.cookie("token", token, {
-                    httpOnly: true,
-                    maxAge: 15 * 60 * 1000,
-                })
-
-                res.redirect("/products")
-            } catch (error) {
-                console.error("GitHub callback error:", error)
-                res.redirect("/login?error=callback_error")
-            }
-        })(req, res, next)
-    }
+    "/github",
+    passport.authenticate("github", { scope: ["user:email"] })
 )
 
+sessionsRouter.get("/github/callback", (req, res, next) => {
+    passport.authenticate("github", { session: false }, (err, user) => {
+        if (err) {
+            console.error("GitHub auth error:", err)
+            return res.redirect("/login?error=github_error")
+        }
+        if (!user) {
+            return res.redirect("/login?error=github_failed")
+        }
 
+        try {
+            console.log("GitHub callback user:", user)
 
+            const token = jwt.sign(
+                { id: user._id, email: user.email, role: user.role },
+                JWT_SECRET,
+                { expiresIn: "15m" }
+            )
+
+            res.cookie("token", token, {
+                httpOnly: true,
+                maxAge: 15 * 60 * 1000,
+            })
+
+            res.redirect("/products")
+        } catch (error) {
+            console.error("GitHub callback error:", error)
+            res.redirect("/login?error=callback_error")
+        }
+    })(req, res, next)
+})
 
 export default sessionsRouter
