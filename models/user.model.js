@@ -30,6 +30,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "user",
     },
+    fromGitHub: {
+        type: Boolean,
+        default: false,
+    },
 })
 
 export const userModel = mongoose.model("User", userSchema)

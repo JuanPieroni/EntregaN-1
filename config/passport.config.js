@@ -1,7 +1,9 @@
 import passport from "passport"
 import { Strategy as LocalStrategy } from "passport-local"
 import { Strategy as JWTStrategy, ExtractJwt } from "passport-jwt"
+import { Strategy as GitHubStrategy } from "passport-github2"
 import { usersManager } from "../managers/users.manager.js"
+import { cartsManager } from "../managers/carts.manager.js"
 import { comparePassword } from "../utils/auth.utils.js"
 
 const JWT_SECRET = "coderhouse_secret_key"
@@ -64,8 +66,60 @@ passport.use(
 )
 
 // GIT HUB Strategy
+passport.use(
+    "github",
+    new GitHubStrategy(
+        {
+            clientID: "Iv23liZDMj6aLPGdnrUi",
+            clientSecret: "53400227add939343d7e565bb38be95ba12b7f8b",
+            callbackURL: "http://localhost:8080/api/sessions/github/callback",
+        },
+        async (accessToken, refreshToken, profile, done) => {
+            console.log("=== GITHUB STRATEGY EJECUTADA ===")
+            console.log("Profile recibido:", profile)
+            console.log("Access token:", accessToken ? "✓" : "✗")
+            try {
+                const githubId = profile._json.login //
+                console.log("GitHub ID:", githubId)
+                const email =
+                    profile._json.email ||
+                    profile.emails?.[0]?.value ||
+                    `${profile._json.login}@github.local`
+
+                console.log("Email obtenido:", email)
+
+                // Buscar usuario existente
+                const existingUser = await usersManager.findByEmail(email)
+                if (existingUser.success) {
+                    console.log("Usuario existente encontrado")
+                    return done(null, existingUser.data)
+                }
+
+                console.log("Creando nuevo usuario...")
+
+                // Crear carrito y usuario nuevo
+                const newCart = await cartsManager.createCart()
+                const newUser = {
+                    first_name: profile._json.name?.split(" ")[0] || "GitHub",
+                    last_name: profile._json.name?.split(" ")[1] || "User",
+                    email: email,
+                    age: 18,
+                    password:  "github_oauth_user",
+                    cart: newCart._id,
+                    role: "user",
+                    fromGitHub: true,
+                }
+
+                const createdUser = await usersManager.createOne(newUser)
+                return done(null, createdUser)
+            } catch (error) {
+                console.error("GitHub Strategy error:", error)
+                return done(error)
+            }
+        }
+    )
+)
 
 
-
-
+// GOOGLE STRATEGY 
 export { passport, JWT_SECRET }
