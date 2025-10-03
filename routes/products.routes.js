@@ -1,28 +1,27 @@
-import { Router } from "express"
 import { productsManager } from "../managers/products.manager.js"
+import CustomRouter from "../utils/CustomRouter.js"
 
-const productsRouter = Router()
+const productsRouter = new CustomRouter()
 
 productsRouter.get("/", async (req, res) => {
     try {
         const productos = await productsManager.findAllProducts(req.query)
-        res.status(200).json({ status: "success", payload: productos })
+        res.sendSuccess(productos, "Lista de productos obtenida")
     } catch (error) {
-        res.status(500).json({ error: error.message })
+        res.sendServerError()
     }
 })
-
 productsRouter.get("/:pid", async (req, res) => {
     try {
         const { pid } = req.params
         const producto = await productsManager.findById(pid)
 
         if (!producto.success) {
-            return res.status(404).json({ error: "Producto no encontrado" })
+            return res.sendNotFound(producto.message)
         }
-        res.status(200).json({ status: "success", payload: producto.data })
+        res.sendSuccess(producto.data, "Producto encontrado")
     } catch (error) {
-        res.status(500).json({ error: error.message })
+        res.sendServerError()
     }
 })
 
@@ -30,9 +29,9 @@ productsRouter.post("/", async (req, res) => {
     try {
         const producto = req.body
         const nuevoProducto = await productsManager.createOne(producto)
-        res.status(201).json({ status: "succes", payload: nuevoProducto })
+        res.sendCreated(nuevoProducto, "Producto creado exitosamente")
     } catch (error) {
-        res.status(500).json({ error: error.message })
+        res.sendServerError()
     }
 })
 
@@ -44,16 +43,14 @@ productsRouter.put("/:pid", async (req, res) => {
             req.body
         )
         if (!productoActualizado.success) {
-            return res
-                .status(404)
-                .json({ status: "error", message: productoActualizado.message })
+            return res.sendNotFound(productoActualizado.message)
         }
-        res.status(200).json({
-            status: "success",
-            payload: productoActualizado.data,
-        })
+        res.sendSuccess(
+            productoActualizado.data,
+            "Producto actualizado exitosamente"
+        )
     } catch (error) {
-        res.status(500).json({ error: error.message })
+        res.sendServerError()
     }
 })
 
@@ -62,17 +59,16 @@ productsRouter.delete("/:pid", async (req, res) => {
         const { pid } = req.params
         const deletedProduct = await productsManager.deleteOne(pid)
         if (!deletedProduct.success) {
-            return res.status(404).json({ error: deletedProduct.message })
+            return res.sendNotFound(deletedProduct.message)
         }
 
-        res.status(200).json({
-            status: "success",
-            message: `Producto ${deletedProduct.data.title} eliminado`,
-            deletedProduct: deletedProduct.data,
-        })
+        res.sendSuccess(
+            deletedProduct.data,
+            `Producto ${deletedProduct.data.title} eliminado`
+        )
     } catch (error) {
-        res.status(500).json({ status: "error", message: error.message })
+        res.sendServerError("Error al eliminar producto")
     }
 })
 
-export default productsRouter
+export default productsRouter.getRouter()

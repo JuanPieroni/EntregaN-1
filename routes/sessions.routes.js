@@ -4,10 +4,11 @@ import { usersManager } from "../managers/users.manager.js"
 import { cartsManager } from "../managers/carts.manager.js"
 import { hashPassword } from "../utils/auth.utils.js"
 import { authenticateJWT } from "../middlewares/auth.middleware.js"
+import CustomRouter from "../utils/CustomRouter.js"
 import jwt from "jsonwebtoken"
 
 const sessionsRouter = Router()
-
+const router = new CustomRouter()
 // POST /api/sessions/register
 sessionsRouter.post("/register", async (req, res) => {
     try {
