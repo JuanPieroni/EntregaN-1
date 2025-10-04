@@ -30,4 +30,4 @@ process.on
 process.exit
 sirve para que un proceso se ejecute mientras otro sigue ejecutando. 
 child_process.fork
-
+lo vamos a usar cuando veamos clusters 
