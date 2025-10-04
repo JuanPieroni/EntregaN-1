@@ -20,6 +20,7 @@
   "homepage": "https://github.com/JuanPieroni/EntregaN-1#readme",
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "commander": "^14.0.1",
     "cookie-parser": "^1.4.7",
     "express": "^5.1.0",
     "express-handlebars": "^8.0.3",

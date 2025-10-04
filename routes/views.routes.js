@@ -5,6 +5,8 @@ import { authenticateJWT } from "../middlewares/auth.middleware.js"
 
 const viewsRouter = Router()
 
+//Todo Agregar Custom router para respuestas.
+
 viewsRouter.get("/products", authenticateJWT, async (req, res) => {
     try {
         const products = await productsManager.findAllProducts(req.query)

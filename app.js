@@ -10,6 +10,9 @@ import productsRouter from "./routes/products.routes.js"
 import cartRouter from "./routes/carts.routes.js"
 import viewsRouter from "./routes/views.routes.js"
 import sessionsRouter from "./routes/sessions.routes.js"
+import userRouter from "./routes/users.routes.js"
+
+const usersRouter = new userRouter()
 
 import {
     connectToMongoDB,
@@ -48,6 +51,7 @@ app.use("/", viewsRouter)
 app.use("/api/products", productsRouter)
 app.use("/api/carts", cartRouter)
 app.use("/api/sessions", sessionsRouter) 
+app.use("/api/users", usersRouter.getRouter()) //Todo : aca ver como hacer para que ande el usersRouter ( es una clase)
 
 const startServer = async () => {
     if (!atlas) {
@@ -70,5 +74,10 @@ const startServer = async () => {
         }
     }
 }
-
+//Todo borrar esta verga de prueba
+/* console.log(process.cwd());
+console.log(`Servidor iniciado con PID: ${process.pid}`) */
+console.log(process.argv.slice(2)) 
+/* console.log(process.memoryUsage());
+console.log(process.env); */
 startServer()

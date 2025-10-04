@@ -8,7 +8,12 @@ import CustomRouter from "../utils/CustomRouter.js"
 import jwt from "jsonwebtoken"
 
 const sessionsRouter = Router()
-const router = new CustomRouter()
+
+
+//Todo - To Apply /* const router = new CustomRouter() */
+
+
+
 // POST /api/sessions/register
 sessionsRouter.post("/register", async (req, res) => {
     try {
@@ -32,7 +37,7 @@ sessionsRouter.post("/register", async (req, res) => {
             age,
             password: hashedPassword,
             cart: newCart._id,
-            role: "user",
+            role: "USER",
         })
 
         /*      // Login automático tras registro

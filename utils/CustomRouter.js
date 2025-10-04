@@ -3,25 +3,47 @@ import { Router } from "express"
 export default class CustomRouter {
     constructor() {
         this.router = Router()
+        this.init()
+    }
+    getRouter() {
+        return this.router
     }
 
+    init() {}
+
     get(path, ...callbacks) {
-        this.router.get(path, this.addCustomResponses, ...callbacks)
+        this.router.get(
+            path,
+            this.addCustomResponses,
+            ...this.applyCallbacks(callbacks)
+        )
         return this
     }
 
     post(path, ...callbacks) {
-        this.router.post(path, this.addCustomResponses, ...callbacks)
+        this.router.post(
+            path,
+            this.addCustomResponses,
+            ...this.applyCallbacks(callbacks)
+        )
         return this
     }
 
     put(path, ...callbacks) {
-        this.router.put(path, this.addCustomResponses, ...callbacks)
+        this.router.put(
+            path,
+            this.addCustomResponses,
+            ...this.applyCallbacks(callbacks)
+        )
         return this
     }
 
     delete(path, ...callbacks) {
-        this.router.delete(path, this.addCustomResponses, ...callbacks)
+        this.router.delete(
+            path,
+            this.addCustomResponses,
+            ...this.applyCallbacks(callbacks)
+        )
         return this
     }
 
@@ -104,8 +126,22 @@ export default class CustomRouter {
 
         next()
     }
+    //Todo : Regex y expresiones para validar params y body
+    //Todo ver como reemplazar los try catch de todas las rutas , over para que carajo mas sirve este custom router
+    //Todo usar applycallbacks para reemplazar los try catch de todas las rutas
+    //Todo despues de hacer eso, como concha especifico cada error? o sea, si es 400, 500, 401, 403, y no generalizado
 
-    getRouter() {
-        return this.router
+    applyCallbacks(callbacks) {
+        return callbacks.map((callback) => async (...params) => {
+            try {
+                await callback.apply(this, params)
+            } catch (error) {
+                console.error("Error en ruta:", error)
+                const res = params[1]
+                res.status(500).send({ status: "error", error: "Server error" })
+            }
+        })
     }
+
+    //Todo hacer el mapeo de rutas en un método init() que se llame en el constructor
 }

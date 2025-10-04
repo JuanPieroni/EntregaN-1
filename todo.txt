@@ -13,6 +13,7 @@ estandarizar respuestas de succes , error , message , server error etc.
 manejo sistemizado de respuestas 
 Gestion de middleware interiorizado: generar middleware a nivel de routers. (opc creo)
 
+expresiones regulareS ? 
 
 creo customRouter.js
 agragar al customrouter el manejo de try catch mapeado y asi aplicarlo a todas las rutas
