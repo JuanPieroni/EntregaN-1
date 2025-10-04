@@ -1,38 +1,41 @@
 {
-  "name": "entrega_1",
-  "version": "1.0.0",
-  "description": "Entrega 1 Comision 74305",
-  "type": "module",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/JuanPieroni/EntregaN-1.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/JuanPieroni/EntregaN-1/issues"
-  },
-  "homepage": "https://github.com/JuanPieroni/EntregaN-1#readme",
-  "dependencies": {
-    "bcrypt": "^5.1.1",
-    "commander": "^14.0.1",
-    "cookie-parser": "^1.4.7",
-    "express": "^5.1.0",
-    "express-handlebars": "^8.0.3",
-    "express-session": "^1.17.3",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.17.0",
-    "mongoose-paginate-v2": "^1.9.1",
-    "nodemon": "^3.1.10",
-    "passport": "^0.7.0",
-    "passport-github2": "^0.1.12",
-    "passport-jwt": "^4.0.1",
-    "passport-local": "^1.0.0",
-    "uuid": "^11.1.0"
-  }
+    "name": "entrega_1",
+    "version": "1.0.0",
+    "description": "Entrega 1 Comision 74305",
+    "type": "module",
+    "main": "app.js",
+    "scripts": {
+        "start": "nodemon app.js",
+        "start:dev": "nodemon app.js --mode dev",
+        "start:prod": "nodemon app.js --mode prod",
+        "start:test": "nodemon app.js --mode test"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/JuanPieroni/EntregaN-1.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/JuanPieroni/EntregaN-1/issues"
+    },
+    "homepage": "https://github.com/JuanPieroni/EntregaN-1#readme",
+    "dependencies": {
+        "bcrypt": "^5.1.1",
+        "commander": "^14.0.1",
+        "cookie-parser": "^1.4.7",
+        "dotenv": "^17.2.3",
+        "express": "^5.1.0",
+        "express-handlebars": "^8.0.3",
+        "express-session": "^1.17.3",
+        "jsonwebtoken": "^9.0.2",
+        "mongoose": "^8.17.0",
+        "mongoose-paginate-v2": "^1.9.1",
+        "nodemon": "^3.1.10",
+        "passport": "^0.7.0",
+        "passport-github2": "^0.1.12",
+        "passport-jwt": "^4.0.1",
+        "passport-local": "^1.0.0",
+        "uuid": "^11.1.0"
+    }
 }

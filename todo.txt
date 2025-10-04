@@ -20,5 +20,14 @@ agragar al customrouter el manejo de try catch mapeado y asi aplicarlo a todas l
 
 agregar luego regex en el customRouter
 
+terminar de configurar el commander + dotenv
 
+Listeners , child-process
+
+
+
+process.on 
+process.exit
+sirve para que un proceso se ejecute mientras otro sigue ejecutando. 
+child_process.fork
 

@@ -1,10 +1,11 @@
 import mongoose from "mongoose"
+import config from "../env.config.js"
 
 export const connectToMongoDB = async () => {
     try {
         await mongoose.connect(
-            "mongodb://127.0.0.1:27017/coderhouse",
-            console.log("MongoDB conectado a 127.0.0.1:27017")
+            config.mongodb.local,
+            console.log("MongoDB conectado a Mongo Compass 127.0.0.1:27017")
         )
     } catch (error) {
         console.error("Error al conectar a mongoDB")
@@ -15,13 +16,12 @@ export const connectToMongoDB = async () => {
 export const connectToMongoDBAtlas = async () => {
     try {
         await mongoose.connect(
-            //contraseña: Atlgla36*(Atlgla36%2A)
-            //usuario: SeisDuro
-            "mongodb+srv://SeisDuro:Atlgla36%2A@cluster0.bvo0gcz.mongodb.net/entregaFinal?retryWrites=true&w=majority",
+ 
+           config.mongodb.atlas,
             console.log("MongoDB conectado a Atlas")
         )
     } catch (error) {
-        console.error("Error al conectar a mongoAtlas")
+        console.error("Error al conectar a Mongo Atlas")
         process.exit(1)
     }
 }

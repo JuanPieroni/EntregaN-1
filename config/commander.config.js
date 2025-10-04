@@ -1,16 +1,25 @@
-import { Command } from "commander"
-
-const program = new Command()
+import { program } from "commander"
 
 program
-    .option("-d", "Variable para debug", false)
+    .name("Proyecto Final Backend II")
+    .description("E-commerce con Node.js y MongoDB")
+    .option("-m, --mode <mode>", "Modo de ejecución", "dev")
     .option("-p, --port <number>", "Puerto del servidor", "8080")
-    .option("-m, --mode <mode>", "Modo de ejecución", "developer")
+    .option("-d,  --debug", "Variable para debug", false)
+    .option("-a, --atlas <boolean>", "Usar MongoDB Atlas", false)
 
-program.parse()
+    .parse()
 
+    export default program
+
+
+/* console.log(program.name())
+console.log(program.description())
+console.log(program.opts().port)
 console.log("Opciones:")
 console.log(program.opts())
 
 console.log("Argumentos:")
-console.log(program.args)
+console.log(program.args) */
+
+//Todo se entiende esto pero , no entiendo bien el uso real. Para ejecutar distintos entornos.. ok que carajo es un entorno en la vida real no ?  como lo uso?

@@ -5,8 +5,9 @@ import { Strategy as GitHubStrategy } from "passport-github2"
 import { usersManager } from "../managers/users.manager.js"
 import { cartsManager } from "../managers/carts.manager.js"
 import { comparePassword } from "../utils/auth.utils.js"
+import config from "./env.config.js"
 
-const JWT_SECRET = "coderhouse_secret_key"
+const JWT_SECRET = config.jwtSecret
 
 // Local Strategy para login
 passport.use(
@@ -70,10 +71,11 @@ passport.use(
     "github",
     new GitHubStrategy(
         {
-            clientID: "Iv23liZDMj6aLPGdnrUi",
-            clientSecret: "53400227add939343d7e565bb38be95ba12b7f8b",
-            callbackURL: "http://localhost:8080/api/sessions/github/callback",
+            clientID: config.github.clientId,
+            clientSecret: config.github.clientSecret,
+            callbackURL: config.github.callbackURL,
         },
+
         async (accessToken, refreshToken, profile, done) => {
             console.log("=== GITHUB STRATEGY EJECUTADA ===")
             console.log("Profile recibido:", profile)
@@ -104,7 +106,7 @@ passport.use(
                     last_name: profile._json.name?.split(" ")[1] || "User",
                     email: email,
                     age: 18,
-                    password:  "github_oauth_user",
+                    password: "github_oauth_user",
                     cart: newCart._id,
                     role: "user",
                     fromGitHub: true,
@@ -120,9 +122,7 @@ passport.use(
     )
 )
 
-
-// GOOGLE STRATEGY 
+// GOOGLE STRATEGY
 // ToDo
-
 
 export { passport, JWT_SECRET }

@@ -145,4 +145,6 @@ sessionsRouter.get("/github/callback", (req, res, next) => {
     })(req, res, next)
 })
 
+//Todo : Agregar otra opciones como Google y Facebook 
+
 export default sessionsRouter
