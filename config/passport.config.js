@@ -2,6 +2,7 @@ import passport from "passport"
 import { Strategy as LocalStrategy } from "passport-local"
 import { Strategy as JWTStrategy, ExtractJwt } from "passport-jwt"
 import { Strategy as GitHubStrategy } from "passport-github2"
+/* import { Strategy as GoogleStrategy } from "passport-google-oauth20" */
 import { usersManager } from "../managers/users.manager.js"
 import { cartsManager } from "../managers/carts.manager.js"
 import { comparePassword } from "../utils/auth.utils.js"
@@ -124,5 +125,10 @@ passport.use(
 
 // GOOGLE STRATEGY
 // ToDo
+
+//Todo : Agregar otra opciones como Google y Facebook 
+//Todo instalar googleoAuth 2.0
+//passport.serialize y deserialize
+
 
 export { passport, JWT_SECRET }

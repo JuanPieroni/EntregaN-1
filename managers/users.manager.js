@@ -3,11 +3,18 @@ import { userModel } from "../models/user.model.js"
 
 class UserManager extends BaseManager {
     constructor() {
-        super(userModel)
+        //Todo : Esta Bien el "Cart" aca para hacer el populate?
+        super(userModel /* , "Cart" */)
     }
 
     async findByEmail(email) {
-        const user = await this.model.findOne({ email }).lean()
+        //Todo: Usermodel.findone o this.model.findOne?
+        //ToDo: aca hacer populate? esta correcto ? 
+        const user = await this.model
+            .findOne({
+                email,
+            }) /* .populate({path: "cart", populate:{path: "products.product"}}) */
+            .lean()
         if (!user) {
             return { success: false, message: "Usuario no encontrado" }
         }

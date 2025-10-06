@@ -145,6 +145,10 @@ sessionsRouter.get("/github/callback", (req, res, next) => {
     })(req, res, next)
 })
 
-//Todo : Agregar otra opciones como Google y Facebook 
+//Google oAuth routes
+//Todo: igual que githiub, Google necestia dos gets . 
+// esta  a las 2:58:00 minutos de la clase 13 de la comision vieja .
+
+
 
 export default sessionsRouter

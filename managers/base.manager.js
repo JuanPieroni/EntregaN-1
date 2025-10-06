@@ -3,6 +3,7 @@
 export default class BaseManager {
     constructor(model) {
         this.model = model
+        
     }
 
     async findAll() {
@@ -22,7 +23,7 @@ export default class BaseManager {
     }
 
     async createOne(obj) {
-        console.log("obj", obj)
+       /*  console.log("obj", obj) */
         const created = await this.model.create(obj)
         return created
     }

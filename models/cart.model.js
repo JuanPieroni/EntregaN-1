@@ -17,6 +17,8 @@ const cartSchema = new mongoose.Schema({
             },
         },
     ],
+    //ToDo: Chequear si esto impide que mongo haga un Id por default  /*   _id: false, */
+    /*   _id: false, */
     createdAt: {
         type: Date,
         default: Date.now,

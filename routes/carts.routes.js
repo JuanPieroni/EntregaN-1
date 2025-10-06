@@ -77,9 +77,8 @@ cartsRouter.get("/:cid", async (req, res) => {
             .findById(cid)
             .populate("products.product")
         if (!cart) {
-            return res
-                .status(404)
-                .json({ status: "error", message: "Carrito no encontrado" })
+            //todo validar aca con [a-zA-Z]+ o algo asi
+            return res.sendNotFound("Carrito no encontrado")
         }
         res.sendSuccess(cart, "Carrito obtenido con éxito")
     } catch (error) {
@@ -123,9 +122,7 @@ cartsRouter.post("/:cid/product/:pid", async (req, res) => {
         await cart.save()
         await product.save()
 
-      res.sendSuccess(cart, `Producto ${product.title} agregado exitosamente`)
-
-
+        res.sendSuccess(cart, `Producto ${product.title} agregado exitosamente`)
     } catch (error) {
         res.sendServerError("Error al agregar producto al carrito")
     }

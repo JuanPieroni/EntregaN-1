@@ -21,7 +21,7 @@ export default class UserRouter extends CustomRouter {
         })
     }
 }
-
+//Todo como hago si quiero poner rutas normales  como venia haciendo. puedo agregarlas aca ? 
 // router.get('/', handlePolicies(["PUBLIC"]), (req, res) => {
 //     res.send('Hola para todos!')
 // })

@@ -6,9 +6,9 @@
     "main": "app.js",
     "scripts": {
         "start": "nodemon app.js",
-        "start:dev": "nodemon app.js --mode dev",
-        "start:prod": "nodemon app.js --mode prod",
-        "start:test": "nodemon app.js --mode test"
+        "dev": "nodemon app.js --mode dev",
+        "prod": "nodemon app.js --mode prod",
+        "test": "nodemon app.js --mode test"
     },
     "repository": {
         "type": "git",
