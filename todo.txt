@@ -31,3 +31,44 @@ process.exit
 sirve para que un proceso se ejecute mientras otro sigue ejecutando. 
 child_process.fork
 lo vamos a usar cuando veamos clusters 
+
+
+
+-----------
+
+Capa de peristencia ( managers ?)
+Capa de servicio ( adicional ) intermedia entre estos dos 
+Capa de negocio o controlador
+-------
+Capas adicionales para node.js ( router )
+
+----
+
+Flujo 
+
+el sevicio se conececta con el manager ( importa a manager )
+controller se comunica con  servicio. importa findall findByid, createone etc
+el router llama al controlador. 
+
+// Router → Controller → Manager/Service → Model
+
+// Más capas, mejor separación
+Router → Controller → Manager → DAO → Model
+
+Loggear y documentar 
+
+Singleton
+
+server side rendering 
+client side rendering 
+
+headers de la peticion 
+pasan token formato de envios de datos , identificador del elemento que hace la peticion.
+
+datos a enviar :
+metodos
+query params 
+body
+route params
+
+Cors

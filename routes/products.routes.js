@@ -15,6 +15,7 @@ productsRouter.get("/:pid", async (req, res) => {
     try {
         const { pid } = req.params
         const producto = await productsManager.findById(pid)
+        
 
         if (!producto.success) {
             return res.sendNotFound(producto.message)

@@ -59,6 +59,8 @@ app.use("/api/carts", cartRouter)
 app.use("/api/sessions", sessionsRouter)
 app.use("/api/users", usersRouter.getRouter()) //Todo : aca ver como hacer para que ande el usersRouter ( es una clase)
 
+
+//Todo: Separar la conexion de mongo con el servidor y usar Singleton
 const startServer = async () => {
     if (!atlas) {
         try {
