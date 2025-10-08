@@ -25,34 +25,37 @@ class CartsService {
         return await cartsManager.vaciarCarrito(cid)
     }
     async addProductToCart(cid, pid, cantidad) {
-      
+        // chequear si viene el producto
         const product = await productsManager.findById(pid)
         if (!product.success) {
             return { success: false, message: "Producto no encontrado" }
         }
-         
+
+        // ver si hay stock
         if (product.data.stock < cantidad) {
             return { success: false, message: "Stock insuficiente" }
         }
-        
-        
-        
+
+        // agregar producto al cart
         const cart = await cartsManager.addProductToCart(cid, pid, cantidad)
         if (typeof cart === "string") {
             return { success: false, message: cart }
         }
-        
-       
-        await productsManager.updateOne(pid, { 
-            stock: product.data.stock - cantidad 
+
+        // actualiz product model prop disponible pasa a false? 
+        const newStock = product.data.stock - cantidad
+        await productsManager.updateOne(pid, {
+            stock: newStock,
+            disponible: newStock > 0,
         })
-        
+
         return { success: true, data: cart }
     }
+
+    async getCartDetails(cid){
+        return await cartsManager.getCartDetails(cid)
+
+    }
 }
-
-
-    
-
 
 export const cartsService = new CartsService()

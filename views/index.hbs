@@ -26,8 +26,8 @@
 
             <p>Categoria : {{this.category}}</p>
             <p>
-                {{#if this.disponible}}
-                    En stock
+                {{#if this.stock}}
+                    En stock ( {{this.stock}})
                 {{else}}
                     No hay stock
                 {{/if}}
@@ -56,6 +56,8 @@
         <a href="/products?page={{products.nextPage}}">Siguiente</a>
     {{/if}}
 </div>
+
+{{!-- //Todo : aca alertar que si no hay stock " no stock disponible" --}}
 <script>
     function alertAgregarProducto(nombreProducto) { alert('Producto "' +
     nombreProducto + '" agregado al carrito ✅'); }

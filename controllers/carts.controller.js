@@ -90,5 +90,10 @@ export const addProductToCart = async (req, res) => {
         res.sendSuccess(result.data, "Producto agregado exitosamente")
     } catch (error) {
         res.sendServerError("Error al agregar producto al carrito")
-    }
+    } 
 }
+
+ 
+
+    
+

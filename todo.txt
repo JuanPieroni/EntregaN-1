@@ -65,10 +65,11 @@ client side rendering
 headers de la peticion 
 pasan token formato de envios de datos , identificador del elemento que hace la peticion.
 
-datos a enviar :
-metodos
-query params 
-body
-route params
+ 
+
 
 Cors
+
+
+
+probar las rutas de addprotuctTo cart . chequear funcionalidad de capas . 

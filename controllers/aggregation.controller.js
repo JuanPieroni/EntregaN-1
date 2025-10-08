@@ -1,42 +1,16 @@
-import mongoose from "mongoose"
-import { cartsModel } from "../models/cart.model.js"
+import { cartsService } from "../services/carts.service.js"
 
-export const aggregateCarrito = async (req, res) => {
+export const getCartDetails = async (req, res) => {
     try {
         const { cid } = req.params
-        const carritoId = new mongoose.Types.ObjectId(cid)
 
-        const detalle = await cartsModel.aggregate([
-            { $match: { _id: carritoId } },
-            { $unwind: "$products" },
-            {
-                $lookup: {
-                    from: "products",
-                    localField: "products.product",
-                    foreignField: "_id",
-                    as: "productoDetalle",
-                },
-            },
+        const detalle = await cartsService.getCartDetails(cid)
+        if (!detalle) {
+            return res.sendNotFound("Carrito no encontrado")
+        }
 
-            { $unwind: "$productoDetalle" },
-            {
-                $project: {
-                    _id: 0,
-                    producto: "$productoDetalle.title",
-                    cantidad: "$products.cantidad",
-                    precioUnitario: "$productoDetalle.price",
-                    precioTotal: {
-                        $multiply: [
-                            "$products.cantidad",
-                            "$productoDetalle.price",
-                        ],
-                    },
-                },
-            },
-        ])
-
-        res.status(200).json({ status: "success", payload: detalle })
+        res.sendSuccess(detalle, "Detalles del carrito obtenidos")
     } catch (error) {
-        res.status(500).json({ status: "error", message: error.message })
+        res.sendServerError("Error al obtener detalles del carrito")
     }
 }

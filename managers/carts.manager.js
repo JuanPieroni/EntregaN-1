@@ -26,10 +26,6 @@ class CartManager extends BaseManager {
         return createdCart
     }
 
-
-
-
-
     async updateCantidadProducto(cid, pid, cantidad) {
         const cart = await this.model.findById(cid)
         if (!cart) return "Carrito no encontrado"
@@ -47,7 +43,6 @@ class CartManager extends BaseManager {
         return carritoActualizado
     }
 
-
     async updateCartProducts(cid, productosActualizados) {
         const cart = await this.model.findById(cid)
         if (!cart) return "Carrito no encontrado"
@@ -61,8 +56,6 @@ class CartManager extends BaseManager {
         const carritoActualizado = await cart.save()
         return carritoActualizado
     }
-
-
 
     async deleteProductoCarrito(cid, pid) {
         const cart = await this.model.findById(cid)
@@ -85,10 +78,6 @@ class CartManager extends BaseManager {
         return carritoVacio
     }
 
-
-
-
-
     async addProductToCart(cid, pid, cantidad) {
         const cart = await this.model.findById(cid)
         if (!cart) return "Carrito no encontrado"
@@ -99,17 +88,67 @@ class CartManager extends BaseManager {
         if (productoInCart) {
             productoInCart.cantidad += Number(cantidad)
         } else {
-            cart.products.push({ 
-                product: new mongoose.Types.ObjectId(pid), 
-                cantidad: Number(cantidad) 
+            cart.products.push({
+                product: new mongoose.Types.ObjectId(pid),
+                cantidad: Number(cantidad),
             })
         }
-        
+
         const carritoActualizado = await cart.save()
         return carritoActualizado
     }
 
+    async getCartDetails(cid) {
+        try {
+            const carritoId = new mongoose.Types.ObjectId(cid)
 
+            const detalle = await this.model.aggregate([
+                { $match: { _id: carritoId } },
+                { $unwind: "$products" },
+                {
+                    $lookup: {
+                        from: "products",
+                        localField: "products.product",
+                        foreignField: "_id",
+                        as: "productoDetalle",
+                    },
+                },
+                { $unwind: "$productoDetalle" },
+                {
+                    $project: {
+                        _id: 0,
+                        producto: "$productoDetalle.title",
+                        cantidad: "$products.cantidad",
+                        precioUnitario: "$productoDetalle.price",
+                        precioTotal: {
+                            $multiply: [
+                                "$products.cantidad",
+                                "$productoDetalle.price",
+                            ],
+                        },
+                    },
+                },
+                {
+                    $group: {
+                        _id: null,
+                        productos: { $push: "$$ROOT" },
+                        total: { $sum: "$precioTotal" },
+                    },
+                },
+                {
+                    $project: {
+                        _id: 0,
+                        productos: 1,
+                        total: 1,
+                    },
+                },
+            ])
+
+            return detalle[0] || null
+        } catch (error) {
+            throw error
+        }
+    }
 }
 
 export const cartsManager = new CartManager()
