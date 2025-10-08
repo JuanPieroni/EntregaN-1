@@ -26,6 +26,10 @@ class CartManager extends BaseManager {
         return createdCart
     }
 
+
+
+
+
     async updateCantidadProducto(cid, pid, cantidad) {
         const cart = await this.model.findById(cid)
         if (!cart) return "Carrito no encontrado"
@@ -43,6 +47,11 @@ class CartManager extends BaseManager {
         return carritoActualizado
     }
 
+
+
+
+
+
     async updateCartProducts(cid, productosActualizados) {
         const cart = await this.model.findById(cid)
         if (!cart) return "Carrito no encontrado"
@@ -56,7 +65,7 @@ class CartManager extends BaseManager {
         const carritoActualizado = await cart.save()
         return carritoActualizado
     }
-
+    
     async deleteProductoCarrito(cid, pid) {
         const cart = await this.model.findById(cid)
         if (!cart) return "Carrido no encontrado"

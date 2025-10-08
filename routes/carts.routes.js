@@ -2,14 +2,51 @@ import { cartsManager } from "../managers/carts.manager.js"
 import { aggregateCarrito } from "../controllers/aggregation.controller.js"
 import { cartsModel } from "../models/cart.model.js"
 import { productsModel } from "../models/product.model.js"
+import { getAllCarts, getCartById, createCart } from "../controllers/carts.controller.js"
 import CustomRouter from "../utils/CustomRouter.js"
+import { create } from "express-handlebars"
 
 const cartsRouter = new CustomRouter()
+cartsRouter.get("/",getAllCarts)
+cartsRouter.get("/:cid", getCartById)
+cartsRouter.post("/",createCart)
 
-cartsRouter.post("/", async (req, res) => {
-    const cart = await cartsManager.createCart()
-    res.sendCreated(cart, "Carrito creado con exito")
+
+
+
+
+
+
+
+
+
+cartsRouter.put("/:cid", async (req, res) => {
+    try {
+        const { cid } = req.params
+        const nuevoProducto = req.body.products
+        const cart = await cartsManager.updateCartProducts(cid, nuevoProducto)
+        res.sendSuccess(cart, "Carrito actualizado con exito")
+    } catch (error) {
+        res.sendServerError("Error al actualizar carrito")
+    }
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 cartsRouter.put("/:cid/product/:pid", async (req, res) => {
     try {
@@ -23,17 +60,6 @@ cartsRouter.put("/:cid/product/:pid", async (req, res) => {
         res.sendSuccess(cart, "Cantidad actualizada con exito")
     } catch (error) {
         res.sendServerError("Error al actualizar cantidad")
-    }
-})
-
-cartsRouter.put("/:cid", async (req, res) => {
-    try {
-        const { cid } = req.params
-        const nuevoProducto = req.body.products
-        const cart = await cartsManager.updateCartProducts(cid, nuevoProducto)
-        res.sendSuccess(cart, "Carrito actualizado con exito")
-    } catch (error) {
-        res.sendServerError("Error al actualizar carrito")
     }
 })
 
@@ -54,37 +80,6 @@ cartsRouter.delete("/:cid", async (req, res) => {
         res.sendSuccess(carritoVacio, "Carrito vaciado con éxito")
     } catch (error) {
         res.sendServerError("Error al vaciar carrito")
-    }
-})
-
-cartsRouter.get("/", async (req, res) => {
-    try {
-        const carts = await cartsManager.model
-            .find()
-            .populate("products.product")
-            .lean()
-
-        res.sendSuccess(carts, "Carritos obtenidos con éxito")
-    } catch (error) {
-        res.sendServerError("Error al obtener carritos")
-    }
-})
-
-cartsRouter.get("/:cid", async (req, res) => {
-    const { cid } = req.params
-    try {
-        const cart = await cartsManager.model
-            .findById(cid)
-            .populate("products.product")
-        if (!cart) {
-            //todo validar aca con [a-zA-Z]+ o algo asi
-            return res.sendNotFound("Carrito no encontrado")
-        }
-        res.sendSuccess(cart, "Carrito obtenido con éxito")
-    } catch (error) {
-        res.sendNotFound(
-            "Error al obtener carrito, ID inválido o no encontrado"
-        )
     }
 })
 
