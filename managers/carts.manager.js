@@ -48,10 +48,6 @@ class CartManager extends BaseManager {
     }
 
 
-
-
-
-
     async updateCartProducts(cid, productosActualizados) {
         const cart = await this.model.findById(cid)
         if (!cart) return "Carrito no encontrado"
@@ -65,7 +61,9 @@ class CartManager extends BaseManager {
         const carritoActualizado = await cart.save()
         return carritoActualizado
     }
-    
+
+
+
     async deleteProductoCarrito(cid, pid) {
         const cart = await this.model.findById(cid)
         if (!cart) return "Carrido no encontrado"
@@ -86,6 +84,32 @@ class CartManager extends BaseManager {
         const carritoVacio = await cart.save()
         return carritoVacio
     }
+
+
+
+
+
+    async addProductToCart(cid, pid, cantidad) {
+        const cart = await this.model.findById(cid)
+        if (!cart) return "Carrito no encontrado"
+
+        const productoInCart = cart.products.find(
+            (p) => p.product.toString() === pid
+        )
+        if (productoInCart) {
+            productoInCart.cantidad += Number(cantidad)
+        } else {
+            cart.products.push({ 
+                product: new mongoose.Types.ObjectId(pid), 
+                cantidad: Number(cantidad) 
+            })
+        }
+        
+        const carritoActualizado = await cart.save()
+        return carritoActualizado
+    }
+
+
 }
 
 export const cartsManager = new CartManager()

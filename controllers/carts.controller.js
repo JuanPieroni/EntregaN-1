@@ -40,3 +40,55 @@ export const updateCart = async (req, res) => {
         res.sendServerError("Error al actualizar carrito")
     }
 }
+
+export const updateProductInCart = async (req, res) => {
+    try {
+        const { cid, pid } = req.params
+        const { cantidad } = req.body
+        const cart = await cartsService.updateProductInCart(cid, pid, cantidad)
+        res.sendSuccess(cart, "Cantidad actualizada con exito")
+    } catch (error) {
+        res.sendServerError("Error al actualizar cantidad")
+    }
+}
+
+export const removeProductFromCart = async (req, res) => {
+    const { cid, pid } = req.params
+    try {
+        const cart = await cartsService.removeProductFromCart(cid, pid)
+        res.sendSuccess(cart, "Producto eliminado con exito")
+    } catch (error) {
+        res.sendServerError("Error al eliminar producto")
+    }
+}
+
+export const clearCart = async (req, res) => {
+    try {
+        const { cid } = req.params
+        const carritoVacio = await cartsService.clearCart(cid)
+        res.sendSuccess(carritoVacio, "Carrito vaciado con éxito")
+    } catch (error) {
+        res.sendServerError("Error al vaciar carrito")
+    }
+}
+
+export const addProductToCart = async (req, res) => {
+    try {
+        const { cid, pid } = req.params
+        let { cantidad = 1 } = req.body || {}
+        cantidad = Number(cantidad)
+
+        const result = await cartsService.addProductToCart(cid, pid, cantidad)
+
+        if (!result.success) {
+            if (result.message === "Stock insuficiente") {
+                return res.sendError(result.message)
+            }
+            res.sendNotFound(res, result.message)
+        }
+
+        res.sendSuccess(result.data, "Producto agregado exitosamente")
+    } catch (error) {
+        res.sendServerError("Error al agregar producto al carrito")
+    }
+}
