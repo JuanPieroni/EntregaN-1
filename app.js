@@ -12,14 +12,7 @@ import viewsRouter from "./routes/views.routes.js"
 import sessionsRouter from "./routes/sessions.routes.js"
 import userRouter from "./routes/users.routes.js"
 import config from "./config/env.config.js"
-/* console.log("config", config) */
-
-
-
-import {
-    connectToMongoDB,
-    connectToMongoDBAtlas,
-} from "./config/db/connect.config.js"
+import MongoSingleton from "./config/db/connect.config.js"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -28,8 +21,6 @@ const usersRouter = new userRouter()
 const app = express()
 const httpServer = createServer(app)
 const PORT = config.port
-const atlas = config.useAtlas
-
 
 
 app.use(express.json())
@@ -57,53 +48,19 @@ app.use("/", viewsRouter)
 app.use("/api/products", productsRouter)
 app.use("/api/carts", cartRouter)
 app.use("/api/sessions", sessionsRouter)
-app.use("/api/users", usersRouter.getRouter()) //Todo : aca ver como hacer para que ande el usersRouter ( es una clase)
+app.use("/api/users", usersRouter.getRouter())
 
-
-//Todo: Separar la conexion de mongo con el servidor y usar Singleton
 const startServer = async () => {
-    if (!atlas) {
-        try {
-            await connectToMongoDB()
-            httpServer.listen(PORT, () => {
-                console.log(`Servidor corriendo en http://localhost:${PORT}`)
-            })
-        } catch (error) {
-            console.error("Error al iniciar el servidor:", error)
-        }
-    } else {
-        try {
-            await connectToMongoDBAtlas()
-            httpServer.listen(PORT, () => {
-                console.log(`Servidor corriendo en http://localhost:${PORT}`)
-            })
-        } catch (error) {
-            console.error("Error al iniciar el servidor:", error)
-        }
+    try {
+        const mongoConn = new MongoSingleton()
+        await mongoConn.connect(config.useAtlas)
+
+        httpServer.listen(PORT, () => {
+            console.log(`Servidor corriendo en http://localhost:${PORT}`)
+        })
+    } catch (error) {
+        console.error("Error al iniciar el servidor:", error)
     }
 }
-//Todo borrar esta verga de prueba
-/* console.log(process.cwd());
-console.log(`Servidor iniciado con PID: ${process.pid}`) */
-/* console.log(process.argv.slice(2)) */
-/* console.log(process.memoryUsage())
-console.log(process.env) */
-/* console.log("process", process); */
-//todo mandar esto a commander u otro archivo en config
 
-/* const env = process.argv[2]
-switch (env) {
-    case "dev":
-        console.log("MODO DE DESARROLLO")
-        break
-    case "prod":
-        console.log("MODO DE PRODUCCION")
-        break
-    case "test":
-        console.log("MODO DE TESTEO")
-        break
-    default:
-        console.log("No env")
-        break
-} */
 startServer()

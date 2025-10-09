@@ -1,42 +1,22 @@
 import CustomRouter from "../utils/CustomRouter.js"
 import { handlePolicies } from "../middlewares/handlePolicies.js"
+import {
+    getPublicMessage,
+    getCurrentUser,
+    getCurrentAdmin,
+} from "../controllers/users.controller.js"
 
 export default class UserRouter extends CustomRouter {
     init() {
-        this.get("/", handlePolicies(["PUBLIC"]), (req, res) => {
-            res.sendSuccess("Hola para todos!")
-        })
+        this.get("/", handlePolicies(["PUBLIC"]), getPublicMessage)
 
         this.get(
             "/currentUser",
             handlePolicies(["USER", "ADMIN"]),
-            (req, res) => {
-                res.sendSuccess(req.user.email, "Email del usuario actual. Eres user o admin")
-            }
+            getCurrentUser
         )
-
-        this.get("/currentAdmin", handlePolicies(["ADMIN"]), (req, res) => {
-            console.log(req.user)
-            res.sendSuccess(req.user.email, "Email del admin actual. Eres admin")
-        })
+        this.get("/currentAdmin", handlePolicies(["ADMIN"]), getCurrentAdmin)
     }
 }
-//Todo como hago si quiero poner rutas normales  como venia haciendo. puedo agregarlas aca ? 
-// router.get('/', handlePolicies(["PUBLIC"]), (req, res) => {
-//     res.send('Hola para todos!')
-// })
 
-// router.get('/currentUser', handlePolicies(["USER", "ADMIN"]), (req, res) => {
-//     res.send(req.user.email)
-// })
-
-// router.get('/currentAdmin', handlePolicies(["ADMIN"]), (req, res) => {
-//     console.log(req.user)
-//     res.send(req.user.email)
-// })
-
-// export class UserRouter {
-//     // HACER EN CASA
-// }
-
-// export default router
+ 

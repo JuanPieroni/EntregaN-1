@@ -21,7 +21,8 @@ cartsRouter.put("/:cid/product/:pid", updateProductInCart)
 cartsRouter.delete("/:cid/product/:pid", removeProductFromCart)
 cartsRouter.delete("/:cid", clearCart)
 cartsRouter.post("/:cid/product/:pid", addProductToCart)
-
 cartsRouter.get("/:cid/detalle", getCartDetails)
 
+
 export default cartsRouter.getRouter()
+
