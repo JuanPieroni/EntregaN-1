@@ -6,3 +6,6 @@ node_modules
 .env.testing
 todo
 claveApple.txt
+ 
+logs/
+*.log
