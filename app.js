@@ -53,7 +53,7 @@ app.use("/api/users", usersRouter.getRouter())
 const startServer = async () => {
     try {
         const mongoConn = new MongoSingleton()
-        await mongoConn.connect(config.useAtlas)
+        await mongoConn.connect()
 
         httpServer.listen(PORT, () => {
             console.log(`Servidor corriendo en http://localhost:${PORT}`)

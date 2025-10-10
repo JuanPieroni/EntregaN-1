@@ -14,7 +14,7 @@ dotenv.config({
 const config = {
     port: process.env.PORT || 8080,
     jwtSecret: process.env.JWT_SECRET,
-    useAtlas: process.env.USE_ATLAS === "true",
+    database: process.env.DATABASE || "mongo",
 
     mongodb: {
         local: process.env.MONGODB_LOCAL_URI,
@@ -23,7 +23,7 @@ const config = {
     github: {
         clientId: process.env.GITHUB_CLIENT_ID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
-        callbackURL : process.env.GITHUB_CALLBACK_URL
+        callbackURL: process.env.GITHUB_CALLBACK_URL,
     },
 }
 

@@ -1,5 +1,5 @@
 import BaseManager from "./base.manager.js"
-import UsersDAO from "../dao/users.dao.js"
+import UsersDAO from "../DAOs/users.dao.js"
 
 class UserManager extends BaseManager {
     constructor() {

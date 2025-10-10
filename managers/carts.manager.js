@@ -1,5 +1,5 @@
 import BaseManager from "./base.manager.js"
-import CartsDAO from "./../dao/carts.dao.js"
+import CartsDAO from "../DAOs/carts.dao.js"
 import mongoose from "mongoose"
 
 class CartManager extends BaseManager {

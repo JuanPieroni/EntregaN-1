@@ -8,15 +8,10 @@ class MongoSingleton {
         this.connection = null
     }
 
-    async connect(useAtlas) {
+    async connect() {
         if (!MongoSingleton.instance) {
-            const url = useAtlas ? config.mongodb.atlas : config.mongodb.local
-            this.connection = await mongoose.connect(url, {})
-            console.log(
-                useAtlas
-                    ? "MongoDB conectado a Atlas"
-                    : "MongoDB conectado a Mongo Compass 127.0.0.1:27017"
-            )
+            this.connection = await mongoose.connect(config.mongodb.atlas, {})
+            console.log("MongoDB conectado a Atlas")
 
             MongoSingleton.instance = this
         }
@@ -25,28 +20,3 @@ class MongoSingleton {
 }
 
 export default MongoSingleton
-
-/* export const connectToMongoDB = async () => {
-    try {
-        await mongoose.connect(
-            config.mongodb.local,
-            console.log("MongoDB conectado a Mongo Compass 127.0.0.1:27017")
-        )
-    } catch (error) {
-        console.error("Error al conectar a mongoDB")
-        process.exit(1)
-    }
-}
-
-export const connectToMongoDBAtlas = async () => {
-    try {
-        await mongoose.connect(
-            config.mongodb.atlas,
-            console.log("MongoDB conectado a Atlas")
-        )
-    } catch (error) {
-        console.error("Error al conectar a Mongo Atlas")
-        process.exit(1)
-    }
-}
- */
