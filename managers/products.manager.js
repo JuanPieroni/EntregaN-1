@@ -1,9 +1,9 @@
 import BaseManager from "./base.manager.js"
-import { productsModel } from "../models/product.model.js"
+import ProductsDAO from "../dao/products.dao.js"
 
 class ProductManager extends BaseManager {
     constructor() {
-        super(productsModel)
+        super(ProductsDAO)
     }
 
     async findAllProducts(params) {
@@ -13,7 +13,7 @@ class ProductManager extends BaseManager {
         console.log("restoQueryFilters", restoQueryFilters)
 
         const sortFilter = sort ? { price: sort === "asc" ? 1 : -1 } : {}
-        const response = await productsModel.paginate(restoQueryFilters, {
+        const response = await ProductsDAO.findAll(restoQueryFilters, {
             limit,
             page,
             sort: sortFilter,
@@ -28,7 +28,7 @@ class ProductManager extends BaseManager {
             prevPage: response.prevPage,
             nextPage: response.nextPage,
             page: response.page,
-            sort : sortFilter,
+            sort: sortFilter,
             totalDocs: response.totalDocs,
             hasPrevPage: response.hasPrevPage,
             hasNextPage: response.hasNextPage,
@@ -40,7 +40,6 @@ class ProductManager extends BaseManager {
             nextLink: response.hasNextPage
                 ? `/api/products?page=${response.nextPage}`
                 : null,
-            
         }
     }
 }

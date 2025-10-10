@@ -1,18 +1,14 @@
-
-
 export default class BaseManager {
-    constructor(model) {
-        this.model = model
-        
+    constructor(dao) {
+        this.dao = dao
     }
 
     async findAll() {
-        const findAll = await this.model.find().lean()
-        return findAll
+        return await this.dao.findAll()
     }
 
     async findById(id) {
-        const idFound = await this.model.findById(id).lean()
+        const idFound = await this.dao.findById(id)
         if (!idFound) {
             return {
                 success: false,
@@ -23,15 +19,12 @@ export default class BaseManager {
     }
 
     async createOne(obj) {
-       /*  console.log("obj", obj) */
-        const created = await this.model.create(obj)
-        return created
+        /*  console.log("obj", obj) */
+        const created = await this.dao.createOne(obj)
     }
 
     async updateOne(id, obj) {
-        const updated = await this.model.findByIdAndUpdate(id, obj, {
-            new: true,
-        })
+        const updated = await this.dao.updateOne(id, obj)
         if (!updated) {
             return { success: false, message: "Articulo no encontrado" }
         }
@@ -39,7 +32,7 @@ export default class BaseManager {
     }
 
     async deleteOne(id) {
-        const deleted = await this.model.findByIdAndDelete(id)
+        const deleted = await this.dao.deleteOne(id)
         if (!deleted) {
             return { success: false, message: "Articulo no encontrado" }
         }

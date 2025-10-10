@@ -11,8 +11,6 @@ import {
 
 const viewsRouter = Router()
 
-
-
 viewsRouter.get("/products", authenticateJWT, renderProducts)
 viewsRouter.get("/cart/:cid", renderCart)
 viewsRouter.get("/carts", renderCarts)
@@ -21,3 +19,5 @@ viewsRouter.get("/register", renderRegister)
 viewsRouter.get("/profile", authenticateJWT, renderProfile)
 
 export default viewsRouter
+
+

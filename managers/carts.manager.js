@@ -1,33 +1,28 @@
 import BaseManager from "./base.manager.js"
-import { cartsModel } from "../models/cart.model.js"
+import CartsDAO from "./../dao/carts.dao.js"
 import mongoose from "mongoose"
 
 class CartManager extends BaseManager {
     constructor() {
-        super(cartsModel)
+        super(CartsDAO)
     }
     async findAllCarts() {
-        return this.model.find().populate("products.product").lean()
+        return await CartsDAO.findAll()
     }
 
     async getCartById(cid) {
-        const cart = await this.model
-            .findById(cid)
-            .populate("products.product")
-            .lean()
-        return cart
+        return await CartsDAO.findById(cid)
     }
 
     async createCart() {
         const newCart = {
             products: [],
         }
-        const createdCart = await this.createOne(newCart)
-        return createdCart
+        return await CartsDAO.createOne(newCart)
     }
 
     async updateCantidadProducto(cid, pid, cantidad) {
-        const cart = await this.model.findById(cid)
+        const cart = await CartsDAO.findById(cid)
         if (!cart) return "Carrito no encontrado"
 
         const productoInCart = cart.products.find(
@@ -39,12 +34,13 @@ class CartManager extends BaseManager {
         }
         productoInCart.cantidad = Number(cantidad)
 
-        const carritoActualizado = await cart.save()
-        return carritoActualizado
+        return await CartsDAO.updateOne(cid, {
+            products: cart.products,
+        })
     }
 
     async updateCartProducts(cid, productosActualizados) {
-        const cart = await this.model.findById(cid)
+        const cart = await CartsDAO.findById(cid)
         if (!cart) return "Carrito no encontrado"
 
         const productosSeguros = productosActualizados.map((p) => ({
@@ -52,34 +48,35 @@ class CartManager extends BaseManager {
             cantidad: p.cantidad ? Number(p.cantidad) : 1,
         }))
 
-        cart.products = productosSeguros
-        const carritoActualizado = await cart.save()
-        return carritoActualizado
+        return await CartsDAO.updateOne(cid, {
+            products: productosSeguros,
+        })
     }
 
     async deleteProductoCarrito(cid, pid) {
-        const cart = await this.model.findById(cid)
+        const cart = await CartsDAO.findById(cid)
         if (!cart) return "Carrido no encontrado"
 
         cart.products = cart.products.filter(
             (p) => p.product.toString() !== pid
         )
-        const carritoActualizado = await cart.save()
-        return carritoActualizado
+        return await CartsDAO.updateOne(cid, {
+            products: cart.products,
+        })
     }
 
     async vaciarCarrito(cid) {
-        const cart = await this.model.findById(cid)
+        const cart = await CartsDAO.findById(cid)
         if (!cart) return "carrito no encontraso"
 
         cart.products = []
-
-        const carritoVacio = await cart.save()
-        return carritoVacio
+        return await CartsDAO.updateOne(cid, {
+            products: cart.products,
+        })
     }
 
     async addProductToCart(cid, pid, cantidad) {
-        const cart = await this.model.findById(cid)
+        const cart = await CartsDAO.findById(cid)
         if (!cart) return "Carrito no encontrado"
 
         const productoInCart = cart.products.find(
@@ -94,60 +91,58 @@ class CartManager extends BaseManager {
             })
         }
 
-        const carritoActualizado = await cart.save()
-        return carritoActualizado
+        return await CartsDAO.updateOne(cid, {
+            products: cart.products,
+        })
     }
 
     async getCartDetails(cid) {
-        try {
-            const carritoId = new mongoose.Types.ObjectId(cid)
+        const carritoId = new mongoose.Types.ObjectId(cid)
 
-            const detalle = await this.model.aggregate([
-                { $match: { _id: carritoId } },
-                { $unwind: "$products" },
-                {
-                    $lookup: {
-                        from: "products",
-                        localField: "products.product",
-                        foreignField: "_id",
-                        as: "productoDetalle",
+        const detalle = [
+            { $match: { _id: carritoId } },
+            { $unwind: "$products" },
+            {
+                $lookup: {
+                    from: "products",
+                    localField: "products.product",
+                    foreignField: "_id",
+                    as: "productoDetalle",
+                },
+            },
+            { $unwind: "$productoDetalle" },
+            {
+                $project: {
+                    _id: 0,
+                    producto: "$productoDetalle.title",
+                    cantidad: "$products.cantidad",
+                    precioUnitario: "$productoDetalle.price",
+                    precioTotal: {
+                        $multiply: [
+                            "$products.cantidad",
+                            "$productoDetalle.price",
+                        ],
                     },
                 },
-                { $unwind: "$productoDetalle" },
-                {
-                    $project: {
-                        _id: 0,
-                        producto: "$productoDetalle.title",
-                        cantidad: "$products.cantidad",
-                        precioUnitario: "$productoDetalle.price",
-                        precioTotal: {
-                            $multiply: [
-                                "$products.cantidad",
-                                "$productoDetalle.price",
-                            ],
-                        },
-                    },
+            },
+            {
+                $group: {
+                    _id: null,
+                    productos: { $push: "$$ROOT" },
+                    total: { $sum: "$precioTotal" },
                 },
-                {
-                    $group: {
-                        _id: null,
-                        productos: { $push: "$$ROOT" },
-                        total: { $sum: "$precioTotal" },
-                    },
+            },
+            {
+                $project: {
+                    _id: 0,
+                    productos: 1,
+                    total: 1,
                 },
-                {
-                    $project: {
-                        _id: 0,
-                        productos: 1,
-                        total: 1,
-                    },
-                },
-            ])
+            },
+        ]
 
-            return detalle[0] || null
-        } catch (error) {
-            throw error
-        }
+        const result = await CartsDAO.aggregate(detalle)
+        return result[0] || null
     }
 }
 
