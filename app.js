@@ -22,7 +22,6 @@ const app = express()
 const httpServer = createServer(app)
 const PORT = config.port
 
-
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
@@ -52,10 +51,17 @@ app.use("/api/users", usersRouter.getRouter())
 
 const startServer = async () => {
     try {
-        const mongoConn = new MongoSingleton()
-        await mongoConn.connect()
+        console.log(` DATABASE: ${config.database}`)
+
+        if (config.database.includes("mongo")) {
+            const mongoConn = new MongoSingleton()
+            await mongoConn.connect()
+        } else {
+            console.log("Usando FileSystem (archivos JSON)")
+        }
 
         httpServer.listen(PORT, () => {
+            console.log(`PUERTO : ${PORT}`)
             console.log(`Servidor corriendo en http://localhost:${PORT}`)
         })
     } catch (error) {

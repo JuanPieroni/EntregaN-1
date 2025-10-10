@@ -1,24 +1,29 @@
-import { productsModel } from "../models/product.model.js"
+import DatabaseFactory from "./factory.js"
 
 class ProductsDAO {
-    static findAll = async (query, options) => {
-        return await productsModel.paginate(query, options)
+    constructor() {
+        this.db = DatabaseFactory.getDatabase('products')
     }
 
-    static findById = async (id) => {
-        return await productsModel.findById(id)
+    findAll = async (query, options) => {
+        return await this.db.findAll(query, options)
     }
 
-    static createOne = async (data) => {
-        return await productsModel.create(data)
+    findById = async (id) => {
+        return await this.db.findById(id)
     }
 
-    static updateOne = async (id, data) => {
-        return await productsModel.findByIdAndUpdate(id, data, { new: true })
+    createOne = async (data) => {
+        return await this.db.createOne(data)
     }
-    static deleteOne = async (id) => {
-        return await productsModel.findByIdAndDelete(id)
+
+    updateOne = async (id, data) => {
+        return await this.db.updateOne(id, data)
+    }
+
+    deleteOne = async (id) => {
+        return await this.db.deleteOne(id)
     }
 }
 
-export default ProductsDAO
+export default new ProductsDAO()

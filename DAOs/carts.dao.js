@@ -1,29 +1,33 @@
-import { cartsModel } from "../models/cart.model.js"
+import DatabaseFactory from "./factory.js"
 
 class CartsDAO {
-    static findAll = async () => {
-        return await cartsModel.find().populate("products.product").lean()
+    constructor() {
+        this.db = DatabaseFactory.getDatabase('carts')
     }
 
-    static findById = async (id) => {
-        return await cartsModel.findById(id).populate("products.product").lean()
+    findAll = async () => {
+        return await this.db.findAll()
     }
 
-    static createOne = async (data) => {
-        return await cartsModel.create(data)
+    findById = async (id) => {
+        return await this.db.findById(id)
     }
 
-    static updateOne = async (id, data) => {
-        return await cartsModel.findByIdAndUpdate(id, data, { new: true })
+    createOne = async (data) => {
+        return await this.db.createOne(data)
     }
 
-    static deleteOne = async (id) => {
-        return await cartsModel.findByIdAndDelete(id)
+    updateOne = async (id, data) => {
+        return await this.db.updateOne(id, data)
     }
 
-    static aggregate = async (detalle) => {
-        return await cartsModel.aggregate(detalle)
+    deleteOne = async (id) => {
+        return await this.db.deleteOne(id)
+    }
+
+    aggregate = async (detalle) => {
+        return await this.db.aggregate(detalle)
     }
 }
 
-export default CartsDAO
+export default new CartsDAO()

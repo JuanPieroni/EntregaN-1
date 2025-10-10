@@ -10,13 +10,26 @@ class MongoSingleton {
 
     async connect() {
         if (!MongoSingleton.instance) {
-            this.connection = await mongoose.connect(config.mongodb.atlas, {})
-            console.log("MongoDB conectado a Atlas")
+            const Db = config.database || "mongo"
+
+            if (Db.includes("mongo")) {
+                const url =
+                    Db === "mongo-atlas"
+                        ? config.mongodb.atlas
+                        : config.mongodb.local
+
+                this.connection = await mongoose.connect(url, {})
+
+                console.log(
+                    Db === "mongo-atlas"
+                        ? "✅ MongoDB conectado a Atlas"
+                        : "✅ MongoDB conectado a Local (127.0.0.1:27017)"
+                )
+            }
 
             MongoSingleton.instance = this
         }
         return MongoSingleton.instance
     }
 }
-
 export default MongoSingleton

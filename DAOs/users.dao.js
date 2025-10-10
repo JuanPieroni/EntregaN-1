@@ -1,29 +1,33 @@
-import { userModel } from "../models/user.model.js"
+import DatabaseFactory from "./factory.js"
 
 class UsersDAO {
-    static findAll = async () => {
-        return await userModel.find().lean()
-    }
-    static findById = async (id) => {
-        return await userModel.findById(id).lean()
-    }
-    static findByEmail = async (email) => {
-        return await userModel
-            .findOne({ email })
-            .populate({ path: "cart", populate: { path: "products.product" } })
-            .lean()
-    }
-    static createOne = async (data) => {
-        return await userModel.create(data)
+    constructor() {
+        this.db = DatabaseFactory.getDatabase('users')
     }
 
-    static updateOne = async (id, data) => {
-        return await userModel.findByIdAndUpdate(id, data, { new: true })
+    findAll = async () => {
+        return await this.db.findAll()
     }
 
-    static deleteOne = async (id) => {
-        return await userModel.findByIdAndDelete(id)
+    findById = async (id) => {
+        return await this.db.findById(id)
+    }
+
+    findByEmail = async (email) => {
+        return await this.db.findByEmail(email)
+    }
+
+    createOne = async (data) => {
+        return await this.db.createOne(data)
+    }
+
+    updateOne = async (id, data) => {
+        return await this.db.updateOne(id, data)
+    }
+
+    deleteOne = async (id) => {
+        return await this.db.deleteOne(id)
     }
 }
 
-export default UsersDAO
+export default new UsersDAO()

@@ -11,7 +11,7 @@ function generarCodigoSimple() {
     return codigo
 }
 
-function generarProductos(cantidad = 2500) {
+function generarProductos(cantidad = 50) {
     const adjectives = [
         "Fresco",
         "Delicioso",
