@@ -21,6 +21,10 @@ export default class BaseManager {
     async createOne(obj) {
         /*  console.log("obj", obj) */
         const created = await this.dao.createOne(obj)
+        return {
+            success: true,
+            data: created,
+        }
     }
 
     async updateOne(id, obj) {

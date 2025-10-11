@@ -36,5 +36,6 @@ cartsRouter.post(
     addProductToCart
 )
 cartsRouter.put("/:cid", handlePolicies(["USER", "ADMIN"]), updateCart)
+cartsRouter.get("/:cid/purchase")
 
 export default cartsRouter.getRouter()

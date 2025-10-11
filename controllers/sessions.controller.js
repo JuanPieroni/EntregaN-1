@@ -1,6 +1,6 @@
 import { sessionsService } from "../services/sessions.service.js"
 import { passport } from "../config/passport.config.js"
-import UserDTO from "../DTOs/user.dto.js"
+ 
 
 export const register = async (req, res) => {
     try {
@@ -43,12 +43,10 @@ export const logout = (req, res) => {
     res.redirect("/login")
 }
 
-//Todo: agregar middleware distintos roles
 export const getCurrentUser = (req, res) => {
-    const userDTO = new UserDTO(req.user)
     res.json({
         status: "success",
-        payload: userDTO,
+        payload: req.user,
     })
 }
 

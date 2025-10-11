@@ -17,7 +17,7 @@ passport.use(
         { usernameField: "email" },
         async (email, password, done) => {
             try {
-                const result = await usersRepository.findByEmail(email)
+                const result = await usersRepository.findByEmailSinDTO(email)
                 if (!result.success) {
                     return done(null, false, {
                         message: "Usuario no encontrado",
