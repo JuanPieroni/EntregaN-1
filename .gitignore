@@ -1,9 +1,8 @@
 node_modules
 .amazonq
-.env 
-.env.development
-.env.production
-.env.testing
+ 
+ 
+ 
 todo
 claveApple.txt
  
