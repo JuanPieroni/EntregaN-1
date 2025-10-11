@@ -17,7 +17,7 @@ export const renderProducts = async (req, res) => {
     }
 }
 
-// GET /cart/:cid
+ 
 export const renderCart = async (req, res) => {
     try {
         const { cid } = req.params
@@ -34,7 +34,7 @@ export const renderCart = async (req, res) => {
     }
 }
 
-// GET /carts
+ 
 export const renderCarts = async (req, res) => {
     try {
         const carts = await cartsService.getAllCarts()
@@ -45,17 +45,17 @@ export const renderCarts = async (req, res) => {
     }
 }
 
-// GET /login
+ 
 export const renderLogin = (req, res) => {
     res.render("login")
 }
 
-// GET /register
+ 
 export const renderRegister = (req, res) => {
     res.render("register")
 }
 
-// GET /profile
+ 
 export const renderProfile = (req, res) => {
     console.log("req.user en /profile:", req.user)
     res.render("profile", { user: req.user })

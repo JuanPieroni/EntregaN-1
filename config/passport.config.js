@@ -2,9 +2,9 @@ import passport from "passport"
 import { Strategy as LocalStrategy } from "passport-local"
 import { Strategy as JWTStrategy, ExtractJwt } from "passport-jwt"
 import { Strategy as GitHubStrategy } from "passport-github2"
-/* import { Strategy as GoogleStrategy } from "passport-google-oauth20" */
-import { usersManager } from "../managers/users.manager.js"
+
 import { cartsManager } from "../managers/carts.manager.js"
+import usersRepository from "../repositories/users.repository.js"
 import { comparePassword } from "../utils/auth.utils.js"
 import config from "./env.config.js"
 
@@ -17,7 +17,7 @@ passport.use(
         { usernameField: "email" },
         async (email, password, done) => {
             try {
-                const result = await usersManager.findByEmail(email)
+                const result = await usersRepository.findByEmail(email)
                 if (!result.success) {
                     return done(null, false, {
                         message: "Usuario no encontrado",
@@ -51,15 +51,12 @@ passport.use(
         },
         async (payload, done) => {
             try {
-                const result = await usersManager.findById(payload.id)
+                const result = await usersRepository.findById(payload.id)
                 if (!result.success) {
                     return done(null, false)
                 }
-                // Convertir a objeto plano para hbss
-                const user = result.data.toObject
-                    ? result.data.toObject()
-                    : result.data
-                return done(null, user)
+
+                return done(null, result.data)
             } catch (error) {
                 return done(error)
             }
@@ -92,7 +89,7 @@ passport.use(
                 console.log("Email obtenido:", email)
 
                 // Buscar usuario existente
-                const existingUser = await usersManager.findByEmail(email)
+                const existingUser = await usersRepository.findByEmail(email)
                 if (existingUser.success) {
                     console.log("Usuario existente encontrado")
                     return done(null, existingUser.data)
@@ -113,8 +110,8 @@ passport.use(
                     fromGitHub: true,
                 }
 
-                const createdUser = await usersManager.createOne(newUser)
-                return done(null, createdUser)
+                const createdUser = await usersRepository.createOne(newUser)
+                return done(null, createdUser.data)
             } catch (error) {
                 console.error("GitHub Strategy error:", error)
                 return done(error)
@@ -126,9 +123,8 @@ passport.use(
 // GOOGLE STRATEGY
 // ToDo
 
-//Todo : Agregar otra opciones como Google y Facebook 
+//Todo : Agregar otra opciones como Google y Facebook
 //Todo instalar googleoAuth 2.0
 //passport.serialize y deserialize
-
 
 export { passport, JWT_SECRET }

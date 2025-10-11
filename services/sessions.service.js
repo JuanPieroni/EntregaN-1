@@ -1,15 +1,15 @@
-import { usersManager } from "../managers/users.manager.js"
 import { cartsManager } from "../managers/carts.manager.js"
 import { hashPassword } from "../utils/auth.utils.js"
 import { JWT_SECRET } from "../config/passport.config.js"
 import jwt from "jsonwebtoken"
+import usersRepository from "../repositories/users.repository.js"
 
 class SessionsService {
     async registerUser(userData) {
         const { first_name, last_name, email, age, password } = userData
 
         // Verificar si el usuario ya existe
-        const existingUser = await usersManager.findByEmail(email)
+        const existingUser = await usersRepository.findByEmail(email)
         if (existingUser.success) {
             return { success: false, message: "Usuario ya existe" }
         }
@@ -19,7 +19,7 @@ class SessionsService {
 
         // Crear nuevo usuario con carrito asignado
         const hashedPassword = hashPassword(password)
-        const newUser = await usersManager.createOne({
+        const newUser = await usersRepository.createOne({
             first_name,
             last_name,
             email,
@@ -29,7 +29,7 @@ class SessionsService {
             role: "USER",
         })
 
-        // Todo: Login automático tras registro (descomentar si se desea)
+        // Todo: Login automático tras registro
         /*      // Login automático tras registro
         const token = jwt.sign(
             { id: newUser._id, email: newUser.email, role: newUser.role },
@@ -42,13 +42,13 @@ class SessionsService {
             maxAge: 24 * 60 * 60 * 1000, // 24 horas
         }) */
 
-        return { success: true, user: newUser }
+        return { success: true, user: newUser.data }
     }
 
     generateToken(user) {
         // Generar JWT token
         const token = jwt.sign(
-            { id: user._id, email: user.email, role: user.role },
+            { id: user._id || user.id, email: user.email, role: user.role },
             JWT_SECRET,
             { expiresIn: "15m" }
         )

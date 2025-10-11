@@ -1,7 +1,7 @@
 import { sessionsService } from "../services/sessions.service.js"
 import { passport } from "../config/passport.config.js"
+import UserDTO from "../DTOs/user.dto.js"
 
-// POST /api/sessions/register
 export const register = async (req, res) => {
     try {
         const result = await sessionsService.registerUser(req.body)
@@ -16,7 +16,6 @@ export const register = async (req, res) => {
     }
 }
 
-// POST /api/sessions/login
 export const login = (req, res, next) => {
     passport.authenticate("login", (err, user, info) => {
         if (err) {
@@ -35,33 +34,24 @@ export const login = (req, res, next) => {
             maxAge: 15 * 60 * 1000,
         })
 
-        // redirigir a profile
         res.redirect("/profile")
     })(req, res, next)
 }
 
-// POST /api/sessions/logout
 export const logout = (req, res) => {
     res.clearCookie("token")
     res.redirect("/login")
 }
 
-// GET /api/sessions/current
 //Todo: agregar middleware distintos roles
 export const getCurrentUser = (req, res) => {
+    const userDTO = new UserDTO(req.user)
     res.json({
         status: "success",
-        payload: {
-            id: req.user._id,
-            email: req.user.email,
-            first_name: req.user.first_name,
-            last_name: req.user.last_name,
-            role: req.user.role,
-        },
+        payload: userDTO,
     })
 }
 
-// GET /api/sessions/github
 export const githubAuth = passport.authenticate("github", {
     scope: ["user:email"],
 })
