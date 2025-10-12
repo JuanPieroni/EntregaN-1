@@ -106,7 +106,7 @@ passport.use(
                     age: 18,
                     password: "github_oauth_user",
                     cart: newCart._id,
-                    role: "user",
+                    role: "USER",
                     fromGitHub: true,
                 }
 

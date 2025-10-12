@@ -1,0 +1,34 @@
+<h1>✅ Compra Realizada con Éxito</h1>
+
+<div style="border: 2px solid green; padding: 20px; margin: 20px 0;">
+    <h2>Ticket de Compra</h2>
+    <p><strong>Código - Nro de ticket:</strong> {{ticket.code}}</p>
+    <p><strong>Fecha:</strong> {{ticket.purchase_datetime}}</p>
+    <p><strong>Comprador:</strong> {{ticket.comprador}}</p>
+
+    <h3>Productos Comprados:</h3>
+    <ul>
+        {{#each ticket.products}}
+            <li>
+                Cantidad: {{this.quantity}} - Precio: ${{this.price}}
+            </li>
+        {{/each}}
+    </ul>
+    <p><strong>Total:</strong> ${{ticket.amount}}</p>
+</div>
+
+{{#if productosNoComprados.length}}
+    <div style="border: 2px solid orange; padding: 20px; margin: 20px 0;">
+        <h3>⚠️ Productos sin stock disponible</h3>
+        <p>Los siguientes productos no pudieron ser procesados:</p>
+        <ul>
+            {{#each productosNoComprados}}
+                <li>{{this}}</li>
+            {{/each}}
+        </ul>
+    </div>
+{{/if}}
+
+<a href="/products" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: blue; color: white; text-decoration: none;">
+    Volver a Productos
+</a>

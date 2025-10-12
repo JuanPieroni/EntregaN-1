@@ -9,6 +9,7 @@ import {
     addProductToCart,
 } from "../controllers/carts.controller.js"
 import { getCartDetails } from "../controllers/aggregation.controller.js"
+import { purchaseCart } from "../controllers/ticket.controller.js"
 import CustomRouter from "../utils/CustomRouter.js"
 import { handlePolicies } from "../middlewares/handlePolicies.js"
 
@@ -36,6 +37,10 @@ cartsRouter.post(
     addProductToCart
 )
 cartsRouter.put("/:cid", handlePolicies(["USER", "ADMIN"]), updateCart)
-cartsRouter.get("/:cid/purchase")
+cartsRouter.post(
+    "/:cid/purchase",
+    handlePolicies(["USER", "ADMIN"]),
+    purchaseCart
+)
 
 export default cartsRouter.getRouter()

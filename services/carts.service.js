@@ -42,12 +42,7 @@ class CartsService {
             return { success: false, message: cart }
         }
 
-        // actualiz product model prop disponible pasa a false? 
-        const newStock = product.data.stock - cantidad
-        await productsManager.updateOne(pid, {
-            stock: newStock,
-            disponible: newStock > 0,
-        })
+   
 
         return { success: true, data: cart }
     }
