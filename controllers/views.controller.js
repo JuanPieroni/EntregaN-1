@@ -81,3 +81,11 @@ export const renderCompraSuccess = async (req, res) => {
         res.status(500).send("Error al procesar la compra")
     }
 }
+export const renderForgotPassword = (req, res) => {
+    res.render("forgot-password")
+}
+
+export const renderResetPassword = (req, res) => {
+    const { token } = req.query
+    res.render("reset-password", { token })
+}

@@ -8,6 +8,8 @@ import {
     renderRegister,
     renderProfile,
     renderCompraSuccess,
+    renderForgotPassword,
+    renderResetPassword,
 } from "../controllers/views.controller.js"
 import { handlePolicies } from "../middlewares/handlePolicies.js"
 
@@ -20,5 +22,8 @@ viewsRouter.get("/login", renderLogin)
 viewsRouter.get("/register", renderRegister)
 viewsRouter.get("/profile", authenticateJWT, renderProfile)
 viewsRouter.post("/cart/:cid/purchase", authenticateJWT, renderCompraSuccess)
+
+viewsRouter.get("/forgot-password", renderForgotPassword)
+viewsRouter.get("/reset-password", renderResetPassword)
 
 export default viewsRouter

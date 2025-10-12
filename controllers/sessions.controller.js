@@ -1,6 +1,10 @@
 import { sessionsService } from "../services/sessions.service.js"
 import { passport } from "../config/passport.config.js"
- 
+import jwt from "jsonwebtoken"
+import { JWT_SECRET } from "../config/passport.config.js"
+import { mailService } from "../services/mail.service.js"
+import { hashPassword, comparePassword } from "../utils/auth.utils.js"
+import usersRepository from "../repositories/users.repository.js"
 
 export const register = async (req, res) => {
     try {
@@ -82,4 +86,91 @@ export const githubCallback = (req, res, next) => {
             res.redirect("/login?error=callback_error")
         }
     })(req, res, next)
+}
+
+//*  Solicitar recuperación de contraseña */
+export const forgotPassword = async (req, res) => {
+    try {
+        const { email } = req.body
+
+        // Buscar usuario
+        const result = await usersRepository.findByEmailSinDTO(email)
+        if (!result.success) {
+            // Por seguridad, no revelar si el email existe o no
+            return res.render("forgot-password", {
+                success: true,
+                message:
+                    "Si el email existe, recibirás un enlace de recuperación",
+            })
+        }
+
+        // Generar token con expiración de 1 hora
+        const token = jwt.sign(
+            { id: result.data._id, email: result.data.email },
+            JWT_SECRET,
+            { expiresIn: "1h" }
+        )
+
+        // Enviar email
+        await mailService.sendPasswordResetEmail(email, token)
+
+        res.render("forgot-password", {
+            success: true,
+            message: "Email enviado. Revisa tu bandeja de entrada.",
+        })
+    } catch (error) {
+        console.error("Error en forgotPassword:", error)
+        res.render("forgot-password", {
+            error: true,
+            message: "Error al enviar el email",
+        })
+    }
+}
+
+// Resetear contraseña
+export const resetPassword = async (req, res) => {
+    try {
+        const { token, newPassword } = req.body
+
+        const decoded = jwt.verify(token, JWT_SECRET)
+
+        const result = await usersRepository.findByEmailSinDTO(decoded.email)
+        if (!result.success) {
+            return res.render("reset-password", {
+                error: true,
+                message: "Usuario no encontrado",
+            })
+        }
+
+        const user = result.data
+
+        if (comparePassword(newPassword, user.password)) {
+            return res.render("reset-password", {
+                error: true,
+                message: "La nueva contraseña debe ser diferente a la anterior",
+                token,
+            })
+        }
+
+        const hashedPassword = hashPassword(newPassword)
+        await usersRepository.updateOne(user._id, { password: hashedPassword })
+
+        res.render("reset-password", {
+            success: true,
+            message: "Contraseña actualizada correctamente",
+        })
+    } catch (error) {
+        if (error.name === "TokenExpiredError") {
+            return res.render("reset-password", {
+                error: true,
+                message: "El enlace ha expirado. Solicita uno nuevo.",
+            })
+        }
+
+        console.error("Error en resetPassword:", error)
+        res.render("reset-password", {
+            error: true,
+            message: "Error al restablecer contraseña",
+        })
+    }
 }

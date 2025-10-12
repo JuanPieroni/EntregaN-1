@@ -1,13 +1,17 @@
 {{! index.handlebars }}
 
-    <h1>Hola {{user.fullName}}  </h1> 
+<h1>Hola {{user.fullName}} </h1>
 <div
     style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;"
 >
     <h2>Listado de productos</h2>
     <div>
-        <a href="/carts" style="margin-right: 10px;">carts todos</a>
-        <a href="/cart/{{userCartId}}" style="margin-right: 10px;">Vercarrito</a>
+        <a href="/carts" style="margin-right: 10px;">Todos los carritos. Solo
+            admins</a>
+        <a
+            href="/cart/{{userCartId}}"
+            style="margin-right: 10px;"
+        >Vercarrito</a>
         <form
             method="POST"
             action="/api/sessions/logout"
@@ -28,14 +32,15 @@
             <p>Categoria : {{this.category}}</p>
             <p>
                 {{#if this.stock}}
-                    En stock ( {{this.stock}})
+                    En stock (
+                    {{this.stock}})
                 {{else}}
                     No hay stock
                 {{/if}}
             </p>
 
             <form
-                action="/api/carts/{{../userCartId}}/product/{{this._id}}"
+                action="/api/carts/{{@root.userCartId}}/product/{{this._id}}"
                 method="POST"
                 onsubmit="alertAgregarProducto('{{this.title}}')"
             >
@@ -58,7 +63,7 @@
     {{/if}}
 </div>
 
-{{!-- //Todo : aca alertar que si no hay stock " no stock disponible" --}}
+{{! //Todo : aca alertar que si no hay stock " no stock disponible" }}
 <script>
     function alertAgregarProducto(nombreProducto) { alert('Producto "' +
     nombreProducto + '" agregado al carrito ✅'); }
