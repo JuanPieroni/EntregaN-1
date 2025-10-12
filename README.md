@@ -17,7 +17,7 @@ El proyecto soporta 3 modos de ejecución:
 npm run prod
 ```
 
-Usa `.env.production` - MongoDB Atlas  
+Usa `.env.production` - MongoDB Atlas
 
 **Modo Development :**
 
@@ -35,14 +35,15 @@ npm run test
 
 Usa `.env.testing` - MongoDB Local (Testing)
 
-### 4. Acceder a la aplicación
+### 2. Acceder a la aplicación
 
 Abrir en el navegador: `http://localhost:8080`
 
 ---
 
 ## 📝 Notas
-
+ 
+-   Los endpoints protegidos requieren cookie `token` Para Insomnia, copiar la cookie después del login.
 -   Los archivos `.env` ya están incluidos en el repositorio
 -   El proyecto se ejecuta en el puerto `8080`
 -   Credenciales de prueba disponibles en la aplicación
