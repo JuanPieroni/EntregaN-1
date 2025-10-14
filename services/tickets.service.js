@@ -11,7 +11,7 @@ class TicketsService {
 
     // Procesar compra
     async processPurchase(cartId, userEmail) {
-        // 1. Obtener carrito
+        //Obtener carrito
         const cart = await cartsManager.getCartById(cartId)
         if (!cart) {
             return { success: false, message: "Carrito no encontrado" }
@@ -25,7 +25,7 @@ class TicketsService {
         const productosNoComprados = []
         let totalAmount = 0
 
-        // 2. Procesar cada producto
+        //Procesar cada producto
         for (const item of cart.products) {
             const productId = item.product._id || item.product
             const product = await productsManager.findById(productId)
@@ -57,7 +57,7 @@ class TicketsService {
             }
         }
 
-        // 3. Si no se compró nada
+        //  Si no compró nada
         if (productosComprados.length === 0) {
             return {
                 success: false,
@@ -66,7 +66,7 @@ class TicketsService {
             }
         }
 
-        // 4. Crear ticket
+        //Crear ticket
         const ticketData = {
             code: this.generateTicketCode(),
             amount: totalAmount,
@@ -76,7 +76,7 @@ class TicketsService {
 
         const ticket = await ticketsRepository.createOne(ticketData)
 
-        // 5. Actualizar carrito (dejar solo productos sin stock)
+        //Actualizar carrito (dejar solo productos sin stock)
         const productosRestantes = cart.products.filter((item) => {
             const productId = (item.product._id || item.product).toString()
             return productosNoComprados.some(
@@ -86,7 +86,7 @@ class TicketsService {
 
         await cartsManager.updateCartProducts(cartId, productosRestantes)
 
-        // 6. Retornar resultado
+        //Retornar resultado
         return {
             success: true,
             ticket: ticket.data,
