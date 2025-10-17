@@ -122,10 +122,7 @@ passport.use(
 )
 
 // GOOGLE STRATEGY
-// ToDo
 
-//Todo : Agregar otra opciones como Google y Facebook
-//Todo instalar googleoAuth 2.0
 //passport.serialize y deserialize
 
 passport.use(
