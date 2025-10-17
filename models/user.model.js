@@ -35,11 +35,10 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
-    //Todo
-    /*     fromGoogle: {
+    fromGoogle: {
         type: Boolean,
         default: false,
-    }, */
+    },
 })
 
 export const userModel = mongoose.model("User", userSchema)

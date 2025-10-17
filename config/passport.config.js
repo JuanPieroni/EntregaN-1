@@ -2,6 +2,7 @@ import passport from "passport"
 import { Strategy as LocalStrategy } from "passport-local"
 import { Strategy as JWTStrategy, ExtractJwt } from "passport-jwt"
 import { Strategy as GitHubStrategy } from "passport-github2"
+import { Strategy as GoogleStrategy } from "passport-google-oauth20"
 
 import { cartsManager } from "../managers/carts.manager.js"
 import usersRepository from "../repositories/users.repository.js"
@@ -83,7 +84,7 @@ passport.use(
                 console.log("GitHub ID:", githubId)
                 const email =
                     profile._json.email ||
-                    profile.emails?.[0]?.value ||
+                    profile.emails?.[ 0 ]?.value ||
                     `${profile._json.login}@github.local`
 
                 console.log("Email obtenido:", email)
@@ -100,8 +101,8 @@ passport.use(
                 // Crear carrito y usuario nuevo
                 const newCart = await cartsManager.createCart()
                 const newUser = {
-                    first_name: profile._json.name?.split(" ")[0] || "GitHub",
-                    last_name: profile._json.name?.split(" ")[1] || "User",
+                    first_name: profile._json.name?.split(" ")[ 0 ] || "GitHub",
+                    last_name: profile._json.name?.split(" ")[ 1 ] || "User",
                     email: email,
                     age: 18,
                     password: "github_oauth_user",
@@ -127,4 +128,47 @@ passport.use(
 //Todo instalar googleoAuth 2.0
 //passport.serialize y deserialize
 
+passport.use(
+    "google", new GoogleStrategy({
+        clientID: config.google.clientId,
+        clientSecret: config.google.clientSecret,
+        callbackURL: config.google.callbackURL,
+
+    },
+        async (accessToken, refereshToken, profile, done) => {
+            console.log("GOOGLE STRATEGY")
+            console.log("Profile recibido: ", profile)
+            console.log("Access Token:", accessToken ? "√" : "x")
+            try {
+                const googleId = profile._json.sub
+                const email = profile._json.email
+                console.log("Google ID:", googleId)
+                console.log("Email obtenido:", email)
+                const existingUser = await usersRepository.findByEmail(email)
+                if (existingUser.success) {
+                    console.log("usuario existente encontrado")
+                    return done(null, existingUser.data)
+                }
+
+                const newCart = await cartsManager.createCart()
+                const newUser = {
+                    first_name: profile._json.given_name,
+                    last_name: profile._json.family_name,
+                    email: email,
+                    age: 18,
+                    password: "XXXXXX_oauth_user",
+                    cart: newCart._id,
+                    role: "USER",
+                    fromGoogle: true,
+                }
+
+                const createdUser = await usersRepository.createOne(newUser)
+                return done(null, createdUser.data)
+            } catch (error) {
+                console.error("Google Strategy error:", error)
+                return done(error)
+            }
+        })
+
+)
 export { passport, JWT_SECRET }

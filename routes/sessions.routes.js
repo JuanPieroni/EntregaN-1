@@ -11,6 +11,8 @@ import {
     githubCallback,
     forgotPassword,
     resetPassword,
+    googleAuth,
+    googleCallback
 } from "../controllers/sessions.controller.js"
 
 const sessionsRouter = Router()
@@ -28,7 +30,8 @@ sessionsRouter.get("/github", githubAuth)
 sessionsRouter.get("/github/callback", githubCallback)
 
 //Google oAuth routes
-//Todo: igual que githiub, Google necestia dos gets .
-// esta  a las 2:58:00 minutos de la clase 13 de la comision vieja .
+sessionsRouter.get("/google", googleAuth)
+sessionsRouter.get("/google/callback", googleCallback)
+
 
 export default sessionsRouter
