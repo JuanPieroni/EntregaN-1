@@ -1,4 +1,5 @@
 import { cartsService } from "../services/carts.service.js"
+import mongoose from "mongoose"
 
 export const getAllCarts = async (req, res) => {
     try {
@@ -12,9 +13,12 @@ export const getAllCarts = async (req, res) => {
 export const getCartById = async (req, res) => {
     try {
         const { cid } = req.params
+        if (!mongoose.Types.ObjectId.isValid(cid)) {
+            return res.sendError("Id de carrito invalido")
+        }
         const cart = await cartsService.getCartById(cid)
         if (!cart) {
-            //todo validar aca con [a-zA-Z]+ o algo asi
+
             return res.sendNotFound("Carrito no encontrado")
         }
         res.sendSuccess(cart, "Carrito obtenido con éxito")
@@ -90,10 +94,10 @@ export const addProductToCart = async (req, res) => {
         res.sendSuccess(result.data, "Producto agregado exitosamente")
     } catch (error) {
         res.sendServerError("Error al agregar producto al carrito")
-    } 
+    }
 }
 
- 
 
-    
+
+
 
