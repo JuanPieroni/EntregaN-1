@@ -1,0 +1,156 @@
+/* Auth Pages - Login & Register */
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 20px;
+}
+
+.auth-container {
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    max-width: 400px;
+    width: 100%;
+}
+
+.auth-container h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.error-message {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #f5c6cb;
+}
+
+.auth-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.auth-container input {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+.auth-container input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.auth-container button[type="submit"] {
+    background: #667eea;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.auth-container button[type="submit"]:hover {
+    background: #5568d3;
+}
+
+.forgot-password {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.forgot-password a {
+    color: #667eea;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.forgot-password a:hover {
+    text-decoration: underline;
+}
+
+.oauth-divider {
+    margin: 30px 0;
+    text-align: center;
+    position: relative;
+}
+
+.oauth-divider p {
+    background: white;
+    display: inline-block;
+    padding: 0 10px;
+    color: #999;
+    position: relative;
+    z-index: 1;
+}
+
+.oauth-divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #ddd;
+}
+
+.oauth-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.oauth-btn {
+    display: block;
+    padding: 12px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    transition: opacity 0.3s;
+}
+
+.oauth-btn:hover {
+    opacity: 0.9;
+}
+
+.oauth-btn.github {
+    background: #333;
+    color: white;
+}
+
+.oauth-btn.google {
+    background: #db4437;
+    color: white;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.auth-footer a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}

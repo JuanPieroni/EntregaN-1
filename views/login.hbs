@@ -1,31 +1,36 @@
-<h1>Iniciar sesión</h1>
+<link rel="stylesheet" href="/static/css/auth.css">
 
-{{#if error}}
-    <div style="color: red; margin-bottom: 10px;">¡Login fallido! Revisa tus credenciales</div>
-{{/if}}
+<div class="auth-container">
+    <h1>Iniciar sesión</h1>
 
-<form method="POST" action="/api/sessions/login">
-    <div>
+    {{#if error}}
+        <div class="error-message">¡Login fallido! Revisa tus credenciales</div>
+    {{/if}}
+
+    <form method="POST" action="/api/sessions/login">
         <input name="email" placeholder="Email" type="email" required />
-    </div>
-    
-    <div>
         <input name="password" placeholder="Contraseña" type="password" required />
+        <button type="submit">Ingresar</button>
+    </form>
+
+    <div class="forgot-password">
+        <a href="/forgot-password">¿Olvidaste tu contraseña?</a>
     </div>
-    
-    <button type="submit">Ingresar</button>
-</form>
-<a href="/forgot-password">¿Olvidaste tu contraseña?</a>
 
+    <div class="oauth-divider">
+        <p>--- O ---</p>
+    </div>
 
-<div style="margin: 20px 0; text-align: center;">
-    <p>--- O ---</p>
-    <a href="/api/sessions/github" style="background: #333; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin-right: 10px;">
-        Iniciar sesión con GitHub
-    </a>
-    <a href="/api/sessions/google" style="background: #db4437; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
-        Iniciar sesión con Google
-    </a>
+    <div class="oauth-buttons">
+        <a href="/api/sessions/github" class="oauth-btn github">
+            Iniciar sesión con GitHub
+        </a>
+        <a href="/api/sessions/google" class="oauth-btn google">
+            Iniciar sesión con Google
+        </a>
+    </div>
+
+    <div class="auth-footer">
+        <p><a href="/register">¿No tienes cuenta? Regístrate</a></p>
+    </div>
 </div>
-
-<p><a href="/register">¿No tienes cuenta? Regístrate</a></p>

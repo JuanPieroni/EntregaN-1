@@ -36,7 +36,7 @@ app.set("views", path.join(__dirname, "views"))
 
 app.get("/", (req, res) => {
     res.render("home", {
-        title: "BackEnd II - Entrega 1",
+            title: "BackEnd II - Entrega 1",
         buttons: true,
     })
 })

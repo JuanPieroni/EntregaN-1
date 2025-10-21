@@ -1,34 +1,38 @@
-<h1>✅ Compra Realizada con Éxito</h1>
+<link rel="stylesheet" href="/static/css/ticket.css">
 
-<div style="border: 2px solid green; padding: 20px; margin: 20px 0;">
-    <h2>Ticket de Compra</h2>
-    <p><strong>Código - Nro de ticket:</strong> {{ticket.code}}</p>
-    <p><strong>Fecha:</strong> {{ticket.purchase_datetime}}</p>
-    <p><strong>Comprador:</strong> {{ticket.comprador}}</p>
+<div class="ticket-container">
+    <h1>✅ Compra Realizada con Éxito</h1>
 
-    <h3>Productos Comprados:</h3>
-    <ul>
-        {{#each ticket.products}}
-            <li>
-                Cantidad: {{this.quantity}} - Precio: ${{this.price}}
-            </li>
-        {{/each}}
-    </ul>
-    <p><strong>Total:</strong> ${{ticket.amount}}</p>
-</div>
+    <div class="ticket-box">
+        <h2>Ticket de Compra</h2>
+        <p><strong>Código - Nro de ticket:</strong> {{ticket.code}}</p>
+        <p><strong>Fecha:</strong> {{ticket.purchase_datetime}}</p>
+        <p><strong>Comprador:</strong> {{ticket.comprador}}</p>
 
-{{#if productosNoComprados.length}}
-    <div style="border: 2px solid orange; padding: 20px; margin: 20px 0;">
-        <h3>⚠️ Productos sin stock disponible</h3>
-        <p>Los siguientes productos no pudieron ser procesados:</p>
-        <ul>
-            {{#each productosNoComprados}}
-                <li>{{this}}</li>
+        <h3>Productos Comprados:</h3>
+        <ul class="ticket-products">
+            {{#each ticket.products}}
+                <li>
+                    Cantidad: {{this.quantity}} - Precio: ${{this.price}}
+                </li>
             {{/each}}
         </ul>
+        <p class="ticket-total">Total: ${{ticket.amount}}</p>
     </div>
-{{/if}}
 
-<a href="/products" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: blue; color: white; text-decoration: none;">
-    Volver a Productos
-</a>
+    {{#if productosNoComprados.length}}
+        <div class="warning-box">
+            <h3>⚠️ Productos sin stock disponible</h3>
+            <p>Los siguientes productos no pudieron ser procesados:</p>
+            <ul>
+                {{#each productosNoComprados}}
+                    <li>{{this}}</li>
+                {{/each}}
+            </ul>
+        </div>
+    {{/if}}
+
+    <a href="/products" class="btn-return">
+        Volver a Productos
+    </a>
+</div>

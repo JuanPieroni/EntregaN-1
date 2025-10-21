@@ -1,25 +1,33 @@
-<h1>Carrito {{cart._id}}</h1>
+<link rel="stylesheet" href="/static/css/cart.css">
 
-<ul>
-    {{#each cart.products}}
-        <li>
-            <h3>{{this.product.title}}</h3>
-            <p>Precio: ${{this.product.price}}</p>
-            <p>Cantidad: {{this.cantidad}}</p>
-        </li>
-    {{/each}}
-</ul>
- 
-{{#if cart.products.length}}
-<form action="/cart/{{cart._id}}/purchase" method="POST" style="margin-top: 20px;">
-    <button type="submit" style="padding: 10px 20px; background-color: green; color: white; border: none; cursor: pointer;">
-        Finalizar Compra
-    </button>
-</form>
+<div class="cart-container">
+    <h1>Carrito {{cart._id}}</h1>
 
-{{else}}
-    <p>El carrito está vacío</p>
-{{/if}}
+    {{#if cart.products.length}}
+        <ul class="cart-items">
+            {{#each cart.products}}
+                <li class="cart-item">
+                    <div>
+                        <h3>{{this.product.title}}</h3>
+                        <p>Precio: ${{this.product.price}}</p>
+                        <p>Cantidad: {{this.cantidad}}</p>
+                    </div>
+                </li>
+            {{/each}}
+        </ul>
 
-<a href="/products" style="display: inline-block; margin-top: 10px;">Volver a
-    productos</a>
+        <div class="cart-actions">
+            <form action="/cart/{{cart._id}}/purchase" method="POST">
+                <button type="submit" class="btn-purchase">
+                    Finalizar Compra
+                </button>
+            </form>
+            <a href="/products" class="btn-back">Volver a productos</a>
+        </div>
+    {{else}}
+        <p class="cart-empty">El carrito está vacío</p>
+        <div class="cart-actions">
+            <a href="/products" class="btn-back">Ir a productos</a>
+        </div>
+    {{/if}}
+</div>

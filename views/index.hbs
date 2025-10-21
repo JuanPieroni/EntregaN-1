@@ -1,70 +1,54 @@
 {{! index.handlebars }}
 
-<h1>Hola {{user.fullName}} </h1>
-<div
-    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;"
->
-    <h2>Listado de productos</h2>
+<div class="header">
     <div>
-        <a href="/carts" style="margin-right: 10px;">Todos los carritos. Solo
-            admins</a>
-        <a
-            href="/cart/{{userCartId}}"
-            style="margin-right: 10px;"
-        >Vercarrito</a>
-        <form
-            method="POST"
-            action="/api/sessions/logout"
-            style="display: inline;"
-        >
-            <button type="submit">Logout</button>
+        <h1>Hola {{user.fullName}}</h1>
+        <h2>Listado de productos</h2>
+    </div>
+    <div class="header-actions">
+        <a href="/carts" class="btn btn-secondary">Todos los carritos</a>
+        <a href="/cart/{{userCartId}}" class="btn btn-primary">Ver carrito</a>
+        <form method="POST" action="/api/sessions/logout" style="display: inline;">
+            <button type="submit" class="btn btn-secondary">Logout</button>
         </form>
     </div>
 </div>
 
-<ul>
+<div class="products-grid">
     {{#each products.payload}}
-        <li>
-            <h3>{{this.title}}</h3>
-            <p>Precio: ${{this.price}}</p>
-            <p>Descripcion: {{this.description}}</p>
-
-            <p>Categoria : {{this.category}}</p>
-            <p>
+        <div class="product-card">
+            <h3 class="product-title">{{this.title}}</h3>
+            <div class="product-price">${{this.price}}</div>
+            <p class="product-description">{{this.description}}</p>
+            <span class="product-category">{{this.category}}</span>
+            <p class="product-stock {{#if this.stock}}stock-available{{else}}stock-unavailable{{/if}}">
                 {{#if this.stock}}
-                    En stock (
-                    {{this.stock}})
+                    ✓ En stock ({{this.stock}})
                 {{else}}
-                    No hay stock
+                    ✗ Sin stock
                 {{/if}}
             </p>
-
             <form
                 action="/api/carts/{{@root.userCartId}}/product/{{this._id}}"
                 method="POST"
                 onsubmit="alertAgregarProducto('{{this.title}}')"
             >
-
-                <button type="submit">Agregar al carrito</button>
+                <button type="submit" class="btn btn-success">Agregar al carrito</button>
             </form>
-        </li>
+        </div>
     {{/each}}
-</ul>
+</div>
 
-<div>
+<div class="pagination">
     {{#if products.hasPrevPage}}
-        <a href="/products?page={{products.prevPage}}">Anterior</a>
+        <a href="/products?page={{products.prevPage}}" class="btn btn-primary">← Anterior</a>
     {{/if}}
 
-    <span>Página {{products.page}} de {{products.totalPages}}</span>
+    <span style="font-weight: bold;">Página {{products.page}} de {{products.totalPages}}</span>
 
     {{#if products.hasNextPage}}
-        <a href="/products?page={{products.nextPage}}">Siguiente</a>
+        <a href="/products?page={{products.nextPage}}" class="btn btn-primary">Siguiente →</a>
     {{/if}}
 </div>
 
-
-<script>
-    function alertAgregarProducto(nombreProducto) { alert('Producto "' +
-    nombreProducto + '" agregado al carrito ✅'); }
-</script>
+<script src="/static/js/products.js"></script>

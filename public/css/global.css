@@ -1,0 +1,75 @@
+/* Global Styles */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f5f7fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Home Page */
+.home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+}
+
+.home-container h1 {
+    font-size: 2.5em;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.home-buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.home-btn {
+    padding: 15px 40px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s;
+}
+
+.home-btn.register {
+    background: #007bff;
+    color: white;
+}
+
+.home-btn.register:hover {
+    background: #0056b3;
+    transform: translateY(-2px);
+}
+
+.home-btn.login {
+    background: #28a745;
+    color: white;
+}
+
+.home-btn.login:hover {
+    background: #218838;
+    transform: translateY(-2px);
+}

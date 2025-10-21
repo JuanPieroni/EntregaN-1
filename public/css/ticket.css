@@ -1,0 +1,107 @@
+/* Ticket & Purchase Success Page */
+
+.ticket-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.ticket-container h1 {
+    text-align: center;
+    color: #28a745;
+    margin-bottom: 30px;
+}
+
+.ticket-box {
+    background: white;
+    border: 2px solid #28a745;
+    border-radius: 10px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.2);
+}
+
+.ticket-box h2 {
+    color: #333;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #28a745;
+    padding-bottom: 10px;
+}
+
+.ticket-box p {
+    margin: 10px 0;
+    color: #555;
+    font-size: 1.1em;
+}
+
+.ticket-box strong {
+    color: #333;
+}
+
+.ticket-products {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.ticket-products li {
+    padding: 10px;
+    background: #f8f9fa;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    border-left: 3px solid #28a745;
+}
+
+.ticket-total {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #28a745;
+    margin-top: 20px;
+}
+
+.warning-box {
+    background: white;
+    border: 2px solid #ffc107;
+    border-radius: 10px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(255, 193, 7, 0.2);
+}
+
+.warning-box h3 {
+    color: #856404;
+    margin-bottom: 15px;
+}
+
+.warning-box p {
+    color: #856404;
+}
+
+.warning-box ul {
+    list-style: none;
+    padding: 0;
+}
+
+.warning-box li {
+    padding: 8px;
+    background: #fff3cd;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    border-left: 3px solid #ffc107;
+}
+
+.btn-return {
+    display: inline-block;
+    background: #007bff;
+    color: white;
+    padding: 15px 40px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 20px;
+    transition: background 0.3s;
+}
+
+.btn-return:hover {
+    background: #0056b3;
+}

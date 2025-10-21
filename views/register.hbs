@@ -1,31 +1,22 @@
-<h1>Registrarse</h1>
+<link rel="stylesheet" href="/static/css/auth.css">
 
-{{#if error}}
-    <div style="color: red; margin-bottom: 10px;">¡Registro fallido! Intenta nuevamente</div>
-{{/if}}
+<div class="auth-container">
+    <h1>Registrarse</h1>
 
-<form method="POST" action="/api/sessions/register">
-    <div>
+    {{#if error}}
+        <div class="error-message">¡Registro fallido! Intenta nuevamente</div>
+    {{/if}}
+
+    <form method="POST" action="/api/sessions/register">
         <input name="first_name" placeholder="Nombre" type="text" required />
-    </div>
-    
-    <div>
         <input name="last_name" placeholder="Apellido" type="text" required />
-    </div>
-    
-    <div>
         <input name="email" placeholder="Email" type="email" required />
-    </div>
-    
-    <div>
         <input name="age" placeholder="Edad" type="number" required />
-    </div>
-    
-    <div>
         <input name="password" placeholder="Contraseña" type="password" required />
-    </div>
-    
-    <button type="submit">Registrarse</button>
-</form>
+        <button type="submit">Registrarse</button>
+    </form>
 
-<p><a href="/login">¿Ya tienes cuenta? Inicia sesión</a></p>
+    <div class="auth-footer">
+        <p><a href="/login">¿Ya tienes cuenta? Inicia sesión</a></p>
+    </div>
+</div>
