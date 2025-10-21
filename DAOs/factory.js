@@ -2,11 +2,12 @@ import config from "../config/env.config.js"
 import MongoUsersDatabase from "./database/mongo/users.mongo.js"
 import MongoProductsDatabase from "./database/mongo/products.mongo.js"
 import MongoCartsDatabase from "./database/mongo/carts.mongo.js"
+import MongoTicketsDatabase from "./database/mongo/tickets.mongo.js"
 
 class DatabaseFactory {
     static getDatabase(type) {
         const database = config.database || 'mongo-local'
-        
+
         switch (database) {
             case 'mongo-atlas':
             case 'mongo-local':
@@ -26,6 +27,8 @@ class DatabaseFactory {
                 return new MongoProductsDatabase()
             case 'carts':
                 return new MongoCartsDatabase()
+            case 'tickets':
+                return new MongoTicketsDatabase()
             default:
                 throw new Error(`Tipo de base de datos no soportado: ${type}`)
         }

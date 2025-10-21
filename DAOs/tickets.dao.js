@@ -1,27 +1,24 @@
-import { ticketModel } from "../models/ticket.model.js"
+import DatabaseFactory from "./factory.js"
 
 class TicketsDAO {
+    constructor() {
+        this.db = DatabaseFactory.getDatabase("tickets")
+    }
+
     async createOne(data) {
-        const ticket = await ticketModel.create(data)
-        return ticket.toObject()
+        return await this.db.createOne(data)
     }
 
     async findById(id) {
-        return await ticketModel
-            .findById(id)
-            .populate("products.product")
-            .lean()
+        return await this.db.findById(id)
     }
 
     async findAll() {
-        return await ticketModel.find().populate("products.product").lean()
+        return await this.db.findAll()
     }
 
     async findByComprador(email) {
-        return await ticketModel
-            .find({ comprador: email })
-            .populate("products.product")
-            .lean()
+        return await this.db.findByComprador(email)
     }
 }
 

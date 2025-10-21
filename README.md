@@ -44,7 +44,7 @@ Abrir en el navegador: `http://localhost:8080`
 ## 📝 Notas
  
 -   Los endpoints protegidos requieren cookie `token` Para Insomnia, copiar la cookie después del login.
--   Los archivos `.env` ya están incluidos en el repositorio
+-   Los archivos `.env` fueron quitados del .gitignore para la correccion. 
 -   El proyecto se ejecuta en el puerto `8080`
 -   Credenciales de prueba disponibles en la aplicación
 
