@@ -18,7 +18,7 @@ export const purchaseCart = async (req, res) => {
         }
 
         // Si hay productos no comprados, incluirlos
-        if (result.productosNoComprados.length > 0) {
+        if (result.productosNoComprados && result.productosNoComprados.length > 0) {
             response.productosNoComprados = result.productosNoComprados
             response.message = "Compra parcial: algunos productos no tenían stock"
         }

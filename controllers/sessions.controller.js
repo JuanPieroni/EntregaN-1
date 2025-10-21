@@ -80,13 +80,50 @@ export const githubCallback = (req, res, next) => {
                 maxAge: 15 * 60 * 1000,
             })
 
-            res.redirect("/products")
+            res.redirect("/profile")
         } catch (error) {
             console.error("GitHub callback error:", error)
             res.redirect("/login?error=callback_error")
         }
     })(req, res, next)
 }
+
+
+//GOOGLE AUTH"
+export const googleAuth = passport.authenticate ("google", {
+    scope: ["profile", "email"] 
+})
+
+
+export const googleCallback = (req, res, next) => {
+    passport.authenticate("google", { session: false }, (err, user) => {
+        if (err) {
+            console.error("Google auth error:", err)
+            return res.redirect("/login?error=google_error")
+        }
+        if (!user) {
+            return res.redirect("/login?error=google_failed")
+        }
+
+        try {
+            console.log("Google callback user:", user)
+
+            // Generar token usando el service
+            const token = sessionsService.generateToken(user)
+
+            res.cookie("token", token, {
+                httpOnly: true,
+                maxAge: 15 * 60 * 1000,
+            })
+
+           res.redirect("/profile")
+        } catch (error) {
+            console.error("Google callback error:", error)
+            res.redirect("/login?error=callback_error")
+        }
+    })(req, res, next)
+}
+
 
 //*  Solicitar recuperación de contraseña */
 export const forgotPassword = async (req, res) => {
