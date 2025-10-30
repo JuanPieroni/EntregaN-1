@@ -150,7 +150,8 @@ passport.use(
                 const newCart = await cartsManager.createCart()
                 const newUser = {
                     first_name: profile._json.given_name,
-                    last_name: profile._json.family_name,
+                    last_name: profile._json.family_name || "Google",
+
                     email: email,
                     age: 18,
                     password: "XXXXXX_oauth_user",

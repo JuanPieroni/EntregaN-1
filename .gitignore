@@ -4,6 +4,6 @@ todo.txt
 logs/
 *.log  
 .amazonq
- 
+/snippets
 
 

@@ -15,11 +15,13 @@ program
 
 /* console.log(program.name())
 console.log(program.description())
-console.log(program.opts().port)
 console.log("Opciones:")
+console.log(program.opts().port)
 console.log(program.opts())
-
 console.log("Argumentos:")
 console.log(program.args) */
 
+
  
+//Todo
+//New Option().choices. para modo de ejecucion dev, prod, test
