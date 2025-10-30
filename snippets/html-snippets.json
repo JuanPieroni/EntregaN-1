@@ -1,0 +1,200 @@
+{
+  "HTML5 Template": {
+    "prefix": "html5",
+    "body": [
+      "<!DOCTYPE html>",
+      "<html lang='es'>",
+      "<head>",
+      "\t<meta charset='UTF-8'>",
+      "\t<meta name='viewport' content='width=device-width, initial-scale=1.0'>",
+      "\t<title>${1:Document}</title>",
+      "\t<link rel='stylesheet' href='${2:styles.css}'>",
+      "</head>",
+      "<body>",
+      "\t$0",
+      "\t<script src='${3:script.js}'></script>",
+      "</body>",
+      "</html>"
+    ],
+    "description": "Plantilla HTML5 completa"
+  },
+  "Form": {
+    "prefix": "form",
+    "body": [
+      "<form action='${1:#}' method='${2|post,get|}'>",
+      "\t<label for='${3:input}'>${4:Label}</label>",
+      "\t<input type='${5|text,email,password,number|}' id='${3:input}' name='${3:input}' required>",
+      "\t$0",
+      "\t<button type='submit'>${6:Submit}</button>",
+      "</form>"
+    ],
+    "description": "Formulario HTML con validación"
+  },
+  "Input": {
+    "prefix": "input",
+    "body": [
+      "<input type='${1|text,email,password,number,tel,url,date|}' id='${2:id}' name='${2:id}' placeholder='${3:placeholder}' ${4:required}>"
+    ],
+    "description": "Input HTML"
+  },
+  "Button": {
+    "prefix": "btn",
+    "body": [
+      "<button type='${1|button,submit,reset|}' class='${2:btn}'>${3:Button}</button>"
+    ],
+    "description": "Botón HTML"
+  },
+  "Link": {
+    "prefix": "a",
+    "body": [
+      "<a href='${1:#}' ${2:target='_blank'}>${3:Link Text}</a>"
+    ],
+    "description": "Enlace HTML"
+  },
+  "Image": {
+    "prefix": "img",
+    "body": [
+      "<img src='${1:image.jpg}' alt='${2:description}' width='${3:auto}' height='${4:auto}'>"
+    ],
+    "description": "Imagen HTML"
+  },
+  "Div": {
+    "prefix": "div",
+    "body": [
+      "<div class='${1:container}'>",
+      "\t$0",
+      "</div>"
+    ],
+    "description": "Div con clase"
+  },
+  "Section": {
+    "prefix": "section",
+    "body": [
+      "<section class='${1:section}'>",
+      "\t<h2>${2:Title}</h2>",
+      "\t$0",
+      "</section>"
+    ],
+    "description": "Section HTML5"
+  },
+  "Article": {
+    "prefix": "article",
+    "body": [
+      "<article class='${1:article}'>",
+      "\t<h3>${2:Title}</h3>",
+      "\t$0",
+      "</article>"
+    ],
+    "description": "Article HTML5"
+  },
+  "Nav": {
+    "prefix": "nav",
+    "body": [
+      "<nav class='${1:navbar}'>",
+      "\t<ul>",
+      "\t\t<li><a href='${2:#}'>${3:Home}</a></li>",
+      "\t\t$0",
+      "\t</ul>",
+      "</nav>"
+    ],
+    "description": "Navegación HTML5"
+  },
+  "Header": {
+    "prefix": "header",
+    "body": [
+      "<header class='${1:header}'>",
+      "\t<h1>${2:Title}</h1>",
+      "\t$0",
+      "</header>"
+    ],
+    "description": "Header HTML5"
+  },
+  "Footer": {
+    "prefix": "footer",
+    "body": [
+      "<footer class='${1:footer}'>",
+      "\t<p>&copy; ${2:2024} ${3:Company Name}</p>",
+      "\t$0",
+      "</footer>"
+    ],
+    "description": "Footer HTML5"
+  },
+  "Card": {
+    "prefix": "card",
+    "body": [
+      "<div class='card'>",
+      "\t<img src='${1:image.jpg}' alt='${2:description}' class='card-img'>",
+      "\t<div class='card-body'>",
+      "\t\t<h3 class='card-title'>${3:Title}</h3>",
+      "\t\t<p class='card-text'>${4:Description}</p>",
+      "\t\t$0",
+      "\t</div>",
+      "</div>"
+    ],
+    "description": "Card component"
+  },
+  "Table": {
+    "prefix": "table",
+    "body": [
+      "<table class='${1:table}'>",
+      "\t<thead>",
+      "\t\t<tr>",
+      "\t\t\t<th>${2:Header 1}</th>",
+      "\t\t\t<th>${3:Header 2}</th>",
+      "\t\t</tr>",
+      "\t</thead>",
+      "\t<tbody>",
+      "\t\t<tr>",
+      "\t\t\t<td>${4:Data 1}</td>",
+      "\t\t\t<td>${5:Data 2}</td>",
+      "\t\t</tr>",
+      "\t\t$0",
+      "\t</tbody>",
+      "</table>"
+    ],
+    "description": "Tabla HTML"
+  },
+  "List Unordered": {
+    "prefix": "ul",
+    "body": [
+      "<ul class='${1:list}'>",
+      "\t<li>${2:Item 1}</li>",
+      "\t<li>${3:Item 2}</li>",
+      "\t$0",
+      "</ul>"
+    ],
+    "description": "Lista desordenada"
+  },
+  "List Ordered": {
+    "prefix": "ol",
+    "body": [
+      "<ol class='${1:list}'>",
+      "\t<li>${2:Item 1}</li>",
+      "\t<li>${3:Item 2}</li>",
+      "\t$0",
+      "</ol>"
+    ],
+    "description": "Lista ordenada"
+  },
+  "Script": {
+    "prefix": "script",
+    "body": [
+      "<script src='${1:script.js}' ${2:defer}></script>"
+    ],
+    "description": "Script tag"
+  },
+  "Link CSS": {
+    "prefix": "linkcss",
+    "body": [
+      "<link rel='stylesheet' href='${1:styles.css}'>"
+    ],
+    "description": "Link CSS"
+  },
+  "Meta": {
+    "prefix": "meta",
+    "body": [
+      "<meta name='${1:description}' content='${2:content}'>"
+    ],
+    "description": "Meta tag"
+  }
+}

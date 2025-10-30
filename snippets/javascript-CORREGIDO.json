@@ -1,0 +1,376 @@
+{
+  "Arrow Function": {
+    "prefix": "af",
+    "body": [
+      "const ${1:functionName} = (${2:params}) => {",
+      "\t$0",
+      "};"
+    ],
+    "description": "Arrow function"
+  },
+  "Async Arrow Function": {
+    "prefix": "aaf",
+    "body": [
+      "const ${1:functionName} = async (${2:params}) => {",
+      "\ttry {",
+      "\t\t$0",
+      "\t} catch (error) {",
+      "\t\tconsole.error(error);",
+      "\t}",
+      "};"
+    ],
+    "description": "Async arrow function con try-catch"
+  },
+  "Promise": {
+    "prefix": "prom",
+    "body": [
+      "new Promise((resolve, reject) => {",
+      "\t$0",
+      "});"
+    ],
+    "description": "Nueva Promise"
+  },
+  "Fetch API": {
+    "prefix": "fetch",
+    "body": [
+      "fetch('${1:url}')",
+      "\t.then(response => response.json())",
+      "\t.then(data => {",
+      "\t\t$0",
+      "\t})",
+      "\t.catch(error => console.error('Error:', error));"
+    ],
+    "description": "Fetch API con manejo de errores"
+  },
+  "Async Fetch": {
+    "prefix": "afetch",
+    "body": [
+      "const ${1:fetchData} = async () => {",
+      "\ttry {",
+      "\t\tconst response = await fetch('${2:url}');",
+      "\t\tconst data = await response.json();",
+      "\t\t$0",
+      "\t\treturn data;",
+      "\t} catch (error) {",
+      "\t\tconsole.error('Error:', error);",
+      "\t}",
+      "};"
+    ],
+    "description": "Async fetch con try-catch"
+  },
+  "For Each": {
+    "prefix": "foreach",
+    "body": [
+      "${1:array}.forEach((${2:item}) => {",
+      "\t$0",
+      "});"
+    ],
+    "description": "forEach loop"
+  },
+  "Map": {
+    "prefix": "map",
+    "body": [
+      "const ${1:result} = ${2:array}.map((${3:item}) => {",
+      "\treturn $0;",
+      "});"
+    ],
+    "description": "Array map"
+  },
+  "Filter": {
+    "prefix": "filter",
+    "body": [
+      "const ${1:filtered} = ${2:array}.filter((${3:item}) => {",
+      "\treturn ${3:item}.$0;",
+      "});"
+    ],
+    "description": "Array filter"
+  },
+  "Reduce": {
+    "prefix": "reduce",
+    "body": [
+      "const ${1:result} = ${2:array}.reduce((${3:acc}, ${4:item}) => {",
+      "\treturn $0;",
+      "}, ${5:initialValue});"
+    ],
+    "description": "Array reduce"
+  },
+  "Find": {
+    "prefix": "find",
+    "body": [
+      "const ${1:found} = ${2:array}.find((${3:item}) => ${3:item}.$0);"
+    ],
+    "description": "Array find"
+  },
+  "Destructuring Object": {
+    "prefix": "dob",
+    "body": [
+      "const { ${1:property} } = ${2:object};"
+    ],
+    "description": "Object destructuring"
+  },
+  "Destructuring Array": {
+    "prefix": "dar",
+    "body": [
+      "const [${1:first}, ${2:second}] = ${3:array};"
+    ],
+    "description": "Array destructuring"
+  },
+  "Spread Operator": {
+    "prefix": "spread",
+    "body": [
+      "...${1:object}"
+    ],
+    "description": "Spread operator"
+  },
+  "Template Literal": {
+    "prefix": "tl",
+    "body": [
+      "`${${1:expression}}`"
+    ],
+    "description": "Template literal"
+  },
+  "Set Timeout": {
+    "prefix": "timeout",
+    "body": [
+      "setTimeout(() => {",
+      "\t$0",
+      "}, ${1:1000});"
+    ],
+    "description": "setTimeout"
+  },
+  "Set Interval": {
+    "prefix": "interval",
+    "body": [
+      "const ${1:intervalId} = setInterval(() => {",
+      "\t$0",
+      "}, ${2:1000});"
+    ],
+    "description": "setInterval"
+  },
+  "Event Listener": {
+    "prefix": "ael",
+    "body": [
+      "${1:element}.addEventListener('${2:click}', (${3:e}) => {",
+      "\t$0",
+      "});"
+    ],
+    "description": "addEventListener"
+  },
+  "Query Selector": {
+    "prefix": "qs",
+    "body": [
+      "const ${1:element} = document.querySelector('${2:selector}');"
+    ],
+    "description": "querySelector"
+  },
+  "Query Selector All": {
+    "prefix": "qsa",
+    "body": [
+      "const ${1:elements} = document.querySelectorAll('${2:selector}');"
+    ],
+    "description": "querySelectorAll"
+  },
+  "Local Storage Set": {
+    "prefix": "lss",
+    "body": [
+      "localStorage.setItem('${1:key}', JSON.stringify(${2:value}));"
+    ],
+    "description": "localStorage setItem"
+  },
+  "Local Storage Get": {
+    "prefix": "lsg",
+    "body": [
+      "const ${1:data} = JSON.parse(localStorage.getItem('${2:key}'));"
+    ],
+    "description": "localStorage getItem"
+  },
+  "Class": {
+    "prefix": "class",
+    "body": [
+      "class ${1:ClassName} {",
+      "\tconstructor(${2:params}) {",
+      "\t\tthis.${3:property} = ${2:params};",
+      "\t}",
+      "\t",
+      "\t${4:methodName}() {",
+      "\t\t$0",
+      "\t}",
+      "}"
+    ],
+    "description": "ES6 Class"
+  },
+  "Import": {
+    "prefix": "imp",
+    "body": [
+      "import ${2:module} from '${1:package}';"
+    ],
+    "description": "ES6 import"
+  },
+  "Export Default": {
+    "prefix": "expd",
+    "body": [
+      "export default ${1:name};"
+    ],
+    "description": "Export default"
+  },
+  "Export Named": {
+    "prefix": "expn",
+    "body": [
+      "export const ${1:name} = ${2:value};"
+    ],
+    "description": "Export named"
+  },
+  "Express Server Full HBS": {
+    "prefix": "expServerFull",
+    "body": [
+      "import express from 'express';",
+      "import { fileURLToPath } from 'url';",
+      "import path from 'path';",
+      "import { engine } from 'express-handlebars';",
+      "import { createServer } from 'http';",
+      "import cookieParser from 'cookie-parser';",
+      "import dotenv from 'dotenv';",
+      "",
+      "// Configuración de __dirname para ES Modules",
+      "const __filename = fileURLToPath(import.meta.url);",
+      "const __dirname = path.dirname(__filename);",
+      "",
+      "// Cargar variables de entorno",
+      "dotenv.config({ path: `.env.${process.env.NODE_ENV || 'development'}` });",
+      "",
+      "const app = express();",
+      "const httpServer = createServer(app);",
+      "const PORT = process.env.PORT || 8080;",
+      "",
+      "// Middlewares",
+      "app.use(express.json());",
+      "app.use(express.urlencoded({ extended: true }));",
+      "app.use(cookieParser());",
+      "",
+      "// Archivos estáticos",
+      "app.use('/static', express.static(path.join(__dirname, 'public')));",
+      "",
+      "// Motor de plantillas Handlebars",
+      "app.engine('hbs', engine({ extname: '.hbs' }));",
+      "app.set('view engine', 'hbs');",
+      "app.set('views', path.join(__dirname, 'views'));",
+      "",
+      "// Ruta principal",
+      "app.get('/', (req, res) => {",
+      "\tres.render('${1:home}', {",
+      "\t\ttitle: '${2:Mi Aplicación}',",
+      "\t});",
+      "});",
+      "",
+      "// Rutas",
+      "$0",
+      "",
+      "// Iniciar servidor",
+      "const startServer = async () => {",
+      "\ttry {",
+      "\t\t// Aquí puedes agregar conexión a DB",
+      "\t\t",
+      "\t\thttpServer.listen(PORT, () => {",
+      "\t\t\tconsole.log(`Servidor corriendo en http://localhost:${PORT}`);",
+      "\t\t});",
+      "\t} catch (error) {",
+      "\t\tconsole.error('Error al iniciar el servidor:', error);",
+      "\t\tprocess.exit(1);",
+      "\t}",
+      "};",
+      "",
+      "startServer();"
+    ],
+    "description": "Servidor Express completo con HBS, static files, ES Modules y dotenv"
+  },
+  "Express Route": {
+    "prefix": "expRoute",
+    "body": [
+      "router.${1|get,post,put,delete|}('${2:/path}', async (req, res) => {",
+      "\ttry {",
+      "\t\tconst { ${3:params} } = req.${4|body,params,query|};",
+      "\t\t$0",
+      "\t\tres.status(200).json({ success: true, data: ${5:result} });",
+      "\t} catch (error) {",
+      "\t\tres.status(500).json({ success: false, message: error.message });",
+      "\t}",
+      "});"
+    ],
+    "description": "Ruta Express con try-catch"
+  },
+  "Express Controller": {
+    "prefix": "expController",
+    "body": [
+      "export const ${1:controllerName} = async (req, res) => {",
+      "\ttry {",
+      "\t\tconst { ${2:params} } = req.${3|body,params,query|};",
+      "\t\t$0",
+      "\t\tres.status(${4:200}).json({",
+      "\t\t\tsuccess: true,",
+      "\t\t\tmessage: '${5:Success message}',",
+      "\t\t\tdata: ${6:result}",
+      "\t\t});",
+      "\t} catch (error) {",
+      "\t\tres.status(500).json({",
+      "\t\t\tsuccess: false,",
+      "\t\t\tmessage: error.message",
+      "\t\t});",
+      "\t}",
+      "};"
+    ],
+    "description": "Controlador Express con manejo de errores"
+  },
+  "Mongoose Model": {
+    "prefix": "mongoModel",
+    "body": [
+      "import mongoose from 'mongoose';",
+      "",
+      "const ${1:modelName}Schema = new mongoose.Schema({",
+      "\t${2:fieldName}: {",
+      "\t\ttype: ${3|String,Number,Boolean,Date,Array,Object|},",
+      "\t\trequired: ${4|true,false|},",
+      "\t\tunique: ${5|false,true|},",
+      "\t\tdefault: ${6:null}",
+      "\t},$0",
+      "}, {",
+      "\ttimestamps: true,",
+      "\tversionKey: false",
+      "});",
+      "",
+      "export default mongoose.model('${1:modelName}', ${1:modelName}Schema);"
+    ],
+    "description": "Modelo de Mongoose completo"
+  },
+  "MongoDB Connection": {
+    "prefix": "mongoConnect",
+    "body": [
+      "import mongoose from 'mongoose';",
+      "",
+      "const connectDB = async () => {",
+      "\ttry {",
+      "\t\tconst conn = await mongoose.connect(process.env.MONGO_URI);",
+      "\t\tconsole.log(`MongoDB Connected: ${conn.connection.host}`);",
+      "\t} catch (error) {",
+      "\t\tconsole.error(`Error: ${error.message}`);",
+      "\t\tprocess.exit(1);",
+      "\t}",
+      "};",
+      "",
+      "export default connectDB;"
+    ],
+    "description": "Función de conexión a MongoDB"
+  },
+  "Import Express Router": {
+    "prefix": "impRouter",
+    "body": [
+      "import { Router } from 'express';",
+      "",
+      "const router = Router();",
+      "",
+      "$0",
+      "",
+      "export default router;"
+    ],
+    "description": "Import y setup de Express Router"
+  }
+}

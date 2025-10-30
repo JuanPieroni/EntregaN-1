@@ -1,0 +1,223 @@
+{
+  "Arrow Function": {
+    "prefix": "af",
+    "body": [
+      "const ${1:functionName} = (${2:params}) => {",
+      "\t$0",
+      "};"
+    ],
+    "description": "Arrow function"
+  },
+  "Async Arrow Function": {
+    "prefix": "aaf",
+    "body": [
+      "const ${1:functionName} = async (${2:params}) => {",
+      "\ttry {",
+      "\t\t$0",
+      "\t} catch (error) {",
+      "\t\tconsole.error(error);",
+      "\t}",
+      "};"
+    ],
+    "description": "Async arrow function con try-catch"
+  },
+  "Promise": {
+    "prefix": "prom",
+    "body": [
+      "new Promise((resolve, reject) => {",
+      "\t$0",
+      "});"
+    ],
+    "description": "Nueva Promise"
+  },
+  "Fetch API": {
+    "prefix": "fetch",
+    "body": [
+      "fetch('${1:url}')",
+      "\t.then(response => response.json())",
+      "\t.then(data => {",
+      "\t\t$0",
+      "\t})",
+      "\t.catch(error => console.error('Error:', error));"
+    ],
+    "description": "Fetch API con manejo de errores"
+  },
+  "Async Fetch": {
+    "prefix": "afetch",
+    "body": [
+      "const ${1:fetchData} = async () => {",
+      "\ttry {",
+      "\t\tconst response = await fetch('${2:url}');",
+      "\t\tconst data = await response.json();",
+      "\t\t$0",
+      "\t\treturn data;",
+      "\t} catch (error) {",
+      "\t\tconsole.error('Error:', error);",
+      "\t}",
+      "};"
+    ],
+    "description": "Async fetch con try-catch"
+  },
+  "For Each": {
+    "prefix": "foreach",
+    "body": [
+      "${1:array}.forEach((${2:item}) => {",
+      "\t$0",
+      "});"
+    ],
+    "description": "forEach loop"
+  },
+  "Map": {
+    "prefix": "map",
+    "body": [
+      "const ${1:result} = ${2:array}.map((${3:item}) => {",
+      "\treturn $0;",
+      "});"
+    ],
+    "description": "Array map"
+  },
+  "Filter": {
+    "prefix": "filter",
+    "body": [
+      "const ${1:filtered} = ${2:array}.filter((${3:item}) => {",
+      "\treturn ${3:item}.$0;",
+      "});"
+    ],
+    "description": "Array filter"
+  },
+  "Reduce": {
+    "prefix": "reduce",
+    "body": [
+      "const ${1:result} = ${2:array}.reduce((${3:acc}, ${4:item}) => {",
+      "\treturn $0;",
+      "}, ${5:initialValue});"
+    ],
+    "description": "Array reduce"
+  },
+  "Find": {
+    "prefix": "find",
+    "body": [
+      "const ${1:found} = ${2:array}.find((${3:item}) => ${3:item}.$0);"
+    ],
+    "description": "Array find"
+  },
+  "Destructuring Object": {
+    "prefix": "dob",
+    "body": [
+      "const { ${1:property} } = ${2:object};"
+    ],
+    "description": "Object destructuring"
+  },
+  "Destructuring Array": {
+    "prefix": "dar",
+    "body": [
+      "const [${1:first}, ${2:second}] = ${3:array};"
+    ],
+    "description": "Array destructuring"
+  },
+  "Spread Operator": {
+    "prefix": "spread",
+    "body": [
+      "...${1:object}"
+    ],
+    "description": "Spread operator"
+  },
+  "Template Literal": {
+    "prefix": "tl",
+    "body": [
+      "`${${1:expression}}`"
+    ],
+    "description": "Template literal"
+  },
+  "Set Timeout": {
+    "prefix": "timeout",
+    "body": [
+      "setTimeout(() => {",
+      "\t$0",
+      "}, ${1:1000});"
+    ],
+    "description": "setTimeout"
+  },
+  "Set Interval": {
+    "prefix": "interval",
+    "body": [
+      "const ${1:intervalId} = setInterval(() => {",
+      "\t$0",
+      "}, ${2:1000});"
+    ],
+    "description": "setInterval"
+  },
+  "Event Listener": {
+    "prefix": "ael",
+    "body": [
+      "${1:element}.addEventListener('${2:click}', (${3:e}) => {",
+      "\t$0",
+      "});"
+    ],
+    "description": "addEventListener"
+  },
+  "Query Selector": {
+    "prefix": "qs",
+    "body": [
+      "const ${1:element} = document.querySelector('${2:selector}');"
+    ],
+    "description": "querySelector"
+  },
+  "Query Selector All": {
+    "prefix": "qsa",
+    "body": [
+      "const ${1:elements} = document.querySelectorAll('${2:selector}');"
+    ],
+    "description": "querySelectorAll"
+  },
+  "Local Storage Set": {
+    "prefix": "lss",
+    "body": [
+      "localStorage.setItem('${1:key}', JSON.stringify(${2:value}));"
+    ],
+    "description": "localStorage setItem"
+  },
+  "Local Storage Get": {
+    "prefix": "lsg",
+    "body": [
+      "const ${1:data} = JSON.parse(localStorage.getItem('${2:key}'));"
+    ],
+    "description": "localStorage getItem"
+  },
+  "Class": {
+    "prefix": "class",
+    "body": [
+      "class ${1:ClassName} {",
+      "\tconstructor(${2:params}) {",
+      "\t\tthis.${3:property} = ${2:params};",
+      "\t}",
+      "\t",
+      "\t${4:methodName}() {",
+      "\t\t$0",
+      "\t}",
+      "}"
+    ],
+    "description": "ES6 Class"
+  },
+  "Import": {
+    "prefix": "imp",
+    "body": [
+      "import ${2:module} from '${1:package}';"
+    ],
+    "description": "ES6 import"
+  },
+  "Export Default": {
+    "prefix": "expd",
+    "body": [
+      "export default ${1:name};"
+    ],
+    "description": "Export default"
+  },
+  "Export Named": {
+    "prefix": "expn",
+    "body": [
+      "export const ${1:name} = ${2:value};"
+    ],
+    "description": "Export named"
+  }
+}

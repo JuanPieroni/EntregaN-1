@@ -1,0 +1,208 @@
+{
+  "Flexbox Container": {
+    "prefix": "flex",
+    "body": [
+      "display: flex;",
+      "justify-content: ${1|center,flex-start,flex-end,space-between,space-around|};",
+      "align-items: ${2|center,flex-start,flex-end,stretch|};",
+      "gap: ${3:1rem};$0"
+    ],
+    "description": "Flexbox container completo"
+  },
+  "Grid Container": {
+    "prefix": "grid",
+    "body": [
+      "display: grid;",
+      "grid-template-columns: ${1:repeat(3, 1fr)};",
+      "gap: ${2:1rem};$0"
+    ],
+    "description": "CSS Grid container"
+  },
+  "Media Query": {
+    "prefix": "media",
+    "body": [
+      "@media (${1|max,min|}-width: ${2:768px}) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Media query responsive"
+  },
+  "Center Absolute": {
+    "prefix": "center",
+    "body": [
+      "position: absolute;",
+      "top: 50%;",
+      "left: 50%;",
+      "transform: translate(-50%, -50%);"
+    ],
+    "description": "Centrar elemento con position absolute"
+  },
+  "Box Shadow": {
+    "prefix": "shadow",
+    "body": [
+      "box-shadow: ${1:0 2px 8px} rgba(0, 0, 0, ${2:0.1});"
+    ],
+    "description": "Box shadow"
+  },
+  "Transition": {
+    "prefix": "trans",
+    "body": [
+      "transition: ${1:all} ${2:0.3s} ${3:ease};"
+    ],
+    "description": "CSS transition"
+  },
+  "Animation": {
+    "prefix": "anim",
+    "body": [
+      "animation: ${1:name} ${2:1s} ${3:ease} ${4:infinite};",
+      "",
+      "@keyframes ${1:name} {",
+      "\t0% {",
+      "\t\t$0",
+      "\t}",
+      "\t100% {",
+      "\t\t",
+      "\t}",
+      "}"
+    ],
+    "description": "CSS animation con keyframes"
+  },
+  "CSS Variables": {
+    "prefix": "cssvar",
+    "body": [
+      ":root {",
+      "\t--${1:primary-color}: ${2:#007bff};",
+      "\t--${3:secondary-color}: ${4:#6c757d};",
+      "\t--${5:font-size}: ${6:16px};$0",
+      "}"
+    ],
+    "description": "CSS custom properties (variables)"
+  },
+  "Reset CSS": {
+    "prefix": "reset",
+    "body": [
+      "* {",
+      "\tmargin: 0;",
+      "\tpadding: 0;",
+      "\tbox-sizing: border-box;",
+      "}"
+    ],
+    "description": "CSS reset básico"
+  },
+  "Button Style": {
+    "prefix": "btnstyle",
+    "body": [
+      ".${1:btn} {",
+      "\tpadding: ${2:0.5rem 1rem};",
+      "\tbackground-color: ${3:var(--primary-color)};",
+      "\tcolor: ${4:white};",
+      "\tborder: none;",
+      "\tborder-radius: ${5:4px};",
+      "\tcursor: pointer;",
+      "\ttransition: all 0.3s ease;",
+      "}",
+      "",
+      ".${1:btn}:hover {",
+      "\topacity: 0.9;",
+      "\ttransform: translateY(-2px);",
+      "}"
+    ],
+    "description": "Estilo de botón completo"
+  },
+  "Card Style": {
+    "prefix": "cardstyle",
+    "body": [
+      ".${1:card} {",
+      "\tbackground: white;",
+      "\tborder-radius: ${2:8px};",
+      "\tbox-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);",
+      "\tpadding: ${3:1.5rem};",
+      "\ttransition: transform 0.3s ease;",
+      "}",
+      "",
+      ".${1:card}:hover {",
+      "\ttransform: translateY(-5px);",
+      "\tbox-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);",
+      "}"
+    ],
+    "description": "Estilo de card con hover"
+  },
+  "Container": {
+    "prefix": "container",
+    "body": [
+      ".${1:container} {",
+      "\tmax-width: ${2:1200px};",
+      "\tmargin: 0 auto;",
+      "\tpadding: ${3:0 1rem};",
+      "}"
+    ],
+    "description": "Container responsive"
+  },
+  "Gradient": {
+    "prefix": "gradient",
+    "body": [
+      "background: linear-gradient(${1|to right,to left,to bottom,to top,135deg|}, ${2:#667eea} 0%, ${3:#764ba2} 100%);"
+    ],
+    "description": "Linear gradient"
+  },
+  "Text Truncate": {
+    "prefix": "truncate",
+    "body": [
+      "white-space: nowrap;",
+      "overflow: hidden;",
+      "text-overflow: ellipsis;"
+    ],
+    "description": "Truncar texto con ellipsis"
+  },
+  "Hover Effect": {
+    "prefix": "hover",
+    "body": [
+      "&:hover {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Hover pseudo-class"
+  },
+  "Before Pseudo": {
+    "prefix": "before",
+    "body": [
+      "&::before {",
+      "\tcontent: '${1:}';",
+      "\t$0",
+      "}"
+    ],
+    "description": "Before pseudo-element"
+  },
+  "After Pseudo": {
+    "prefix": "after",
+    "body": [
+      "&::after {",
+      "\tcontent: '${1:}';",
+      "\t$0",
+      "}"
+    ],
+    "description": "After pseudo-element"
+  },
+  "Scrollbar Style": {
+    "prefix": "scrollbar",
+    "body": [
+      "&::-webkit-scrollbar {",
+      "\twidth: ${1:8px};",
+      "}",
+      "",
+      "&::-webkit-scrollbar-track {",
+      "\tbackground: ${2:#f1f1f1};",
+      "}",
+      "",
+      "&::-webkit-scrollbar-thumb {",
+      "\tbackground: ${3:#888};",
+      "\tborder-radius: ${4:4px};",
+      "}",
+      "",
+      "&::-webkit-scrollbar-thumb:hover {",
+      "\tbackground: ${5:#555};",
+      "}"
+    ],
+    "description": "Custom scrollbar style"
+  }
+}
