@@ -1,1 +1,3 @@
 MY SQL database .
+sequelize 
+mysql2
